@@ -7,12 +7,3 @@ with open("simulator.html", "r", encoding="utf-8") as f:
     html_content = f.read()
 
 components.html(html_content, height=1100, scrolling=True)
-```
-
----
-
-**4. ודא שיש קובץ `requirements.txt`**
-
-אם הוא לא קיים — צור אותו (שוב "Add file") עם התוכן:
-```
-streamlit

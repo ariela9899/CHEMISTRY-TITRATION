@@ -6,6 +6,7 @@
 <title>מעבדת כימיה — ניסויים אינטראקטיביים</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 /* ════════════════════════════════
    TOKENS
@@ -307,8 +308,93 @@ tbody tr.fresh{animation:rowIn .5s ease}
   100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
 
 /* ════════════════════════════════
-   CABBAGE SCREEN
+   REACTION VISUALIZER
 ════════════════════════════════ */
+#screen-reaction{flex-direction:column;background:#0a0e27}
+.rxn-top{flex-shrink:0;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(99,102,241,.3);padding:14px 20px;display:flex;
+  flex-direction:column;gap:10px}
+.rxn-top-row1{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.rxn-top-row1 h2{font-size:1rem;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px}
+.rxn-input-row{display:flex;gap:8px}
+.rxn-inp{flex:1;padding:10px 16px;background:rgba(15,23,42,.7);
+  border:1.5px solid rgba(99,102,241,.4);border-radius:10px;color:#fff;
+  font-family:var(--sans);font-size:.85rem;outline:none;
+  transition:border-color .2s}
+.rxn-inp::placeholder{color:#475569}
+.rxn-inp:focus{border-color:#6366f1}
+.rxn-vis-btn{padding:10px 22px;background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  border:none;border-radius:10px;color:#fff;font-weight:700;font-size:.82rem;
+  cursor:pointer;font-family:var(--sans);transition:all .2s;white-space:nowrap}
+.rxn-vis-btn:hover{background:linear-gradient(135deg,#4338ca,#6d28d9);transform:translateY(-1px)}
+.rxn-vis-btn:disabled{background:#374151;cursor:not-allowed;transform:none}
+.rxn-presets{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.rxn-preset-lbl{font-size:.68rem;color:#818cf8;white-space:nowrap}
+.rxn-preset{padding:4px 11px;border-radius:6px;font-size:.65rem;font-weight:600;
+  background:rgba(49,46,129,.5);border:1px solid rgba(99,102,241,.3);color:#a5b4fc;
+  cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.rxn-preset:hover{background:rgba(79,70,229,.4);border-color:#6366f1;color:#fff}
+.rxn-preset:disabled{opacity:.4;cursor:not-allowed}
+.rxn-equation-bar{background:rgba(15,23,42,.7);border:1px solid rgba(99,102,241,.3);
+  border-radius:12px;padding:14px 18px}
+.rxn-eq-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.rxn-mol-chip{padding:8px 14px;border-radius:9px;text-align:center}
+.rxn-mol-chip.reactant{background:rgba(30,58,138,.4);border:1.5px solid rgba(96,165,250,.4)}
+.rxn-mol-chip.product{background:rgba(6,78,59,.4);border:1.5px solid rgba(52,211,153,.4)}
+.rxn-mol-name{font-size:.82rem;font-weight:700;color:#bfdbfe}
+.rxn-mol-name.prod{color:#a7f3d0}
+.rxn-mol-formula{font-size:.68rem;font-family:var(--mono);color:#93c5fd;margin-top:1px}
+.rxn-mol-formula.prod{color:#6ee7b7}
+.rxn-hbond-tag{font-size:.6rem;color:#67e8f9;margin-top:2px}
+.rxn-arrow-lbl{font-size:1.6rem;color:#818cf8}
+.rxn-plus{font-size:1.3rem;color:#818cf8}
+.rxn-stage-btns{display:flex;gap:8px;justify-content:center}
+.rxn-stage-btn{padding:8px 22px;border-radius:9px;font-weight:700;font-size:.78rem;
+  cursor:pointer;border:none;font-family:var(--sans);transition:all .2s}
+.rxn-stage-btn.active-r{background:linear-gradient(135deg,#2563eb,#06b6d4);color:#fff;
+  box-shadow:0 4px 12px rgba(37,99,235,.4)}
+.rxn-stage-btn.active-p{background:linear-gradient(135deg,#059669,#0d9488);color:#fff;
+  box-shadow:0 4px 12px rgba(5,150,105,.4)}
+.rxn-stage-btn.inactive{background:rgba(30,41,59,.6);color:#94a3b8}
+.rxn-stage-btn.inactive:hover{background:rgba(51,65,85,.7);color:#fff}
+.rxn-err{padding:8px 14px;background:rgba(127,29,29,.5);border:1px solid rgba(239,68,68,.4);
+  border-radius:8px;color:#fca5a5;font-size:.75rem}
+.rxn-body{flex:1;position:relative;overflow:hidden}
+#rxn-mount{width:100%;height:100%}
+.rxn-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.rxn-empty{text-align:center;color:#818cf8;max-width:400px;padding:20px}
+.rxn-empty-icon{font-size:4rem;margin-bottom:12px}
+.rxn-empty h3{font-size:1.3rem;font-weight:300;color:#fff;margin-bottom:8px}
+.rxn-empty p{font-size:.78rem;opacity:.7;line-height:1.7}
+.rxn-loading{background:rgba(0,0,0,.7);pointer-events:all}
+.rxn-loading-inner{text-align:center}
+.rxn-spin{font-size:3.5rem;animation:rxnspin 1.2s linear infinite;margin-bottom:10px}
+@keyframes rxnspin{to{transform:rotate(360deg)}}
+.rxn-loading-inner p{color:#a5b4fc;font-size:1rem;font-weight:600}
+.rxn-loading-inner small{color:#6366f1;font-size:.75rem}
+.rxn-hud-controls{position:absolute;top:12px;left:12px;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
+  border:1px solid rgba(99,102,241,.25);border-radius:10px;
+  padding:10px 14px;font-size:.72rem;color:#a5b4fc}
+.rxn-hud-controls strong{color:#fff;display:block;margin-bottom:4px}
+.rxn-hud-stage{position:absolute;top:12px;right:12px;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
+  border:1px solid rgba(99,102,241,.25);border-radius:10px;
+  padding:10px 14px;min-width:160px}
+.rxn-stage-badge{display:inline-block;padding:3px 10px;border-radius:20px;
+  font-size:.68rem;font-weight:700;margin-bottom:8px}
+.rxn-mol-info{background:rgba(30,41,59,.5);border-radius:7px;padding:7px 10px;margin-bottom:5px}
+.rxn-mol-info-name{font-size:.75rem;font-weight:700;color:#67e8f9}
+.rxn-mol-info-formula{font-size:.62rem;font-family:var(--mono);color:#818cf8;margin-top:1px}
+.rxn-mol-info-atoms{font-size:.6rem;color:#475569;margin-top:1px}
+.rxn-legend{position:absolute;bottom:12px;right:12px;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
+  border:1px solid rgba(99,102,241,.25);border-radius:10px;padding:10px 14px}
+.rxn-legend strong{font-size:.7rem;color:#fff;display:block;margin-bottom:6px}
+.rxn-legend-item{display:flex;align-items:center;gap:7px;font-size:.65rem;color:#94a3b8;margin-bottom:3px}
+.rxn-legend-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.rxn-legend-hbond{width:20px;height:2px;border-top:2px dashed #67e8f9;flex-shrink:0}
+
 .exp-screen-inner{flex:1;overflow-y:auto;padding:24px}
 .exp-top-bar{display:flex;align-items:center;gap:12px;padding:12px 20px;
   background:var(--surface);border-bottom:2px solid;box-shadow:0 2px 8px rgba(0,0,0,.08);flex-shrink:0}
@@ -444,6 +530,24 @@ tbody tr.fresh{animation:rowIn .5s ease}
       </div>
       <div class="exp-arrow"><span>לחצו להתחלה</span><span class="arrow-icon">←</span></div>
     </div>
+
+    <!-- Card 5: Reaction Visualizer -->
+    <div class="exp-card" style="border-color:var(--border);--hover-color:#0d9488"
+      onclick="goTo('screen-reaction')"
+      onmouseover="this.style.borderColor='#0d9488'"
+      onmouseout="this.style.borderColor='var(--border)'">
+      <div class="exp-emoji">⚗️</div>
+      <div class="exp-badge" style="background:var(--teal-l);border:1.5px solid var(--teal-m);color:var(--teal)">ניסוי 5</div>
+      <div class="exp-name">סימולטור<br>תגובות תלת–ממד</div>
+      <div class="exp-desc">הקלידו כל תגובה כימית והמחשב יבנה עבורכם מולקולות תלת–ממדיות של מגיבים ותוצרים — בזמן אמת!</div>
+      <div class="exp-tags">
+        <span class="exp-tag">3D</span>
+        <span class="exp-tag">AI</span>
+        <span class="exp-tag">מולקולות</span>
+      </div>
+      <div class="exp-arrow"><span>לחצו להתחלה</span><span class="arrow-icon">←</span></div>
+    </div>
+
   </div>
 </div>
 
@@ -838,6 +942,14 @@ function goTo(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   if(id==='screen-titration' && !chart) initChart();
+  if(id==='screen-reaction'){
+    setTimeout(()=>{
+      rxnInitScene();
+      if(!rxnRAF && rxnRenderer && rxnScene && rxnCamera){
+        (function animate(){rxnRAF=requestAnimationFrame(animate);rxnRenderer.render(rxnScene,rxnCamera);})();
+      }
+    },50);
+  }
 }
 
 /* ══════════════════════════════════
@@ -1180,6 +1292,377 @@ function answSnake(el,correct){
   if(correct){fb.className='qfb ok';fb.innerText='✓ נכון! קטליזטור מאיץ תגובה מבלי להיצרך — KI ניתן לשחזור בסוף התגובה.';}
   else{fb.className='qfb no';fb.innerText='✗ שגוי. קטליזטור מגביר מהירות תגובה ואינו נצרך בתהליך.';}
 }
+</script>
+
+<!-- ══════════════════════════════════════
+     SCREEN 6: REACTION VISUALIZER
+══════════════════════════════════════ -->
+<div id="screen-reaction" class="screen">
+
+  <!-- Top bar -->
+  <div class="rxn-top">
+    <div class="rxn-top-row1">
+      <button class="back-btn" onclick="goTo('screen-landing');rxnPause()">⬅ חזרה</button>
+      <h2>⚗️ סימולטור תגובות — ויזואליזציה תלת–ממדית</h2>
+    </div>
+
+    <div class="rxn-input-row">
+      <input class="rxn-inp" id="rxn-inp" type="text"
+        placeholder="הקלידו תגובה: H2 + O2 → H2O  או  glycosidic bond hydrolysis  או  CH4 + 2O2 → CO2 + 2H2O"
+        onkeydown="if(event.key==='Enter')rxnFetch()">
+      <button class="rxn-vis-btn" id="rxn-vis-btn" onclick="rxnFetch()">🔬 הדמה</button>
+    </div>
+
+    <div class="rxn-presets">
+      <span class="rxn-preset-lbl">דוגמאות מהירות:</span>
+      <button class="rxn-preset" onclick="rxnPreset('H2 + O2 → H2O')">💧 מים</button>
+      <button class="rxn-preset" onclick="rxnPreset('CH4 + 2O2 → CO2 + 2H2O')">🔥 שריפת מתאן</button>
+      <button class="rxn-preset" onclick="rxnPreset('N2 + 3H2 → 2NH3')">⚗️ אמוניה</button>
+      <button class="rxn-preset" onclick="rxnPreset('NaCl → Na+ + Cl-')">🧂 המסת מלח</button>
+      <button class="rxn-preset" onclick="rxnPreset('cysteine + guanine → cysteine-guanine complex')">🧬 קישור ציסטאין–גואנין</button>
+      <button class="rxn-preset" onclick="rxnPreset('C2H5OH + 3O2 → 2CO2 + 3H2O')">🍷 שריפת אתנול</button>
+    </div>
+
+    <div id="rxn-err" class="rxn-err" style="display:none"></div>
+
+    <!-- Equation display -->
+    <div id="rxn-equation-bar" class="rxn-equation-bar" style="display:none">
+      <div class="rxn-eq-row" id="rxn-eq-row"></div>
+      <div class="rxn-stage-btns">
+        <button class="rxn-stage-btn active-r" id="rxn-btn-r" onclick="rxnShowStage('reactants')">👁 הצג מגיבים</button>
+        <button class="rxn-stage-btn inactive"  id="rxn-btn-p" onclick="rxnShowStage('products')">👁 הצג תוצרים</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3D viewport -->
+  <div class="rxn-body">
+    <div id="rxn-mount"></div>
+
+    <!-- Empty state -->
+    <div class="rxn-overlay" id="rxn-empty">
+      <div class="rxn-empty">
+        <div class="rxn-empty-icon">⚗️</div>
+        <h3>סימולטור תגובות כימיות</h3>
+        <p>הקלידו תגובה כימית כלשהי<br>והמחשב יבנה מולקולות תלת–ממדיות בזמן אמת</p>
+        <div style="margin-top:14px;padding:12px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);border-radius:9px;font-size:.72rem;color:#818cf8;text-align:right;line-height:1.9">
+          <div>• נוסחה: <span style="color:#a5b4fc">2H₂ + O₂ → 2H₂O</span></div>
+          <div>• שפה חופשית: <span style="color:#a5b4fc">glycosidic bond hydrolysis</span></div>
+          <div>• תגובה אורגנית: <span style="color:#a5b4fc">CH₄ + 2O₂ → CO₂ + 2H₂O</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="rxn-overlay rxn-loading" id="rxn-loading" style="display:none">
+      <div class="rxn-loading-inner">
+        <div class="rxn-spin">⚛️</div>
+        <p>בונה מולקולות...</p>
+        <small>AI מחשב קואורדינטות תלת–ממדיות</small>
+      </div>
+    </div>
+
+    <!-- HUD: controls -->
+    <div class="rxn-hud-controls" id="rxn-hud-c" style="display:none">
+      <strong>🎮 שליטה:</strong>
+      <div>• גרור — סיבוב</div>
+      <div>• גלגל — זום</div>
+    </div>
+
+    <!-- HUD: stage info -->
+    <div class="rxn-hud-stage" id="rxn-hud-s" style="display:none">
+      <div class="rxn-stage-badge" id="rxn-stage-badge"></div>
+      <div id="rxn-mol-list"></div>
+    </div>
+
+    <!-- Legend -->
+    <div class="rxn-legend" id="rxn-legend" style="display:none">
+      <strong>⚛️ אלמנטים:</strong>
+      <div id="rxn-legend-items"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════
+   REACTION VISUALIZER — Vanilla JS + Three.js
+══════════════════════════════════ */
+let rxnScene=null,rxnRenderer=null,rxnCamera=null,rxnRAF=null,rxnData=null,rxnStage='reactants';
+let rxnMouseDown=false,rxnMX=0,rxnMY=0;
+
+const RXN_PRESETS=[
+  'H2 + O2 → H2O',
+  'CH4 + 2O2 → CO2 + 2H2O',
+  'N2 + 3H2 → 2NH3',
+  'NaCl → Na+ + Cl-',
+  'cysteine + guanine → cysteine-guanine complex',
+  'C2H5OH + 3O2 → 2CO2 + 3H2O'
+];
+
+const ELEM_COLORS={H:'#FFFFFF',C:'#909090',N:'#3050F8',O:'#FF0D0D',S:'#FFFF30',
+  P:'#FF8000',Cl:'#1FF01F',F:'#90E050',Br:'#A62929',Na:'#AB5CF2',K:'#8F40D4'};
+const ELEM_NAMES={H:'מימן',C:'פחמן',N:'חנקן',O:'חמצן',S:'גופרית',
+  P:'זרחן',Cl:'כלור',F:'פלואור',Br:'ברום',Na:'נתרן',K:'אשלגן'};
+
+function rxnInitScene(){
+  if(rxnRenderer) return; // already initialized
+  const mount=document.getElementById('rxn-mount');
+  if(!mount||!mount.clientWidth) return;
+
+  rxnScene=new THREE.Scene();
+  rxnScene.background=new THREE.Color(0x0a0e27);
+
+  rxnCamera=new THREE.PerspectiveCamera(75,mount.clientWidth/mount.clientHeight,0.1,1000);
+  rxnCamera.position.set(0,0,25);
+
+  rxnRenderer=new THREE.WebGLRenderer({antialias:true});
+  rxnRenderer.setSize(mount.clientWidth,mount.clientHeight);
+  rxnRenderer.setPixelRatio(window.devicePixelRatio);
+  mount.appendChild(rxnRenderer.domElement);
+
+  rxnScene.add(new THREE.AmbientLight(0xffffff,0.5));
+  const dl1=new THREE.DirectionalLight(0xffffff,0.6);dl1.position.set(5,5,5);rxnScene.add(dl1);
+  const dl2=new THREE.DirectionalLight(0xffffff,0.4);dl2.position.set(-5,-5,5);rxnScene.add(dl2);
+
+  // Mouse
+  rxnRenderer.domElement.addEventListener('mousedown',e=>{rxnMouseDown=true;rxnMX=e.clientX;rxnMY=e.clientY;});
+  rxnRenderer.domElement.addEventListener('mouseup',()=>rxnMouseDown=false);
+  rxnRenderer.domElement.addEventListener('mouseleave',()=>rxnMouseDown=false);
+  rxnRenderer.domElement.addEventListener('mousemove',e=>{
+    if(!rxnMouseDown||!rxnScene)return;
+    rxnScene.rotation.y+=(e.clientX-rxnMX)*0.012;
+    rxnScene.rotation.x+=(e.clientY-rxnMY)*0.012;
+    rxnMX=e.clientX;rxnMY=e.clientY;
+  });
+  rxnRenderer.domElement.addEventListener('wheel',e=>{
+    rxnCamera.position.z+=e.deltaY*0.025;
+    rxnCamera.position.z=Math.max(4,Math.min(70,rxnCamera.position.z));
+  });
+  // Touch
+  let lastTouchDist=0;
+  rxnRenderer.domElement.addEventListener('touchstart',e=>{
+    if(e.touches.length===1){rxnMouseDown=true;rxnMX=e.touches[0].clientX;rxnMY=e.touches[0].clientY;}
+    if(e.touches.length===2)lastTouchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+  });
+  rxnRenderer.domElement.addEventListener('touchend',()=>rxnMouseDown=false);
+  rxnRenderer.domElement.addEventListener('touchmove',e=>{
+    if(e.touches.length===1&&rxnMouseDown&&rxnScene){
+      rxnScene.rotation.y+=(e.touches[0].clientX-rxnMX)*0.012;
+      rxnScene.rotation.x+=(e.touches[0].clientY-rxnMY)*0.012;
+      rxnMX=e.touches[0].clientX;rxnMY=e.touches[0].clientY;
+    }
+    if(e.touches.length===2){
+      const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+      rxnCamera.position.z-=(d-lastTouchDist)*0.1;
+      rxnCamera.position.z=Math.max(4,Math.min(70,rxnCamera.position.z));
+      lastTouchDist=d;
+    }
+  });
+
+  // Resize
+  window.addEventListener('resize',()=>{
+    if(!rxnRenderer||!rxnCamera) return;
+    const m=document.getElementById('rxn-mount');
+    if(!m) return;
+    rxnRenderer.setSize(m.clientWidth,m.clientHeight);
+    rxnCamera.aspect=m.clientWidth/m.clientHeight;
+    rxnCamera.updateProjectionMatrix();
+  });
+
+  (function animate(){
+    rxnRAF=requestAnimationFrame(animate);
+    if(rxnRenderer&&rxnScene&&rxnCamera) rxnRenderer.render(rxnScene,rxnCamera);
+  })();
+}
+
+function rxnPause(){
+  if(rxnRAF){cancelAnimationFrame(rxnRAF);rxnRAF=null;}
+}
+
+function rxnClearScene(){
+  if(!rxnScene) return;
+  const rem=[];
+  rxnScene.traverse(c=>{if(c.isMesh||c.isLine)rem.push(c);});
+  rem.forEach(o=>{rxnScene.remove(o);if(o.geometry)o.geometry.dispose();if(o.material)o.material.dispose();});
+}
+
+function rxnMakeAtom(pos,color,radius){
+  const g=new THREE.SphereGeometry(radius,32,32);
+  const m=new THREE.MeshStandardMaterial({color:new THREE.Color(color),metalness:.4,roughness:.3,emissive:new THREE.Color(color),emissiveIntensity:.15});
+  const s=new THREE.Mesh(g,m);
+  s.position.set(...pos);
+  return s;
+}
+
+function rxnMakeBond(start,end,color,r=0.1){
+  const s3=new THREE.Vector3(...start),e3=new THREE.Vector3(...end);
+  const dir=new THREE.Vector3().subVectors(e3,s3);
+  const dist=dir.length();
+  const g=new THREE.CylinderGeometry(r,r,dist,8);
+  const m=new THREE.MeshStandardMaterial({color:new THREE.Color(color||'#808080'),metalness:.3,roughness:.5});
+  const cyl=new THREE.Mesh(g,m);
+  const mid=new THREE.Vector3().addVectors(s3,e3).divideScalar(2);
+  cyl.position.copy(mid);
+  cyl.lookAt(e3);
+  cyl.rotateX(Math.PI/2);
+  return cyl;
+}
+
+function rxnMakeHBond(start,end){
+  const pts=[new THREE.Vector3(...start),new THREE.Vector3(...end)];
+  const g=new THREE.BufferGeometry().setFromPoints(pts);
+  const m=new THREE.LineDashedMaterial({color:0x00ffff,linewidth:2,dashSize:.4,gapSize:.2});
+  const line=new THREE.Line(g,m);
+  line.computeLineDistances();
+  const gg=new THREE.SphereGeometry(.18,12,12);
+  const gm=new THREE.MeshBasicMaterial({color:0x00ffff,transparent:true,opacity:.7});
+  const g1=new THREE.Mesh(gg,gm.clone());g1.position.set(...start);
+  const g2=new THREE.Mesh(gg,gm.clone());g2.position.set(...end);
+  return[line,g1,g2];
+}
+
+function rxnRender(molecules){
+  if(!rxnScene) return;
+  rxnClearScene();
+  molecules.forEach(mol=>{
+    mol.atoms.forEach(a=>rxnScene.add(rxnMakeAtom(a.position,a.color,a.radius)));
+    mol.bonds.forEach(b=>rxnScene.add(rxnMakeBond(b.start,b.end,b.color)));
+    (mol.hydrogenBonds||[]).forEach(hb=>{
+      rxnMakeHBond(hb.donor,hb.acceptor).forEach(o=>rxnScene.add(o));
+    });
+  });
+  // Auto-fit camera
+  const box=new THREE.Box3().setFromObject(rxnScene);
+  const center=box.getCenter(new THREE.Vector3());
+  const size=box.getSize(new THREE.Vector3());
+  rxnScene.position.sub(center);
+  const maxD=Math.max(size.x,size.y,size.z);
+  const fov=rxnCamera.fov*(Math.PI/180);
+  rxnCamera.position.z=Math.max(Math.abs(maxD/(2*Math.tan(fov/2)))*1.9,10);
+}
+
+async function rxnFetch(){
+  const inp=document.getElementById('rxn-inp').value.trim();
+  if(!inp) return;
+  if(!rxnScene) rxnInitScene();
+
+  document.getElementById('rxn-loading').style.display='flex';
+  document.getElementById('rxn-empty').style.display='none';
+  document.getElementById('rxn-err').style.display='none';
+  document.getElementById('rxn-vis-btn').disabled=true;
+  document.querySelectorAll('.rxn-preset').forEach(b=>b.disabled=true);
+
+  const prompt=`You are a chemistry expert. Visualize this reaction: "${inp}"
+
+Return ONLY valid JSON (no markdown, no explanation):
+{
+  "equation": "reactant → product",
+  "reactants": [
+    {
+      "name": "molecule name",
+      "formula": "formula",
+      "atoms": [{"element":"H","position":[x,y,z],"color":"#FFFFFF","radius":0.4}],
+      "bonds": [{"start":[x1,y1,z1],"end":[x2,y2,z2],"color":"#909090"}],
+      "hydrogenBonds": []
+    }
+  ],
+  "products": [...]
+}
+
+Rules:
+- CPK colors: H=#FFFFFF C=#909090 N=#3050F8 O=#FF0D0D S=#FFFF30 P=#FF8000 Cl=#1FF01F
+- Realistic 3D Angstrom coordinates
+- Space molecules apart (x offsets of ~8–12 Å between molecules)
+- For molecular complexes include hydrogenBonds with donor/acceptor positions
+- Radii: H=0.35 C=0.55 N=0.50 O=0.48 S=0.75 Cl=0.7 P=0.65
+- Return ONLY JSON, nothing else`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:5000,
+        messages:[{role:'user',content:prompt}]})
+    });
+    const result=await res.json();
+    let text=(result.content.find(c=>c.type==='text')?.text||'').trim();
+    text=text.replace(/^```json\s*/,'').replace(/^```\s*/,'').replace(/```\s*$/,'');
+    rxnData=JSON.parse(text);
+    rxnStage='reactants';
+    rxnRender(rxnData.reactants);
+    rxnUpdateUI();
+    document.getElementById('rxn-equation-bar').style.display='block';
+    document.getElementById('rxn-hud-c').style.display='block';
+    document.getElementById('rxn-hud-s').style.display='block';
+    document.getElementById('rxn-legend').style.display='block';
+  }catch(e){
+    document.getElementById('rxn-err').style.display='block';
+    document.getElementById('rxn-err').innerText='שגיאה: '+e.message+' — נסו שוב';
+    document.getElementById('rxn-empty').style.display='flex';
+  }finally{
+    document.getElementById('rxn-loading').style.display='none';
+    document.getElementById('rxn-vis-btn').disabled=false;
+    document.querySelectorAll('.rxn-preset').forEach(b=>b.disabled=false);
+  }
+}
+
+function rxnPreset(txt){
+  document.getElementById('rxn-inp').value=txt;
+  rxnFetch();
+}
+
+function rxnShowStage(stage){
+  if(!rxnData) return;
+  rxnStage=stage;
+  rxnRender(rxnData[stage]);
+  rxnUpdateUI();
+}
+
+function rxnUpdateUI(){
+  if(!rxnData) return;
+  // Equation bar
+  const row=document.getElementById('rxn-eq-row');
+  row.innerHTML='';
+  rxnData.reactants.forEach((m,i)=>{
+    row.innerHTML+=`<div class="rxn-mol-chip reactant"><div class="rxn-mol-name">${m.name}</div><div class="rxn-mol-formula">${m.formula}</div></div>`;
+    if(i<rxnData.reactants.length-1) row.innerHTML+=`<span class="rxn-plus">+</span>`;
+  });
+  row.innerHTML+=`<span class="rxn-arrow-lbl">→</span>`;
+  rxnData.products.forEach((m,i)=>{
+    const hb=m.hydrogenBonds&&m.hydrogenBonds.length>0?`<div class="rxn-hbond-tag">💧 ${m.hydrogenBonds.length} קשרי מימן</div>`:'';
+    row.innerHTML+=`<div class="rxn-mol-chip product"><div class="rxn-mol-name prod">${m.name}</div><div class="rxn-mol-formula prod">${m.formula}</div>${hb}</div>`;
+    if(i<rxnData.products.length-1) row.innerHTML+=`<span class="rxn-plus" style="color:#34d399">+</span>`;
+  });
+  // Stage buttons
+  const br=document.getElementById('rxn-btn-r'),bp=document.getElementById('rxn-btn-p');
+  br.className='rxn-stage-btn '+(rxnStage==='reactants'?'active-r':'inactive');
+  bp.className='rxn-stage-btn '+(rxnStage==='products'?'active-p':'inactive');
+  // HUD stage badge
+  const badge=document.getElementById('rxn-stage-badge');
+  if(rxnStage==='reactants'){badge.style.cssText='background:linear-gradient(135deg,#1d4ed8,#0891b2);color:#fff';badge.innerText='🔵 מגיבים';}
+  else{badge.style.cssText='background:linear-gradient(135deg,#065f46,#0f766e);color:#fff';badge.innerText='🟢 תוצרים';}
+  // Mol list
+  const ml=document.getElementById('rxn-mol-list');ml.innerHTML='';
+  rxnData[rxnStage].forEach(m=>{
+    ml.innerHTML+=`<div class="rxn-mol-info">
+      <div class="rxn-mol-info-name">${m.name}</div>
+      <div class="rxn-mol-info-formula">${m.formula}</div>
+      <div class="rxn-mol-info-atoms">אטומים: ${m.atoms.length}${m.hydrogenBonds&&m.hydrogenBonds.length?` · קשרי H: ${m.hydrogenBonds.length}`:''}</div>
+    </div>`;
+  });
+  // Legend
+  const all=[...rxnData.reactants,...rxnData.products];
+  const elems=new Set();
+  all.forEach(m=>m.atoms.forEach(a=>elems.add(a.element)));
+  const hasHB=all.some(m=>m.hydrogenBonds&&m.hydrogenBonds.length>0);
+  const li=document.getElementById('rxn-legend-items');li.innerHTML='';
+  [...elems].sort().forEach(el=>{
+    const c=ELEM_COLORS[el]||'#aaa',n=ELEM_NAMES[el]||el;
+    li.innerHTML+=`<div class="rxn-legend-item"><div class="rxn-legend-dot" style="background:${c};border:1px solid rgba(255,255,255,.2)"></div><span>${n} (${el})</span></div>`;
+  });
+  if(hasHB) li.innerHTML+=`<div class="rxn-legend-item" style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(99,102,241,.3)"><div class="rxn-legend-hbond"></div><span style="color:#67e8f9">קשר מימן</span></div>`;
+}
+
 </script>
 </body>
 </html>

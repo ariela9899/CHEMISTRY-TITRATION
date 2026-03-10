@@ -989,6 +989,7 @@ function goTo(id){
       }
     },50);
   }
+  if(id==='screen-citrus') citInit();
 }
 
 /* ══════════════════════════════════
@@ -2471,12 +2472,6 @@ function toggleHint(btn){
   btn.textContent = hint.classList.contains('show') ? '🙈 הסתר רמז' : '💡 רמז';
 }
 
-// Init when screen first shown — hook into goTo
-const _origGoTo2 = goTo;
-function goTo(id){
-  _origGoTo2(id);
-  if(id==='screen-citrus') citInit();
-}
 </script>
 </body>
 </html>

@@ -575,6 +575,24 @@ tbody tr.fresh{animation:rowIn .5s ease}
       <div class="exp-arrow"><span>לחצו להתחלה</span><span class="arrow-icon">←</span></div>
     </div>
 
+    <!-- Card 7: White Powders -->
+    <div class="exp-card" style="border-color:var(--border)"
+      onclick="goTo('screen-powders')"
+      onmouseover="this.style.borderColor='#6366f1';this.style.transform='translateY(-6px)';this.style.boxShadow='0 12px 32px rgba(99,102,241,.18)'"
+      onmouseout="this.style.borderColor='var(--border)';this.style.transform='';this.style.boxShadow=''">
+      <div class="exp-emoji">🔬</div>
+      <div class="exp-badge" style="background:#eef2ff;border:1.5px solid #c7d2fe;color:#4f46e5">ניסוי חקר 7</div>
+      <div class="exp-name">אבקות<br>לבנות 🧪</div>
+      <div class="exp-desc">ניסוי חקר רמה 2א' — זיהוי חמש אבקות לבנות נעלמות: KI, Ca(OH)₂, גלוקוז, NaCl ושעווה באמצעות סדרת בדיקות.</div>
+      <div class="exp-tags">
+        <span class="exp-tag">חקר</span>
+        <span class="exp-tag">רמה 2א</span>
+        <span class="exp-tag">זיהוי</span>
+        <span class="exp-tag">קשרים כימיים</span>
+      </div>
+      <div class="exp-arrow"><span>לחצו להתחלה</span><span class="arrow-icon">←</span></div>
+    </div>
+
   </div>
 </div>
 
@@ -990,6 +1008,7 @@ function goTo(id){
     },50);
   }
   if(id==='screen-citrus') citInit();
+  if(id==='screen-powders') pwdInit();
 }
 
 /* ══════════════════════════════════
@@ -2472,6 +2491,556 @@ function toggleHint(btn){
   btn.textContent = hint.classList.contains('show') ? '🙈 הסתר רמז' : '💡 רמז';
 }
 
+</script>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 8: WHITE POWDERS — LEVEL 2A
+══════════════════════════════════════════ -->
+<style>
+/* ── WHITE POWDERS ──────────────────────────── */
+#screen-powders{flex-direction:column;overflow:hidden}
+.pwd-top{flex-shrink:0;display:flex;align-items:center;gap:12px;padding:11px 18px;
+  background:var(--surface);border-bottom:2px solid #6366f1;
+  box-shadow:0 2px 8px rgba(99,102,241,.12)}
+.pwd-top h2{font-size:.93rem;font-weight:800;color:#4f46e5}
+.pwd-tabs{flex-shrink:0;display:flex;background:var(--surface);
+  border-bottom:1.5px solid var(--border);overflow-x:auto;padding:0 16px}
+.pwd-tabs::-webkit-scrollbar{display:none}
+.pwd-tab{padding:10px 18px;font-size:.74rem;font-weight:700;cursor:pointer;
+  border-bottom:3px solid transparent;color:var(--text3);white-space:nowrap;transition:all .2s}
+.pwd-tab.active{color:#4f46e5;border-bottom-color:#6366f1}
+.pwd-tab:hover:not(.active){color:var(--text);border-bottom-color:var(--border2)}
+.pwd-body{flex:1;overflow-y:auto;padding:20px 24px;background:var(--bg)}
+.pwd-body::-webkit-scrollbar{width:5px}
+.pwd-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.pwd-panel{display:none}.pwd-panel.active{display:block}
+.pwd-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);
+  padding:18px 20px;margin-bottom:16px;box-shadow:var(--shadow)}
+.pwd-card-title{font-size:.85rem;font-weight:800;color:var(--text);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.pwd-badge{display:inline-flex;align-items:center;justify-content:center;
+  min-width:26px;height:26px;border-radius:50%;background:#6366f1;
+  color:#fff;font-size:.68rem;font-weight:800;flex-shrink:0;padding:0 4px}
+
+/* Substance property cards */
+.sub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.sub-card{border-radius:10px;border:1.5px solid var(--border);padding:12px 14px;background:var(--surface2)}
+.sub-card-name{font-size:.78rem;font-weight:800;color:var(--text);margin-bottom:4px}
+.sub-card-formula{font-family:var(--mono);font-size:.7rem;color:#6366f1;margin-bottom:8px}
+.sub-prop{font-size:.68rem;color:var(--text2);margin-bottom:3px;display:flex;gap:6px}
+.sub-prop-lbl{color:var(--text3);font-weight:600;white-space:nowrap}
+.bond-chip{display:inline-block;padding:2px 9px;border-radius:12px;font-size:.62rem;
+  font-weight:700;margin-top:4px}
+.bond-ionic{background:#fee2e2;color:#dc2626;border:1px solid #fca5a5}
+.bond-covalent{background:#dbeafe;color:#2563eb;border:1px solid #93c5fd}
+.bond-metallic{background:#fef9c3;color:#d97706;border:1px solid #fde047}
+
+/* Test matrix */
+.test-matrix-wrap{overflow-x:auto}
+.test-matrix{width:100%;border-collapse:collapse;font-size:.72rem}
+.test-matrix th{padding:8px 10px;text-align:center;font-size:.62rem;font-family:var(--mono);
+  color:var(--text3);text-transform:uppercase;letter-spacing:.06em;
+  background:var(--surface2);border:1.5px solid var(--border);font-weight:700;white-space:nowrap}
+.test-matrix td{padding:6px 8px;border:1.5px solid var(--border);text-align:center;
+  vertical-align:middle}
+.test-matrix td.sub-hdr{font-weight:800;font-size:.72rem;color:var(--text);
+  background:var(--surface2);white-space:nowrap;text-align:right;padding-right:12px}
+.obs-inp{width:100%;min-width:90px;padding:5px 7px;border:1.5px solid var(--border);
+  border-radius:7px;font-size:.7rem;background:var(--surface);color:var(--text);
+  outline:none;text-align:center;transition:border-color .2s}
+.obs-inp:focus{border-color:#6366f1}
+.result-chip{display:inline-block;padding:3px 9px;border-radius:12px;font-size:.65rem;font-weight:700}
+.rc-pos{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.rc-neg{background:#fee2e2;color:#dc2626;border:1px solid #fca5a5}
+.rc-prt{background:#fef9c3;color:#d97706;border:1px solid #fde047}
+
+/* Flow chart */
+.flow-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
+.flow-node{border-radius:10px;border:2px solid var(--border);padding:10px 16px;
+  font-size:.75rem;font-weight:700;text-align:center;background:var(--surface2);
+  max-width:300px;width:100%;position:relative}
+.flow-test{border-color:#6366f1;background:#eef2ff;color:#4f46e5}
+.flow-id{border-color:#059669;background:var(--green-l);color:#059669;font-size:.8rem}
+.flow-arrow{display:flex;flex-direction:column;align-items:center;font-size:.62rem;
+  color:var(--text3);gap:0;margin:0}
+.flow-arrow-line{width:2px;height:18px;background:var(--border2)}
+.flow-arrow-head{color:var(--border2);font-size:.8rem;line-height:1;margin-top:-4px}
+.flow-branch{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;margin-top:0}
+.flow-branch-lbl{font-size:.65rem;font-weight:700;text-align:center;
+  padding:2px 10px;border-radius:8px;font-family:var(--mono)}
+.lbl-yes{background:#dcfce7;color:#15803d}
+.lbl-no{background:#fee2e2;color:#dc2626}
+
+/* Materials order form */
+.order-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.order-item{display:flex;align-items:center;gap:8px;padding:8px 12px;
+  border:1.5px solid var(--border);border-radius:9px;background:var(--surface2)}
+.order-cb{width:16px;height:16px;accent-color:#6366f1;cursor:pointer;flex-shrink:0}
+.order-label{font-size:.74rem;color:var(--text2)}
+.order-item.checked{border-color:#6366f1;background:#eef2ff}
+.order-item.checked .order-label{color:#4f46e5;font-weight:600}
+
+/* Identification result */
+.id-guess-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.cup-badge{display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:50%;font-size:.85rem;font-weight:800;
+  background:#eef2ff;border:2px solid #6366f1;color:#4f46e5;flex-shrink:0}
+.id-select{padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;
+  font-family:var(--sans);font-size:.75rem;color:var(--text);background:var(--surface);
+  outline:none;flex:1;min-width:160px;transition:border-color .2s}
+.id-select:focus{border-color:#6366f1}
+.id-justification{width:100%;padding:7px 11px;border:1.5px solid var(--border);
+  border-radius:8px;font-size:.73rem;color:var(--text);background:var(--surface);
+  outline:none;resize:none;font-family:var(--sans);line-height:1.6;transition:border-color .2s}
+.id-justification:focus{border-color:#6366f1}
+.id-check-btn{padding:7px 18px;background:#6366f1;border:none;border-radius:9px;
+  color:#fff;font-weight:700;font-size:.75rem;cursor:pointer;font-family:var(--sans);transition:all .2s}
+.id-check-btn:hover{background:#4f46e5}
+.id-result-row{padding:10px 14px;border-radius:9px;font-size:.78rem;font-weight:700;
+  margin-top:10px;display:none}
+.id-result-row.show{display:flex;align-items:center;gap:8px}
+.id-result-row.all-correct{background:#dcfce7;border:1.5px solid #86efac;color:#15803d}
+.id-result-row.has-error{background:#fee2e2;border:1.5px solid #fca5a5;color:#dc2626}
+</style>
+
+<div id="screen-powders" class="screen">
+
+  <div class="pwd-top">
+    <button class="back-btn" onclick="goTo('screen-landing')">⬅ חזרה</button>
+    <span style="font-size:1.3rem">🔬</span>
+    <h2>ניסוי חקר רמה 2א' — אבקות לבנות: זיהוי חמישה נעלמים</h2>
+  </div>
+
+  <div class="pwd-tabs">
+    <div class="pwd-tab active" id="pwd-tab-0" onclick="pwdTab(0)">📚 שלב א׳: טרום חקר</div>
+    <div class="pwd-tab" id="pwd-tab-1" onclick="pwdTab(1)">⚗️ בדיקות וצפיות</div>
+    <div class="pwd-tab" id="pwd-tab-2" onclick="pwdTab(2)">📋 טבלת תוצאות</div>
+    <div class="pwd-tab" id="pwd-tab-3" onclick="pwdTab(3)">🌊 תרשים זרימה</div>
+    <div class="pwd-tab" id="pwd-tab-4" onclick="pwdTab(4)">🏷️ זיהוי וסיכום</div>
+    <div class="pwd-tab" id="pwd-tab-5" onclick="pwdTab(5)">✏️ שלב ב׳: ביקורת</div>
+  </div>
+
+  <div class="pwd-body">
+
+    <!-- ── TAB 0: PRE-INVESTIGATION ── -->
+    <div class="pwd-panel active" id="pwd-panel-0">
+
+      <div class="pwd-card">
+        <div class="pwd-card-title"><span class="pwd-badge">🎯</span>מטרת הניסוי</div>
+        <div style="font-size:.82rem;line-height:1.8;color:var(--text2)">
+          לפניכם <strong>חמש כוסות A–E</strong> המכילות אבקות לבנות. עליכם לזהות באופן <strong>חד–משמעי</strong> כל אחד מהנעלמים באמצעות תכנון וביצוע סדרת בדיקות. החומרים הנעלמים:
+        </div>
+        <div class="sub-grid" style="margin-top:14px" id="pwd-sub-grid"><!-- built by JS --></div>
+      </div>
+
+      <div class="pwd-card">
+        <div class="pwd-card-title"><span class="pwd-badge">1</span>שאלות טרום חקר</div>
+
+        <div style="margin-bottom:14px">
+          <div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:8px">א. רשמו את סוג הקשר הכימי בכל אחד מהחומרים:</div>
+          <div id="pwd-bond-q" style="display:flex;flex-direction:column;gap:6px"><!-- built by JS --></div>
+        </div>
+
+        <div style="margin-bottom:14px">
+          <div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:6px">ב. תארו את המראה הצפוי של כל חומר (טקסטורה, מבנה גבישי, גוון):</div>
+          <textarea id="pwd-appearance-q" class="analysis-textarea" style="min-height:90px"
+            placeholder="לדוגמה: NaCl — גבישים שקופים מעוקבים, מבריקים..."></textarea>
+        </div>
+
+        <div>
+          <div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:6px">ג. תכננו את הבדיקות — רשמו אילו ניסויים תבצעו ומה אתם צופים:</div>
+          <textarea class="analysis-textarea" style="min-height:110px"
+            placeholder="לדוגמה: 1. המסה במים — NaCl וKI יימסו, שעווה לא תימס...&#10;2. בדיקת AgNO₃ — KI יתן משקע צהוב (AgI), NaCl יתן משקע לבן (AgCl)..."></textarea>
+        </div>
+      </div>
+
+      <div class="pwd-card">
+        <div class="pwd-card-title"><span class="pwd-badge">📦</span>טופס הזמנת חומרים וכלים</div>
+        <div style="font-size:.73rem;color:var(--text3);margin-bottom:12px">סמנו את כל מה שתצטרכו לבצוע הניסוי:</div>
+        <div class="order-grid" id="pwd-order-grid"><!-- built by JS --></div>
+        <div style="margin-top:12px">
+          <div style="font-size:.75rem;font-weight:700;color:var(--text);margin-bottom:6px">חומרים / כלים נוספים שתצטרכו:</div>
+          <textarea class="analysis-textarea" style="min-height:60px" placeholder="הוסיפו כאן חומרים וכלים נוספים..."></textarea>
+        </div>
+        <div style="margin-top:12px;padding:10px 14px;background:#eef2ff;border:1.5px solid #c7d2fe;border-radius:9px;font-size:.73rem;color:#4f46e5">
+          <strong>📋 לאחר מילוי הטופס — הגישו למורה לאישור לפני ביצוע הניסוי.</strong>
+        </div>
+      </div>
+
+    </div><!-- /panel-0 -->
+
+    <!-- ── TAB 1: TESTS ── -->
+    <div class="pwd-panel" id="pwd-panel-1">
+
+      <div class="pwd-card" style="border-color:#c7d2fe">
+        <div class="pwd-card-title" style="color:#4f46e5">⚗️ בדיקות מומלצות לזיהוי הנעלמים</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px" id="pwd-tests-info">
+          <!-- built by JS -->
+        </div>
+      </div>
+
+      <div class="pwd-card">
+        <div class="pwd-card-title"><span class="pwd-badge">🔎</span>תצפיות ראשוניות — מראה החומרים (ללא שום בדיקה)</div>
+        <div style="font-size:.72rem;color:var(--text3);margin-bottom:12px">
+          התבוננו בחמש הכוסות A–E ותארו את מראה כל אבקה לפני ביצוע כל בדיקה.
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px" id="pwd-appearance-rows">
+          <!-- built by JS -->
+        </div>
+      </div>
+
+    </div><!-- /panel-1 -->
+
+    <!-- ── TAB 2: RESULTS TABLE ── -->
+    <div class="pwd-panel" id="pwd-panel-2">
+      <div class="pwd-card">
+        <div class="pwd-card-title"><span class="pwd-badge">📋</span>טבלת תוצאות — רשמו את תצפיותיכם</div>
+        <div class="tbl-note" style="background:#eef2ff;border-color:#c7d2fe;color:#4f46e5">
+          💡 לכל כוס (A–E) ולכל בדיקה — רשמו את מה שנצפה בפועל. לדוגמה: "משקע לבן", "נמס לחלוטין", "לא נמס".
+        </div>
+        <div class="test-matrix-wrap">
+          <table class="test-matrix" id="pwd-results-tbl"><!-- built by JS --></table>
+        </div>
+      </div>
+    </div><!-- /panel-2 -->
+
+    <!-- ── TAB 3: FLOW CHART ── -->
+    <div class="pwd-panel" id="pwd-panel-3">
+      <div class="pwd-card">
+        <div class="pwd-card-title"><span class="pwd-badge">🌊</span>תרשים זרימה לזיהוי הנעלמים</div>
+        <div style="font-size:.76rem;color:var(--text2);margin-bottom:16px;line-height:1.7">
+          להלן תרשים זרימה <strong>מנחה</strong> — מבוסס על הלוגיקה המדעית של הבדיקות. בכל שלב מבוצעת בדיקה מבדילה המצמצמת את מספר האפשרויות.
+        </div>
+        <div id="pwd-flowchart"><!-- built by JS --></div>
+      </div>
+      <div class="pwd-card">
+        <div class="pwd-card-title"><span class="pwd-badge">✏️</span>תרשים זרימה — הגרסה שלכם</div>
+        <textarea class="analysis-textarea" style="min-height:160px"
+          placeholder="תארו בטקסט חופשי את תרשים הזרימה שתכננתם:&#10;&#10;שלב 1: בדיקת המסה במים → ...&#10;שלב 2: לחומרים הנמסים — ..."></textarea>
+      </div>
+    </div><!-- /panel-3 -->
+
+    <!-- ── TAB 4: IDENTIFICATION ── -->
+    <div class="pwd-panel" id="pwd-panel-4">
+      <div class="pwd-card">
+        <div class="pwd-card-title"><span class="pwd-badge">🏷️</span>זיהוי סופי — מה בכל כוס?</div>
+        <div style="font-size:.73rem;color:var(--text3);margin-bottom:14px">
+          לפי תוצאות הבדיקות שלכם — בחרו עבור כל כוס את החומר המזוהה ונמקו.
+        </div>
+        <div id="pwd-id-rows"><!-- built by JS --></div>
+        <button class="id-check-btn" style="margin-top:12px" onclick="pwdCheckId()">
+          ✔ בדוק זיהוי
+        </button>
+        <div id="pwd-id-result" class="id-result-row"></div>
+      </div>
+
+      <div class="pwd-card">
+        <div class="pwd-card-title"><span class="pwd-badge">📌</span>סיכום — תרשים זרימה של הממצאים</div>
+        <textarea class="analysis-textarea" style="min-height:130px"
+          placeholder="סכמו את ממצאיכם: אילו בדיקות הביאו לזיהוי ודאי? האם היה צורך בכל הבדיקות?"></textarea>
+      </div>
+    </div><!-- /panel-4 -->
+
+    <!-- ── TAB 5: CRITIQUE (PHASE B) ── -->
+    <div class="pwd-panel" id="pwd-panel-5">
+
+      <div class="pwd-card">
+        <div class="pwd-card-title"><span class="pwd-badge">✏️</span>שלב ב׳ — ביקורת וסיכום</div>
+
+        <div class="analysis-q">
+          <div class="analysis-q-text"><span class="analysis-q-num">1.</span>מסקנות — התייחסו לכל שלב בניסוי. מה הוביל לזיהוי כל חומר?</div>
+          <textarea class="analysis-textarea" style="min-height:100px" placeholder="פרטו את מסקנותיכם לפי שלבי הזיהוי..."></textarea>
+        </div>
+
+        <div class="analysis-q">
+          <div class="analysis-q-text"><span class="analysis-q-num">2.</span>קשיים — האם נתקלתם בקשיים בניסוי? כיצד התגברתם עליהם?</div>
+          <textarea class="analysis-textarea" placeholder="לדוגמה: קושי בזיהוי נקודת הסיום של בדיקה, צבע לא ברור..."></textarea>
+          <div><button class="analysis-hint-btn" onclick="toggleHint(this)">💡 קשיים אפשריים</button>
+          <div class="analysis-hint">
+            • NaCl ו-KI דומים מאוד במראה — קשה להבדיל ויזואלית<br>
+            • בדיקת להבה: קשה לזהות את צבע הלהבה ב-KI (סגול–ורדרד)<br>
+            • גלוקוז ממיס לאט במים יחסית — יש להמתין<br>
+            • שעווה עשויה להיראות לבנה כמו שאר האבקות
+          </div></div>
+        </div>
+
+        <div class="analysis-q">
+          <div class="analysis-q-text"><span class="analysis-q-num">3.</span>ביקורת שיטה — שגיאות, מגבלות ואי–ודאויות בניסוי.</div>
+          <textarea class="analysis-textarea" style="min-height:100px" placeholder="התייחסו לדיוק, לשגיאות סובייקטיביות, למגבלות הכלים..."></textarea>
+          <div><button class="analysis-hint-btn" onclick="toggleHint(this)">💡 רמז</button>
+          <div class="analysis-hint">
+            • שגיאות סובייקטיביות: פרשנות צבע המשקע, זיהוי גוון להבה<br>
+            • זיהום צולב: שימוש בכלים לא נקיים בין בדיקה לבדיקה<br>
+            • כמויות קטנות: עם כמות קטנה של חומר, תגובות יכולות להיות חלשות<br>
+            • טמפרטורה: משפיעה על קצב ההמסה ועל בדיקת הלהבה
+          </div></div>
+        </div>
+
+        <div class="analysis-q">
+          <div class="analysis-q-text"><span class="analysis-q-num">4.</span>ביקורת תוקף — האם הזיהוי חד–משמעי? האם ייתכן שחומר אחר היה נותן את אותן תוצאות?</div>
+          <textarea class="analysis-textarea" placeholder="התייחסו לאפשרות זיהוי שגוי ולמהימנות המסקנות..."></textarea>
+        </div>
+
+        <div class="analysis-q">
+          <div class="analysis-q-text"><span class="analysis-q-num">5.</span>שיפורים מוצעים — אילו שינויים היו משפרים את הניסוי?</div>
+          <textarea class="analysis-textarea" placeholder="לדוגמה: להשתמש ב-pH מטר, להוסיף בדיקת מוליכות חשמלית..."></textarea>
+          <div><button class="analysis-hint-btn" onclick="toggleHint(this)">💡 רמז</button>
+          <div class="analysis-hint">
+            • שימוש ב-pH מטר דיגיטלי במקום נייר לקמוס<br>
+            • בדיקת מוליכות חשמלית — אלקטרוליטים (KI, NaCl, Ca(OH)₂) ינהלו זרם<br>
+            • ספקטרוסקופיה של להבה (ספקטרוסקופ) לזיהוי ויזואלי מדויק של K ו-Na<br>
+            • שימוש בנייר אינדיקטור אוניברסלי לדיוק בזיהוי pH
+          </div></div>
+        </div>
+
+      </div>
+    </div><!-- /panel-5 -->
+
+  </div><!-- /pwd-body -->
+</div><!-- /screen-powders -->
+
+<script>
+/* ══════════════════════════════════
+   WHITE POWDERS LOGIC
+══════════════════════════════════ */
+const PWD_SUBS = [
+  { id:'KI',     name:'אשלגן יודיד',    formula:'KI(s)',        bond:'יוני',      bondClass:'bond-ionic',
+    color:'#dc2626', bg:'#fee2e2', border:'#fca5a5',
+    props:{ appear:'גבישים לבנים/שקופים, מבריקים', solubility:'נמס היטב במים', pH:'נייטרלי (7)',
+            flame:'להבה סגול-ורדרד (K⁺)', AgNO3:'משקע צהוב (AgI)', iodine:'ללא שינוי',
+            benedict:'ללא שינוי', heat:'מתפרק בחום גבוה' }},
+  { id:'Ca(OH)₂',name:'סידן הידרוקסיד', formula:'Ca(OH)₂(s)',  bond:'יוני',      bondClass:'bond-ionic',
+    color:'#d97706', bg:'#fef3c7', border:'#fde68a',
+    props:{ appear:'אבקה לבנה דקה (ספרפאר)', solubility:'מעט מסיס (0.17g/100mL)', pH:'בסיסי חזק (12–13)',
+            flame:'להבה כתום-אדמדם (Ca²⁺)', AgNO3:'ללא משקע', iodine:'ללא שינוי',
+            benedict:'ללא שינוי', heat:'מתפרק ל-CaO + H₂O' }},
+  { id:'C₆H₁₂O₆',name:'גלוקוז',         formula:'C₆H₁₂O₆(s)', bond:'קוולנטי', bondClass:'bond-covalent',
+    color:'#2563eb', bg:'#dbeafe', border:'#93c5fd',
+    props:{ appear:'גבישים/אבקה לבנה, ריח מתקתק', solubility:'נמס היטב — תמיסה צמיגה', pH:'נייטרלי (6.5–7)',
+            flame:'להבה כתומה (C → CO₂)', AgNO3:'ללא משקע', iodine:'ללא שינוי',
+            benedict:'משקע כתום-אדום (מחזר!)', heat:'מתקרמל — שחרה' }},
+  { id:'NaCl',   name:'מלח בישול',      formula:'NaCl(s)',      bond:'יוני',      bondClass:'bond-ionic',
+    color:'#059669', bg:'#d1fae5', border:'#6ee7b7',
+    props:{ appear:'גבישים מעוקבים לבנים', solubility:'נמס היטב במים', pH:'נייטרלי (7)',
+            flame:'להבה צהובה עזה (Na⁺)', AgNO3:'משקע לבן (AgCl)', iodine:'ללא שינוי',
+            benedict:'ללא שינוי', heat:'נמס, לא מתפרק' }},
+  { id:'C₁₅H₃₂', name:'שעווה (פרפין)',  formula:'C₁₅H₃₂(s)',   bond:'קוולנטי', bondClass:'bond-covalent',
+    color:'#7c3aed', bg:'#f5f3ff', border:'#c4b5fd',
+    props:{ appear:'גרגרים/שבבים לבנים, שמנוניים למגע', solubility:'לא נמס במים', pH:'ללא שינוי',
+            flame:'להבה כתומה (שריפה מלאה)', AgNO3:'ללא משקע', iodine:'ללא שינוי',
+            benedict:'ללא שינוי', heat:'נמס בחום נמוך (≈50°C) — שעווה נוזלית' }}
+];
+
+const PWD_TESTS = [
+  { id:'appear', name:'מראה',           icon:'👁',  desc:'תצפית ויזואלית — טקסטורה, בריק, מבנה גבישי' },
+  { id:'solubility', name:'המסה במים',  icon:'💧',  desc:'הוסיפו מעט חומר ל-5 מ"ל מים — האם נמס?' },
+  { id:'pH',     name:'pH / לקמוס',    icon:'🌈',  desc:'בדקו עם נייר לקמוס או נייר pH את תמיסת החומר' },
+  { id:'flame',  name:'בדיקת להבה',    icon:'🔥',  desc:'הכניסו קצת חומר ללהבה — שימו לב לצבע הלהבה' },
+  { id:'AgNO3',  name:'AgNO₃',         icon:'⚪',  desc:'הוסיפו כמה טיפות AgNO₃ לתמיסת החומר במים' },
+  { id:'benedict',name:"בנדיקט/פֶהלינג",icon:'🟠', desc:'הרתיחו עם תמיסת בנדיקט — משקע אדום = סוכר מחזר' },
+  { id:'heat',   name:'התנהגות בחום',  icon:'♨️',  desc:'חממו מעט את האבקה בכפית — מה קורה?' },
+];
+
+const PWD_CUPS = ['A','B','C','D','E'];
+
+const PWD_ORDERS = [
+  { cat:'כלים', items:['5 כוסות כימיות 50 מ"ל','פינצטה','כפיות קטנות × 5','מבחנות × 10','מעמד מבחנות','מנורת אלכוהול / בונזן','כלב/ממחט'] },
+  { cat:'חומרים', items:['מים מזוקקים','תמיסת AgNO₃ 0.1M','תמיסת בנדיקט','נייר לקמוס / pH','תמיסת יוד (לוגול)','HCl (לבדיקת CO₃²⁻)'] },
+];
+
+let pwdInitDone = false;
+
+function pwdInit(){
+  if(pwdInitDone) return;
+  pwdInitDone = true;
+
+  /* Sub grid */
+  const sg = document.getElementById('pwd-sub-grid');
+  sg.innerHTML = PWD_SUBS.map(s => `
+    <div class="sub-card" style="border-color:${s.border};background:${s.bg}">
+      <div class="sub-card-name" style="color:${s.color}">${s.name}</div>
+      <div class="sub-card-formula">${s.formula}</div>
+      <div class="sub-prop"><span class="sub-prop-lbl">מבנה:</span>${s.props.appear}</div>
+      <div class="sub-prop"><span class="sub-prop-lbl">המסה:</span>${s.props.solubility}</div>
+      <span class="bond-chip ${s.bondClass}">קשר ${s.bond}</span>
+    </div>`).join('');
+
+  /* Bond question */
+  const bq = document.getElementById('pwd-bond-q');
+  bq.innerHTML = PWD_SUBS.map(s => `
+    <div style="display:flex;align-items:center;gap:10px;padding:7px 12px;
+      border:1.5px solid ${s.border};border-radius:9px;background:${s.bg}">
+      <span style="font-size:.78rem;font-weight:700;color:${s.color};min-width:130px">${s.formula}</span>
+      <input type="text" class="obs-inp" style="border-color:${s.border}"
+        placeholder="סוג הקשר + הסבר קצר...">
+    </div>`).join('');
+
+  /* Order form */
+  const og = document.getElementById('pwd-order-grid');
+  let items = [];
+  PWD_ORDERS.forEach(cat => cat.items.forEach(it => items.push(it)));
+  og.innerHTML = items.map(it => `
+    <div class="order-item" onclick="this.classList.toggle('checked')">
+      <input type="checkbox" class="order-cb" onclick="event.stopPropagation();this.closest('.order-item').classList.toggle('checked')">
+      <span class="order-label">${it}</span>
+    </div>`).join('');
+
+  /* Tests info cards */
+  const ti = document.getElementById('pwd-tests-info');
+  ti.innerHTML = PWD_TESTS.map(t => `
+    <div style="padding:10px 12px;border:1.5px solid #c7d2fe;border-radius:9px;background:#eef2ff">
+      <div style="font-size:.8rem;font-weight:700;color:#4f46e5;margin-bottom:4px">${t.icon} ${t.name}</div>
+      <div style="font-size:.7rem;color:var(--text2);line-height:1.65">${t.desc}</div>
+    </div>`).join('');
+
+  /* Appearance rows (panel 1) */
+  const ar = document.getElementById('pwd-appearance-rows');
+  ar.innerHTML = PWD_CUPS.map(c => `
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="cup-badge">${c}</div>
+      <input type="text" class="obs-inp" style="flex:1"
+        placeholder="תארו את מראה האבקה בכוס ${c}...">
+    </div>`).join('');
+
+  /* Results table */
+  const tbl = document.getElementById('pwd-results-tbl');
+  tbl.innerHTML = `<thead><tr>
+    <th>כוס</th>
+    ${PWD_TESTS.map(t=>`<th>${t.icon}<br>${t.name}</th>`).join('')}
+  </tr></thead>
+  <tbody>
+    ${PWD_CUPS.map(c=>`<tr>
+      <td class="sub-hdr">כוס ${c}</td>
+      ${PWD_TESTS.map(t=>`<td><input type="text" class="obs-inp" id="obs-${c}-${t.id}"
+        placeholder="צפייה..."></td>`).join('')}
+    </tr>`).join('')}
+  </tbody>`;
+
+  /* Flow chart */
+  const fc = document.getElementById('pwd-flowchart');
+  fc.innerHTML = `
+  <div class="flow-wrap">
+    ${pwdFlowNode('test','1. בדיקת המסה במים','האם החומר נמס?')}
+    ${pwdFlowArrow()}
+    <div class="flow-branch">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+        <div class="flow-branch-lbl lbl-yes">✔ נמס</div>
+        ${pwdFlowArrow()}
+        ${pwdFlowNode('test','2. pH / לקמוס','מהו pH התמיסה?')}
+        ${pwdFlowArrow()}
+        <div class="flow-branch" style="gap:10px">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+            <div class="flow-branch-lbl lbl-yes">pH > 11</div>
+            ${pwdFlowArrow()}
+            ${pwdFlowNode('id','🟡 Ca(OH)₂','קשר יוני, בסיסי חזק')}
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+            <div class="flow-branch-lbl lbl-no">pH ≈ 7</div>
+            ${pwdFlowArrow()}
+            ${pwdFlowNode('test','3. AgNO₃','סוג המשקע?')}
+            ${pwdFlowArrow()}
+            <div class="flow-branch" style="gap:10px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+                <div class="flow-branch-lbl lbl-yes">משקע צהוב</div>
+                ${pwdFlowArrow()}
+                ${pwdFlowNode('id','🟣 KI','AgI — משקע צהוב')}
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+                <div class="flow-branch-lbl" style="background:#fef3c7;color:#d97706">משקע לבן</div>
+                ${pwdFlowArrow()}
+                ${pwdFlowNode('test','4. בדיקת להבה','צבע הלהבה?')}
+                ${pwdFlowArrow()}
+                <div class="flow-branch" style="gap:10px">
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+                    <div class="flow-branch-lbl lbl-yes">צהובה עזה</div>
+                    ${pwdFlowArrow()}
+                    ${pwdFlowNode('id','🟢 NaCl','Na⁺ — להבה צהובה')}
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+                    <div class="flow-branch-lbl lbl-no">ללא משקע</div>
+                    ${pwdFlowArrow()}
+                    ${pwdFlowNode('test','4b. בנדיקט','משקע אדום?')}
+                    ${pwdFlowArrow()}
+                    <div class="flow-branch" style="gap:10px">
+                      <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+                        <div class="flow-branch-lbl lbl-yes">משקע אדום</div>
+                        ${pwdFlowArrow()}
+                        ${pwdFlowNode('id','🔵 גלוקוז','סוכר מחזר')}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+        <div class="flow-branch-lbl lbl-no">✘ לא נמס</div>
+        ${pwdFlowArrow()}
+        ${pwdFlowNode('test','2b. חימום','האם נמס/נשרף?')}
+        ${pwdFlowArrow()}
+        ${pwdFlowNode('id','🟤 שעווה','קוולנטי לא–קוטבי, לא נמס במים, נמס בחום')}
+      </div>
+    </div>
+  </div>`;
+
+  /* Identification rows */
+  const ir = document.getElementById('pwd-id-rows');
+  const subNames = PWD_SUBS.map(s => s.name + ' (' + s.formula + ')');
+  ir.innerHTML = PWD_CUPS.map(c => `
+    <div style="background:var(--surface2);border:1.5px solid var(--border);
+      border-radius:10px;padding:12px 14px;margin-bottom:10px">
+      <div class="id-guess-row">
+        <div class="cup-badge">${c}</div>
+        <select class="id-select" id="id-sel-${c}">
+          <option value="">-- בחרו חומר --</option>
+          ${PWD_SUBS.map(s=>`<option value="${s.id}">${s.name} (${s.formula})</option>`).join('')}
+        </select>
+      </div>
+      <textarea class="id-justification" id="id-just-${c}" rows="2"
+        placeholder="נמקו: אילו בדיקות הביאו לזיהוי זה?"></textarea>
+    </div>`).join('');
+}
+
+function pwdFlowNode(type, title, sub){
+  return `<div class="flow-node ${type==='id'?'flow-id':'flow-test'}">
+    <div style="font-weight:800;margin-bottom:3px">${title}</div>
+    <div style="font-size:.65rem;opacity:.8">${sub}</div>
+  </div>`;
+}
+function pwdFlowArrow(){
+  return `<div class="flow-arrow">
+    <div class="flow-arrow-line"></div>
+    <div class="flow-arrow-head">▼</div>
+  </div>`;
+}
+
+function pwdCheckId(){
+  const selections = PWD_CUPS.map(c => document.getElementById(`id-sel-${c}`)?.value || '');
+  const filled = selections.filter(v => v !== '').length;
+  const unique = new Set(selections.filter(v=>v!=='')).size;
+  const result = document.getElementById('pwd-id-result');
+  if(filled < 5){
+    result.className='id-result-row has-error show';
+    result.innerHTML='⚠️ זיהויו את כל חמשת הכוסות לפני הבדיקה.';
+    return;
+  }
+  if(unique < 5){
+    result.className='id-result-row has-error show';
+    result.innerHTML='⚠️ שתי כוסות קיבלו אותו זיהוי — כל חומר אמור להופיע פעם אחת בלבד.';
+    return;
+  }
+  result.className='id-result-row all-correct show';
+  result.innerHTML='✅ כל חמשת הכוסות זוהו! ודאו עם המורה שהזיהוי אכן נכון על פי תצפיותיכם.';
+}
+
+function pwdTab(idx){
+  for(let i=0;i<6;i++){
+    document.getElementById(`pwd-tab-${i}`).classList.toggle('active', i===idx);
+    document.getElementById(`pwd-panel-${i}`).classList.toggle('active', i===idx);
+  }
+}
 </script>
 </body>
 </html>

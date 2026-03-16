@@ -215,13 +215,17 @@ header.tit-hdr{flex-shrink:0;display:flex;align-items:center;justify-content:spa
 .metric-val{font-family:var(--mono);font-size:1.5rem;font-weight:600;line-height:1;transition:color .3s}
 .mv-acid{color:var(--red)} .mv-neutral{color:var(--green)} .mv-base{color:var(--purple)} .mv-blue{color:var(--blue)}
 .metric-unit{font-size:.62rem;color:var(--text3);font-family:var(--mono)}
+.acid-section-lbl{font-size:.58rem;font-weight:700;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.07em;margin:8px 0 4px}
 .acid-toggle{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+.acid-toggle-juices{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:4px}
 .acid-btn{padding:7px 4px;text-align:center;border-radius:9px;border:1.5px solid var(--border);
   cursor:pointer;font-size:.68rem;font-weight:700;color:var(--text3);
   background:var(--surface2);transition:all .2s;font-family:var(--sans)}
 .acid-btn.act-strong{background:var(--red-l);border-color:var(--red);color:var(--red)}
 .acid-btn.act-weak{background:var(--orange-l);border-color:var(--orange);color:var(--orange)}
 .acid-btn.act-citric{background:var(--teal-l);border-color:var(--teal);color:var(--teal)}
+.acid-btn.act-juice{background:var(--yellow-l);border-color:var(--yellow);color:var(--yellow)}
 /* NaOH conc input */
 .base-conc-row{display:flex;align-items:center;gap:6px;margin-top:8px}
 .base-conc-row label{font-size:.65rem;font-family:var(--mono);color:var(--text3);white-space:nowrap;font-weight:600}
@@ -620,18 +624,45 @@ tbody tr.fresh{animation:rowIn .5s ease}
       <div class="side-panel">
         <div class="sp-section">
           <div class="plabel">סוג חומצה</div>
+          <div class="acid-section-lbl">חומצות טהורות</div>
           <div class="acid-toggle">
             <div class="acid-btn act-strong" id="btn-strong" onclick="setAcidType('strong')">
               <div style="font-size:.75rem;font-weight:800">HCl</div>
               <div style="font-size:.55rem;opacity:.75">הידרוכלורית</div>
+              <div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#dc2626;opacity:.85" id="ph-lbl-strong">pH ≈ 1.0</div>
             </div>
             <div class="acid-btn" id="btn-weak" onclick="setAcidType('weak')">
               <div style="font-size:.68rem;font-weight:800">CH₃COOH</div>
               <div style="font-size:.55rem;opacity:.75">אצטית</div>
+              <div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#ea580c;opacity:.85" id="ph-lbl-weak">pH ≈ 2.87</div>
             </div>
             <div class="acid-btn" id="btn-citric" onclick="setAcidType('citric')">
               <div style="font-size:.68rem;font-weight:800">H₃Cit</div>
               <div style="font-size:.55rem;opacity:.75">ציטרית</div>
+              <div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#0d9488;opacity:.85" id="ph-lbl-citric">pH ≈ 1.98</div>
+            </div>
+          </div>
+          <div class="acid-section-lbl" style="margin-top:10px">🍊 מיצי פירות הדר</div>
+          <div class="acid-toggle-juices">
+            <div class="acid-btn" id="btn-j-lemon" onclick="setJuice('lemon')">
+              <div style="font-size:.85rem">🍋</div>
+              <div style="font-size:.65rem;font-weight:800">לימון</div>
+              <div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#ca8a04;opacity:.85">pH 2.0–2.5</div>
+            </div>
+            <div class="acid-btn" id="btn-j-orange" onclick="setJuice('orange')">
+              <div style="font-size:.85rem">🍊</div>
+              <div style="font-size:.65rem;font-weight:800">תפוז</div>
+              <div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#ea580c;opacity:.85">pH 3.3–4.2</div>
+            </div>
+            <div class="acid-btn" id="btn-j-grapefruit" onclick="setJuice('grapefruit')">
+              <div style="font-size:.85rem">🍈</div>
+              <div style="font-size:.65rem;font-weight:800">אשכולית</div>
+              <div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#d97706;opacity:.85">pH 3.0–3.4</div>
+            </div>
+            <div class="acid-btn" id="btn-j-lime" onclick="setJuice('lime')">
+              <div style="font-size:.85rem">🟢</div>
+              <div style="font-size:.65rem;font-weight:800">ליים</div>
+              <div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#65a30d;opacity:.85">pH 2.0–2.4</div>
             </div>
           </div>
           <!-- NaOH concentration — hidden in exam mode -->
@@ -724,6 +755,44 @@ tbody tr.fresh{animation:rowIn .5s ease}
           </div>
           <div class="quiz-body" id="quiz-body"></div>
         </div>
+
+        <!-- Conceptual question card -->
+        <div class="quiz-card" style="margin-top:10px">
+          <div class="quiz-hdr">
+            <div style="font-size:.8rem;font-weight:700;color:#6366f1;display:flex;align-items:center;gap:6px">🧠 שאלת עיון</div>
+          </div>
+          <div style="padding:12px 14px">
+            <div style="font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:10px;line-height:1.55">
+              האם ניתן לגלות את <strong>ריכוז החומצה</strong> על סמך ה-pH בלבד?
+            </div>
+            <div style="display:flex;gap:8px;margin-bottom:10px" id="ph-q-btns">
+              <button onclick="phQAnswer(true)"
+                style="flex:1;padding:8px 6px;border-radius:8px;border:1.5px solid var(--border);
+                  background:var(--surface2);color:var(--text);font-size:.75rem;font-weight:700;
+                  cursor:pointer;font-family:var(--sans);transition:all .2s"
+                id="ph-q-yes">כן, ניתן</button>
+              <button onclick="phQAnswer(false)"
+                style="flex:1;padding:8px 6px;border-radius:8px;border:1.5px solid var(--border);
+                  background:var(--surface2);color:var(--text);font-size:.75rem;font-weight:700;
+                  cursor:pointer;font-family:var(--sans);transition:all .2s"
+                id="ph-q-no">לא, לא ניתן</button>
+            </div>
+            <div id="ph-q-answer" style="display:none;border-radius:9px;overflow:hidden">
+              <div id="ph-q-verdict" style="padding:8px 12px;font-size:.75rem;font-weight:700"></div>
+              <div style="padding:10px 12px;background:var(--blue-l);border:1.5px solid var(--blue-m);
+                border-radius:9px;font-size:.75rem;line-height:1.75;color:var(--text2)">
+                זו בדיוק הסיבה שבגללה אנו מבצעים את ניסוי הטיטור.<br>
+                ה-pH מודד רק את הפרוטונים שכבר <strong>התנתקו</strong> מהחומצה — כלומר רק את החלק שהתפרק.<br>
+                בטיטור, ה-NaOH <strong>"מאלץ"</strong> גם את מולקולות החומצה שלא התפרקו להגיב ולמסור את כל הפרוטונים שלהן.<br>
+                כך הטיטור מודד את <strong>סך כל החומצה</strong> — הן זו שהתפרקה והן זו שלא.<br><br>
+                <span style="font-family:var(--mono);color:#6366f1;font-size:.7rem">
+                  לדוגמה: לימון ותפוז יכולים לקבל pH דומה (~3.2), אך ריכוז החומצה הציטרית בלימון גבוה בהרבה — והטיטור הוא זה שמגלה זאת.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <div class="right-panel">
@@ -1195,14 +1264,15 @@ function exportCSV(){
 const quizDefs=[
   {type:'input',
    q:()=>{
+     const nm=document.getElementById('p-acid-name')?.textContent||'החומצה';
      if(acidType==='strong') return `מהו ה-pH ההתחלתי של HCl בריכוז ${cAcid.toFixed(2)}M?`;
      if(acidType==='weak')   return `מהו ה-pH ההתחלתי של CH₃COOH בריכוז ${cAcid.toFixed(2)}M? (pKa=4.76)`;
-     return `מהו ה-pH ההתחלתי של H₃Cit (חומצה ציטרית) בריכוז ${cAcid.toFixed(2)}M? (pKa1=3.13)`;
+     return `מהו ה-pH ההתחלתי של ${nm} (חומצה ציטרית ${cAcid.toFixed(3)}M)? (pKa₁=3.13)`;
    },
    hint:()=>{
      if(acidType==='strong') return `pH = –log(${cAcid.toFixed(2)})`;
      if(acidType==='weak')   return 'pH ≈ ½(pKa – log C) = ½(4.76 – log C)';
-     return 'pH ≈ ½(pKa1 – log C) = ½(3.13 – log C) — חומצה ראשונה שולטת';
+     return 'pH ≈ ½(pKa1 – log C) = ½(3.13 – log C)';
    },
    check:v=>Math.abs(parseFloat(v)-parseFloat(calculatePH(0).toFixed(2)))<0.12,
    ok:()=>`✓ נכון! pH ≈ ${calculatePH(0).toFixed(2)}`,
@@ -1261,6 +1331,8 @@ function answerInput(phase){
 }
 function markPhase(idx,state){document.getElementById(`qp${idx}`).className='qphase '+state;}
 function startChallenge(){
+  juiceMode=false; currentJuice=null;
+  clearJuiceBtns();
   // Random acid concentration
   const acidChoices=[0.05,0.06,0.07,0.08,0.09,0.10,0.11,0.12,0.13,0.14,0.15];
   hiddenConc=acidChoices[Math.floor(Math.random()*acidChoices.length)];
@@ -1283,12 +1355,26 @@ function startChallenge(){
     `Ca = (Cb × Vb) / (${n} × Va)  [Cb=${cBase.toFixed(2)}M]`;
 }
 function checkChallengeAnswer(){
-  const val=parseFloat(document.getElementById('ch-ans-inp').value),fb=document.getElementById('ch-fb');
-  if(Math.abs(val-hiddenConc)<0.015){
-    fb.className='ch-fb ok';fb.innerText=`✓ מדויק! ריכוז החומצה: ${hiddenConc.toFixed(3)} M`;
+  const val=parseFloat(document.getElementById('ch-ans-inp').value);
+  const fb=document.getElementById('ch-fb');
+  const n=(acidType==='citric')?3:1;
+  const tol=juiceMode?0.02:0.015;
+  if(Math.abs(val-hiddenConc)<tol){
+    fb.className='ch-fb ok';
+    if(juiceMode && currentJuice){
+      const d=JUICE_DATA[currentJuice];
+      fb.innerHTML=`✓ מדויק! ${d.emoji} ריכוז חומצה ציטרית ב${d.heLabel}: <strong>${hiddenConc.toFixed(3)} M</strong>`;
+    } else {
+      fb.innerText=`✓ מדויק! ריכוז החומצה: ${hiddenConc.toFixed(3)} M`;
+    }
     document.getElementById('p-acid-conc').textContent=`${hiddenConc.toFixed(3)} M`;
-    document.getElementById('p-acid-conc').style.color='var(--green)';launchConfetti();
-  }else{fb.className='ch-fb no';fb.innerText=`✗ ${val>hiddenConc?'גבוה':'נמוך'} — Vb=${eqVolume.toFixed(2)} מ"ל, Cb=${cBase.toFixed(2)}M`;}
+    document.getElementById('p-acid-conc').style.color='var(--green)';
+    launchConfetti();
+  } else {
+    const hint=`Ca = (${cBase.toFixed(2)} × ${eqVolume.toFixed(2)}) / (${n} × 25)`;
+    fb.className='ch-fb no';
+    fb.innerText=`✗ ${val>hiddenConc?'גבוה מדי':'נמוך מדי'} — רמז: ${hint}`;
+  }
 }
 function launchConfetti(){
   const w=document.createElement('div');w.className='confetti-wrap';document.body.appendChild(w);
@@ -1310,8 +1396,102 @@ function updateBaseConc(val){
   const hdrSub=document.getElementById('hdr-sub');
   if(hdrSub) hdrSub.textContent=hdrSub.textContent.replace(/NaOH [\d.]+M/,`NaOH ${cBase.toFixed(2)}M`);
 }
+function phQAnswer(yes){
+  document.getElementById('ph-q-answer').style.display='block';
+  const verdict=document.getElementById('ph-q-verdict');
+  const yBtn=document.getElementById('ph-q-yes');
+  const nBtn=document.getElementById('ph-q-no');
+  yBtn.style.pointerEvents='none'; nBtn.style.pointerEvents='none';
+  if(yes){
+    verdict.style.cssText='padding:8px 12px;font-size:.75rem;font-weight:700;background:#fee2e2;color:#dc2626';
+    verdict.textContent='✗ לא בדיוק — pH לבדו אינו מספיק לחישוב ריכוז.';
+    yBtn.style.cssText+='background:#fee2e2;border-color:#dc2626;color:#dc2626';
+  } else {
+    verdict.style.cssText='padding:8px 12px;font-size:.75rem;font-weight:700;background:#dcfce7;color:#15803d';
+    verdict.textContent='✓ נכון! הנה למה:';
+    nBtn.style.cssText+='background:#dcfce7;border-color:#059669;color:#059669';
+  }
+}
+
+function updateAcidPhLabels(){
+  // Compute pH for strong (HCl 0.1M), weak (CH₃COOH 0.1M), citric (0.25M)
+  // These are static — no need to recalc, just show formula-based values
+  const savedType=acidType, savedC=cAcid;
+  const computePH=(type,c)=>{
+    acidType=type; cAcid=c;
+    const v=parseFloat(calculatePH(0).toFixed(2));
+    return v;
+  };
+  const phS=computePH('strong',0.1);
+  const phW=computePH('weak',0.1);
+  const phCit=computePH('citric',0.25);
+  acidType=savedType; cAcid=savedC;
+  document.getElementById('ph-lbl-strong').textContent =`pH ≈ ${phS.toFixed(1)}`;
+  document.getElementById('ph-lbl-weak').textContent   =`pH ≈ ${phW.toFixed(2)}`;
+  document.getElementById('ph-lbl-citric').textContent =`pH ≈ ${phCit.toFixed(2)}`;
+}
+
+function clearJuiceBtns(){
+  ['lemon','orange','grapefruit','lime'].forEach(j=>{
+    const el=document.getElementById(`btn-j-${j}`);
+    if(el) el.className='acid-btn';
+  });
+}
+const JUICE_DATA={
+  lemon:      {emoji:'🍋', name:'מיץ לימון',    heLabel:'לימון טרי',    range:[0.22,0.35], color:'#ca8a04'},
+  orange:     {emoji:'🍊', name:'מיץ תפוזים',   heLabel:'תפוז טרי',     range:[0.04,0.09], color:'#ea580c'},
+  grapefruit: {emoji:'🍈', name:'מיץ אשכוליות', heLabel:'אשכולית טרייה',range:[0.07,0.13], color:'#d97706'},
+  lime:       {emoji:'🟢', name:'מיץ ליים',      heLabel:'ליים טרי',     range:[0.16,0.28], color:'#65a30d'},
+};
+let juiceMode=false, currentJuice=null;
+
+function randInRange(min,max){
+  // 2 decimal places
+  return Math.round((min + Math.random()*(max-min))*100)/100;
+}
+
+function setJuice(j){
+  const d=JUICE_DATA[j];
+  acidType='citric';
+  juiceMode=true;
+  currentJuice=j;
+  challengeMode=true;                    // reuse challenge machinery
+  hiddenConc=randInRange(d.range[0],d.range[1]);
+  cAcid=hiddenConc;
+
+  // clear all acid/juice buttons
+  document.getElementById('btn-strong').className='acid-btn';
+  document.getElementById('btn-weak').className='acid-btn';
+  document.getElementById('btn-citric').className='acid-btn';
+  clearJuiceBtns();
+  document.getElementById(`btn-j-${j}`).className='acid-btn act-juice';
+
+  // header
+  const nm=document.getElementById('p-acid-name');
+  nm.textContent=d.emoji+' '+d.heLabel; nm.style.color=d.color;
+  document.getElementById('p-eq-ph').textContent='> 7';
+  document.getElementById('hdr-sub').textContent=
+    `${d.emoji} ${d.name} ← NaOH ${cBase.toFixed(2)}M — גלה את ריכוז החומצה הציטרית!`;
+
+  // hide concentration
+  document.getElementById('normal-status').style.display='none';
+  document.getElementById('challenge-status').style.display='flex';
+  document.getElementById('p-acid-conc').textContent='??? M';
+  document.getElementById('p-acid-conc').style.color='var(--yellow)';
+  document.getElementById('p-eq').textContent='? מ"ל';
+
+  // update formula hint for triprotic
+  const hint=document.getElementById('ch-formula-hint');
+  if(hint) hint.textContent=`Ca = (Cb × Vb) / (3 × Va)  [n=3 לחומצה ציטרית, Cb=${cBase.toFixed(2)}M]`;
+
+  // hide NaOH conc input (student knows it — it's given)
+  document.getElementById('base-conc-row').style.display='flex';
+
+  resetSimulation(true);
+}
 function setAcidType(t){
   acidType=t;
+  clearJuiceBtns();
   document.getElementById('btn-strong').className='acid-btn'+(t==='strong'?' act-strong':'');
   document.getElementById('btn-weak').className  ='acid-btn'+(t==='weak'?  ' act-weak':'');
   document.getElementById('btn-citric').className ='acid-btn'+(t==='citric'?' act-citric':'');
@@ -1328,7 +1508,7 @@ function setAcidType(t){
     document.getElementById('p-eq-ph').textContent='> 7';
     document.getElementById('hdr-sub').textContent=`CH₃COOH (חומצה אצטית) ← ${base}`;
   } else if(t==='citric'){
-    cAcid=0.25;   // ~lemon juice concentration
+    cAcid=0.25;
     nm.textContent='H₃Cit'; nm.style.color='var(--teal)';
     document.getElementById('p-eq-ph').textContent='> 7';
     document.getElementById('hdr-sub').textContent=`H₃Cit (חומצה ציטרית) ← ${base}`;
@@ -1360,13 +1540,17 @@ function resetSimulation(k){
   document.getElementById('ch-ans-box').classList.remove('show');
   document.getElementById('ch-fb').className='ch-fb';
   const ci=document.getElementById('ch-ans-inp');if(ci)ci.value='';
-  if(!k){challengeMode=false;document.getElementById('normal-status').style.display='flex';
+  if(!k){
+    challengeMode=false; juiceMode=false; currentJuice=null;
+    document.getElementById('normal-status').style.display='flex';
     document.getElementById('challenge-status').style.display='none';
-    // Restore NaOH concentration input
     document.getElementById('base-conc-row').style.display='flex';
+    clearJuiceBtns();
     document.getElementById('p-acid-conc').textContent=`${cAcid.toFixed(3)} M`;
-    document.getElementById('p-acid-conc').style.color= acidType==='citric'?'var(--teal)': acidType==='weak'?'var(--orange)':'var(--red)';
-    document.getElementById('p-eq').textContent=`${theoreticalEqVol().toFixed(1)} מ"ל`;}
+    document.getElementById('p-acid-conc').style.color=
+      acidType==='citric'?'var(--teal)': acidType==='weak'?'var(--orange)':'var(--red)';
+    document.getElementById('p-eq').textContent=`${theoreticalEqVol().toFixed(1)} מ"ל`;
+  }
   [0,1,2].forEach(i=>document.getElementById(`qp${i}`).className='qphase'+(i===0?' active':''));
   showQuiz(0);
 }
@@ -1390,6 +1574,7 @@ function initChart(){
   document.getElementById('ph-display').innerText=init.toFixed(2);
   document.getElementById('ph-needle').style.left=`${(init/14)*100}%`;
   showQuiz(0);
+  updateAcidPhLabels();
 }
 
 /* ══════════════════════════════════

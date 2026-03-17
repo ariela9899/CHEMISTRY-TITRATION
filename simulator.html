@@ -673,7 +673,7 @@ tbody tr.fresh{animation:rowIn .5s ease}
             <div class="acid-btn" id="btn-j-orange" onclick="setJuice('orange')"><div style="font-size:.85rem">🍊</div><div style="font-size:.65rem;font-weight:800">תפוז</div><div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#ea580c;opacity:.85">pH 3.3–4.2</div></div>
             <div class="acid-btn" id="btn-j-grapefruit" onclick="setJuice('grapefruit')"><div style="font-size:.85rem">🍈</div><div style="font-size:.65rem;font-weight:800">אשכולית</div><div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#d97706;opacity:.85">pH 3.0–3.4</div></div>
             <div class="acid-btn" id="btn-j-clementine" onclick="setJuice('clementine')"><div style="font-size:.85rem">🍊</div><div style="font-size:.65rem;font-weight:800">קלמנטינה</div><div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#f97316;opacity:.85">pH 3.5–4.5</div></div>
-            <div class="acid-btn" id="btn-j-lime" onclick="setJuice('lime')"><div style="font-size:.85rem">🟢</div><div style="font-size:.65rem;font-weight:800">ליים</div><div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#65a30d;opacity:.85">pH 2.0–2.4</div></div>
+
           </div>
           <div class="base-conc-row" id="base-conc-row">
             <label>ריכוז NaOH:</label>
@@ -707,7 +707,7 @@ tbody tr.fresh{animation:rowIn .5s ease}
               </svg>
               <canvas id="vortex-canvas" width="110" height="120" style="position:absolute;top:0;left:0;pointer-events:none"></canvas>
             </div>
-            <div style="font-size:.6rem;font-family:var(--mono);color:var(--text3);margin-top:2px">ארלנמייר — HCl 20 מ"ל</div>
+            <div id="flask-label-txt" style="font-size:.6rem;font-family:var(--mono);color:var(--text3);margin-top:2px">ארלנמייר — HCl 20 מ"ל</div>
           </div>
           <div style="margin-top:12px">
             <div class="plabel">סקלת pH</div>
@@ -1254,7 +1254,7 @@ function updateFormulaHint(){
   if(el) el.textContent=`Ca = (Cb × Vb) / (${n} × Va)   [n=${nLabel}, Cb=${cBase.toFixed(2)}M]`;
 }
 function clearJuiceBtns(){
-  ['lemon','orange','grapefruit','clementine','lime'].forEach(j=>{
+  ['lemon','orange','grapefruit','clementine'].forEach(j=>{
     const el=document.getElementById(`btn-j-${j}`);if(el) el.className='acid-btn';
   });
 }
@@ -1264,7 +1264,6 @@ const JUICE_DATA={
   orange:{emoji:'🍊',name:'מיץ תפוזים',heLabel:'תפוז טרי',range:[0.050,0.057],color:'#ea580c'},   // H⁺=0.16M → 0.053M ±~7%
   grapefruit:{emoji:'🍈',name:'מיץ אשכוליות',heLabel:'אשכולית טרייה',range:[0.073,0.081],color:'#d97706'}, // H⁺=0.23M → 0.077M ±~5%
   clementine:{emoji:'🍊',name:'מיץ קלמנטינה',heLabel:'קלמנטינה טרייה',range:[0.040,0.047],color:'#f97316'}, // H⁺=0.13M → 0.043M ±~8%
-  lime:{emoji:'🟢',name:'מיץ ליים',heLabel:'ליים טרי',range:[0.22,0.28],color:'#65a30d'},          // דומה ללימון — אין מדידה ישירה
 };
 let juiceMode=false,currentJuice=null;
 
@@ -1278,13 +1277,12 @@ function setJuice(j){
   const nm=document.getElementById('p-acid-name');nm.textContent=d.emoji+' '+d.heLabel;nm.style.color=d.color;
   document.getElementById('p-eq-ph').textContent='> 7';
   document.getElementById('hdr-sub').textContent=`${d.emoji} ${d.name} ← NaOH ${cBase.toFixed(2)}M — גלה את ריכוז החומצה הציטרית!`;
-  document.getElementById('normal-status').style.display='none';
-  document.getElementById('challenge-status').style.display='flex';
   document.getElementById('p-acid-conc').textContent='??? M';
   document.getElementById('p-acid-conc').style.color='var(--yellow)';
   document.getElementById('p-eq').textContent='? מ"ל';
   updateFormulaHint();
   document.getElementById('base-conc-row').style.display='flex';
+  document.getElementById('flask-label-txt').textContent=`ארלנמייר — ${d.emoji} ${d.heLabel} 20 מ"ל`;
   resetSimulation(true);
 }
 function setAcidType(t){
@@ -1293,8 +1291,8 @@ function setAcidType(t){
   document.getElementById('btn-citric').className='acid-btn'+(t==='citric'?' act-citric':'');
   const nm=document.getElementById('p-acid-name');
   const base=`NaOH ${cBase.toFixed(2)}M`;
-  if(t==='strong'){cAcid=0.5;nm.textContent='HCl';nm.style.color='var(--red)';document.getElementById('p-eq-ph').textContent='7.00';document.getElementById('hdr-sub').textContent=`HCl (חומצה הידרוכלורית) ← ${base}`;}
-  else if(t==='citric'){cAcid=0.5;nm.textContent='H₃Cit';nm.style.color='var(--teal)';document.getElementById('p-eq-ph').textContent='> 7';document.getElementById('hdr-sub').textContent=`H₃Cit (חומצה ציטרית) ← ${base}`;}
+  if(t==='strong'){cAcid=0.5;nm.textContent='HCl';nm.style.color='var(--red)';document.getElementById('p-eq-ph').textContent='7.00';document.getElementById('hdr-sub').textContent=`HCl (חומצה הידרוכלורית) ← ${base}`;document.getElementById('flask-label-txt').textContent='ארלנמייר — HCl 20 מ"ל';}
+  else if(t==='citric'){cAcid=0.5;nm.textContent='H₃Cit';nm.style.color='var(--teal)';document.getElementById('p-eq-ph').textContent='> 7';document.getElementById('hdr-sub').textContent=`H₃Cit (חומצה ציטרית) ← ${base}`;document.getElementById('flask-label-txt').textContent='ארלנמייר — H₃Cit 20 מ"ל';}
   updateFormulaHint();resetSimulation();
 }
 function setMode(m){
@@ -1558,17 +1556,405 @@ function rxnUpdateUI(){
   </div>
   <div class="exp-screen-inner"><p style="padding:20px;color:var(--text2)">תוכן ניסוי 6 — יש להדביק כאן את קוד screen-citrus המלא מהקובץ המקורי.</p></div>
 </div>
-<div id="screen-powders" class="screen" style="flex-direction:column">
+<div id="screen-powders" class="screen" style="flex-direction:column;position:relative">
+
+  <!-- ── TOP BAR ── -->
   <div class="exp-top-bar" style="border-color:#6366f1">
     <button class="back-btn" onclick="goTo('screen-landing')">⬅ חזרה</button>
     <span style="font-size:1.4rem">🔬</span>
-    <h2 style="color:#4f46e5">ניסוי חקר רמה 2א' — אבקות לבנות</h2>
+    <h2 style="color:#4f46e5;flex:1">ניסוי חקר רמה 2א׳ — אבקות לבנות</h2>
+    <button onclick="pwdToggleIntro()" style="padding:6px 14px;border:1.5px solid #c4b5fd;background:#f5f3ff;color:#6d28d9;border-radius:9px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .2s">📖 רקע תיאורטי</button>
   </div>
-  <div class="exp-screen-inner"><p style="padding:20px;color:var(--text2)">תוכן ניסוי 7 — יש להדביק כאן את קוד screen-powders המלא מהקובץ המקורי.</p></div>
+
+  <!-- ── INTRO OVERLAY ── -->
+  <div id="pwd-intro-panel" style="display:none;position:absolute;inset:0;z-index:100;background:#f5f3ff;overflow-y:auto;padding:28px 24px 40px">
+    <div style="max-width:900px;margin:0 auto">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px">
+        <h2 style="font-size:1.05rem;font-weight:800;color:#5b21b6">🔬 רקע תיאורטי — ניסוי האבקות הלבנות</h2>
+        <button onclick="pwdToggleIntro()" style="padding:8px 18px;border:1.5px solid var(--purple);background:var(--purple-l);color:var(--purple);border-radius:9px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:var(--sans)">⬅ חזרה לניסוי</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px">
+        <div style="background:#fff;border:1.5px solid var(--purple-m);border-radius:10px;padding:14px 16px">
+          <div style="font-size:.8rem;font-weight:800;color:var(--purple);margin-bottom:8px">🎯 מטרת הניסוי</div>
+          <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">בפניכם <strong>חמש מבחנות</strong> (A–E) המכילות אבקה לבנה אחת מתוך חמש: <strong>KI, Ca(OH)₂, גלוקוז, NaCl ושעווה</strong>. באמצעות ביצוע בדיקות שיטתיות — מסיסות, pH, AgNO₃ וחימום — עליכם לזהות מה כוללת כל מבחנה.</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid #93c5fd;border-radius:10px;padding:14px 16px">
+          <div style="font-size:.8rem;font-weight:800;color:var(--blue);margin-bottom:8px">💧 בדיקת מסיסות</div>
+          <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">מוסיפים מים לכל אבקה. <strong>מסיסות</strong> = קשרים יוניים (KI, NaCl, Ca(OH)₂) או פולריים (גלוקוז). <strong>אי-מסיסות + צף</strong> = קשרים קוולנטיים לא-פולריים (שעווה). זהו ה<strong>מסנן הראשון</strong> — שעווה מזוהה מיד!</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--green-m);border-radius:10px;padding:14px 16px">
+          <div style="font-size:.8rem;font-weight:800;color:var(--green);margin-bottom:8px">🌡️ בדיקת pH</div>
+          <div style="font-size:.75rem;line-height:1.8;color:var(--text2)"><strong>Ca(OH)₂</strong> הוא בסיס חזק — pH &gt; 12. KI, NaCl וגלוקוז כולם <strong>ניטרליים</strong> (pH ≈ 7). בדיקת pH מייחדת את Ca(OH)₂ ישר מהשאר.</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid #fde68a;border-radius:10px;padding:14px 16px">
+          <div style="font-size:.8rem;font-weight:800;color:var(--yellow);margin-bottom:8px">⚗️ בדיקת AgNO₃</div>
+          <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">תמיסת כסף חנקני מפיל יוני הלוגניד:<br>• <strong>KI + AgNO₃ → AgI↓ (משקע צהוב)</strong><br>• <strong>NaCl + AgNO₃ → AgCl↓ (משקע לבן)</strong><br>• Ca(OH)₂ + AgNO₃ → Ag₂O↓ (חום)<br>• גלוקוז / שעווה — ללא שינוי</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid #fed7aa;border-radius:10px;padding:14px 16px">
+          <div style="font-size:.8rem;font-weight:800;color:var(--orange);margin-bottom:8px">🔥 בדיקת חימום</div>
+          <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">• <strong>שעווה</strong> — נמסה בטמפ' נמוכה, בוערת<br>• <strong>גלוקוז</strong> — מתקרמל (משחים, ריח מתוק)<br>• KI, NaCl, Ca(OH)₂ — עמידים לחום</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--purple-m);border-radius:10px;padding:14px 16px">
+          <div style="font-size:.8rem;font-weight:800;color:var(--purple);margin-bottom:8px">🔗 קשרים כימיים</div>
+          <div style="font-size:.75rem;line-height:1.8;color:var(--text2)"><strong>יוניים</strong> (KI, NaCl, Ca(OH)₂) — מסיסים במים, מוליכים חשמל.<br><strong>קוולנטי פולרי</strong> (גלוקוז) — מסיס, אינו מוליך.<br><strong>קוולנטי לא-פולרי</strong> (שעווה) — לא מסיס, נמס בחום.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <div class="exp-screen-inner" style="padding:14px">
+
+    <!-- Progress -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;padding:10px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;flex-shrink:0">
+      <span style="font-size:.7rem;font-weight:700;color:var(--text3);white-space:nowrap">📊 התקדמות:</span>
+      <div style="flex:1;height:6px;background:var(--border);border-radius:3px">
+        <div id="pwd-progress-fill" style="height:100%;background:linear-gradient(90deg,#6366f1,#2563eb);border-radius:3px;width:0%;transition:width .5s"></div>
+      </div>
+      <span id="pwd-progress-txt" style="font-size:.72rem;font-family:var(--mono);color:#6366f1;font-weight:700;white-space:nowrap">0 / 20 בדיקות</span>
+    </div>
+
+    <!-- Grid: Controls + Table -->
+    <div style="display:grid;grid-template-columns:minmax(260px,1fr) minmax(0,1.4fr);gap:14px;margin-bottom:14px">
+
+      <!-- LEFT: Controls -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+
+        <!-- Test selector -->
+        <div class="card">
+          <div class="card-header" style="color:#5b21b6;font-size:.78rem">⚗️ בחר בדיקה</div>
+          <div class="card-body" style="padding:10px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px" id="pwd-test-btns"></div>
+          </div>
+        </div>
+
+        <!-- Tube selector -->
+        <div class="card">
+          <div class="card-header" style="color:#5b21b6;font-size:.78rem">🧫 בחר מבחנה</div>
+          <div class="card-body" style="padding:10px">
+            <div style="display:flex;gap:8px;justify-content:space-around" id="pwd-tube-btns"></div>
+          </div>
+        </div>
+
+        <!-- Run button -->
+        <button id="pwd-run-btn" onclick="pwdRunTest()" disabled style="padding:11px 0;border:none;border-radius:10px;background:#e2e8f0;color:#94a3b8;font-size:.82rem;font-weight:700;cursor:not-allowed;font-family:var(--sans);transition:all .2s;flex-shrink:0">בצע בדיקה</button>
+
+        <!-- Result visual -->
+        <div class="card" style="flex:1">
+          <div class="card-header" style="font-size:.75rem;color:var(--text3)">📋 תוצאת הבדיקה</div>
+          <div class="card-body" id="pwd-result-body" style="text-align:center;color:var(--text3);font-size:.78rem;padding:18px;min-height:80px;display:flex;align-items:center;justify-content:center">
+            <span>בחרו בדיקה ומבחנה ולחצו <strong>בצע בדיקה</strong></span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Results table -->
+      <div class="card" style="overflow:hidden">
+        <div class="card-header" style="color:#5b21b6;font-size:.78rem">📊 טבלת תוצאות</div>
+        <div style="overflow-x:auto;padding:8px">
+          <table id="pwd-grid-table" style="width:100%;border-collapse:collapse"></table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Identification -->
+    <div class="card">
+      <div class="card-header" style="color:#5b21b6;font-size:.78rem">🔍 זיהוי — לאחר שביצעתם מספיק בדיקות, זהו את האבקה בכל מבחנה</div>
+      <div class="card-body" style="padding:12px">
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px" id="pwd-id-grid"></div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <button onclick="pwdCheck()" style="padding:10px 22px;border:none;border-radius:10px;background:linear-gradient(135deg,#6366f1,#2563eb);color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .2s">✓ בדוק תשובות</button>
+          <button onclick="pwdReset()" style="padding:10px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface2);color:var(--text2);font-size:.78rem;font-weight:700;cursor:pointer;font-family:var(--sans)">↺ ניסוי חדש (ערבוב חדש)</button>
+        </div>
+        <div id="pwd-verdict" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+  </div>
 </div>
 <script>
 function citInit(){}
-function pwdInit(){}
+
+/* ══════════════════════════════════
+   POWDERS EXPERIMENT
+══════════════════════════════════ */
+const PWD_POWDERS = [
+  { id:'KI',      name:'KI',       label:'יוד אשלגן — KI' },
+  { id:'caoh2',   name:'Ca(OH)₂',  label:'סידן הידרוקסיד — Ca(OH)₂' },
+  { id:'glucose', name:'גלוקוז',   label:'גלוקוז — C₆H₁₂O₆' },
+  { id:'nacl',    name:'NaCl',     label:'נתרן כלוריד — NaCl' },
+  { id:'wax',     name:'שעווה',    label:'שעווה (פרפין)' }
+];
+
+const PWD_TESTS = [
+  { id:'water', name:'מסיסות במים',   icon:'💧', short:'מים' },
+  { id:'ph',    name:'בדיקת pH',      icon:'🌡️', short:'pH' },
+  { id:'agno3', name:'תמיסת AgNO₃',  icon:'⚗️', short:'AgNO₃' },
+  { id:'heat',  name:'חימום',         icon:'🔥', short:'חימום' }
+];
+
+// Results matrix: PWD_RESULTS[powderIndex][testId]
+const PWD_RESULTS = [
+  { // 0 — KI
+    water:{ label:'מסיס — תמיסה שקופה לחלוטין',    color:'#dbeafe', border:'#93c5fd', symbol:'✓ מסיס',      tc:'#1d4ed8' },
+    ph:   { label:'pH ≈ 7 — ניטרלי',                color:'#f0fdf4', border:'#86efac', symbol:'pH = 7',      tc:'#166534' },
+    agno3:{ label:'משקע צהוב — AgI↓',               color:'#fef08a', border:'#eab308', symbol:'↓ צהוב',     tc:'#713f12' },
+    heat: { label:'ללא שינוי — עמיד לחום',           color:'#f1f5f9', border:'#cbd5e1', symbol:'— ללא שינוי', tc:'#64748b' }
+  },
+  { // 1 — Ca(OH)₂
+    water:{ label:'מסיס חלקית — תמיסה עכורה (מים סיידיים)', color:'#e0f2fe', border:'#38bdf8', symbol:'~ עכור',      tc:'#075985' },
+    ph:   { label:'pH > 12 — בסיסי חזק מאוד!',                 color:'#bbf7d0', border:'#34d399', symbol:'pH > 12',    tc:'#065f46' },
+    agno3:{ label:'משקע חום-כהה — Ag₂O↓',                      color:'#92400e', border:'#78350f', symbol:'↓ חום',     tc:'#fff' },
+    heat: { label:'ללא שינוי — עמיד לחום',                     color:'#f1f5f9', border:'#cbd5e1', symbol:'— ללא שינוי', tc:'#64748b' }
+  },
+  { // 2 — glucose
+    water:{ label:'מסיס — תמיסה שקופה',             color:'#dbeafe', border:'#93c5fd', symbol:'✓ מסיס',      tc:'#1d4ed8' },
+    ph:   { label:'pH ≈ 7 — ניטרלי',                color:'#f0fdf4', border:'#86efac', symbol:'pH = 7',      tc:'#166534' },
+    agno3:{ label:'ללא שינוי — אין משקע',            color:'#f1f5f9', border:'#cbd5e1', symbol:'— ללא שינוי', tc:'#64748b' },
+    heat: { label:'מתקרמל! השחמה וריח מתוק',        color:'#fed7aa', border:'#f97316', symbol:'🍯 קרמל',     tc:'#7c2d12' }
+  },
+  { // 3 — NaCl
+    water:{ label:'מסיס — תמיסה שקופה',             color:'#dbeafe', border:'#93c5fd', symbol:'✓ מסיס',      tc:'#1d4ed8' },
+    ph:   { label:'pH ≈ 7 — ניטרלי',                color:'#f0fdf4', border:'#86efac', symbol:'pH = 7',      tc:'#166534' },
+    agno3:{ label:'משקע לבן-גבן — AgCl↓',           color:'#f8fafc', border:'#64748b', symbol:'↓ לבן',      tc:'#334155' },
+    heat: { label:'פצפוצים קלים — ללא שינוי כמותי', color:'#f1f5f9', border:'#cbd5e1', symbol:'✨ פצפוץ',    tc:'#475569' }
+  },
+  { // 4 — wax
+    water:{ label:'לא מסיס! צף על פני המים',          color:'#fef9c3', border:'#fbbf24', symbol:'✗ צף',       tc:'#713f12' },
+    ph:   { label:'לא מגיב — לא מסיס במים',            color:'#f1f5f9', border:'#cbd5e1', symbol:'N/A',        tc:'#94a3b8' },
+    agno3:{ label:'לא מגיב — לא מסיס במים',            color:'#f1f5f9', border:'#cbd5e1', symbol:'N/A',        tc:'#94a3b8' },
+    heat: { label:'נמס! לאחר הצתה — בוער להבה צהובה', color:'#fef3c7', border:'#fbbf24', symbol:'🕯️ נמס/בוער', tc:'#78350f' }
+  }
+];
+
+let pwdOrder=[], pwdGrid={}, pwdSelTest=null, pwdSelTube=null, pwdTestCount=0, pwdInited=false;
+
+function pwdInit(){
+  if(pwdInited) return;
+  pwdInited=true;
+
+  // Shuffle powders into tubes A–E
+  const idx=[0,1,2,3,4];
+  for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]];}
+  pwdOrder=idx;
+
+  // Init tracking
+  pwdGrid={};
+  for(let t=0;t<5;t++){pwdGrid[t]={};PWD_TESTS.forEach(ts=>pwdGrid[t][ts.id]=false);}
+  pwdTestCount=0; pwdSelTest=null; pwdSelTube=null;
+
+  pwdBuildTestBtns();
+  pwdBuildTubeBtns();
+  pwdBuildTable();
+  pwdBuildIdGrid();
+  const rv=document.getElementById('pwd-verdict');if(rv)rv.innerHTML='';
+  const rb=document.getElementById('pwd-result-body');if(rb)rb.innerHTML='<span>בחרו בדיקה ומבחנה ולחצו <strong>בצע בדיקה</strong></span>';
+  pwdUpdateRunBtn();
+}
+
+function pwdBuildTestBtns(){
+  const el=document.getElementById('pwd-test-btns');if(!el)return;
+  el.innerHTML='';
+  PWD_TESTS.forEach(ts=>{
+    const b=document.createElement('button');
+    b.id=`pwd-tbtn-${ts.id}`;
+    b.innerHTML=`${ts.icon}<br><span style="font-size:.7rem">${ts.name}</span>`;
+    b.style.cssText='padding:10px 6px;border:1.5px solid var(--border);border-radius:9px;background:var(--surface2);color:var(--text2);font-size:.8rem;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .2s;text-align:center;line-height:1.4';
+    b.onclick=()=>pwdSelectTest(ts.id);
+    el.appendChild(b);
+  });
+}
+
+function pwdBuildTubeBtns(){
+  const el=document.getElementById('pwd-tube-btns');if(!el)return;
+  el.innerHTML='';
+  ['A','B','C','D','E'].forEach((letter,i)=>{
+    const wrap=document.createElement('div');
+    wrap.style.cssText='display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer';
+    wrap.innerHTML=`
+      <div id="pwd-tv-${i}" onclick="pwdSelectTube(${i})" style="width:34px;height:72px;border:2px solid #cbd5e1;border-radius:0 0 17px 17px;background:linear-gradient(180deg,#f8fafc 0%,#fff 100%);position:relative;overflow:hidden;cursor:pointer;transition:all .2s">
+        <div style="position:absolute;bottom:0;left:0;right:0;height:16px;background:rgba(248,250,252,.9);border-top:1px solid rgba(0,0,0,.06)"></div>
+        <div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:18px;height:5px;background:rgba(203,213,225,.8);border-radius:3px"></div>
+      </div>
+      <div id="pwd-tl-${i}" style="font-size:.82rem;font-weight:800;color:var(--text2);font-family:var(--mono)">${letter}</div>
+      <div id="pwd-tc-${i}" style="font-size:.58rem;color:var(--text3);font-family:var(--mono)">0/4</div>`;
+    el.appendChild(wrap);
+  });
+}
+
+function pwdBuildTable(){
+  const t=document.getElementById('pwd-grid-table');if(!t)return;
+  let h=`<thead><tr><th style="padding:7px 8px;font-size:.62rem;font-family:var(--mono);color:var(--text3);text-align:center;background:var(--surface2);border:1px solid var(--border)">מבחנה</th>`;
+  PWD_TESTS.forEach(ts=>h+=`<th style="padding:7px 6px;font-size:.6rem;font-family:var(--mono);color:var(--text3);text-align:center;background:var(--surface2);border:1px solid var(--border);white-space:nowrap">${ts.icon} ${ts.short}</th>`);
+  h+='</tr></thead><tbody>';
+  ['A','B','C','D','E'].forEach((letter,i)=>{
+    h+=`<tr><td style="padding:9px 8px;font-size:.78rem;font-weight:800;font-family:var(--mono);color:#6366f1;text-align:center;border:1px solid var(--border);background:#eef2ff">${letter}</td>`;
+    PWD_TESTS.forEach(ts=>h+=`<td id="pwd-cell-${i}-${ts.id}" style="padding:8px 5px;font-size:.65rem;text-align:center;border:1px solid var(--border);background:var(--surface2);color:var(--text3);transition:all .4s;min-width:64px;font-family:var(--mono)">?</td>`);
+    h+='</tr>';
+  });
+  t.innerHTML=h+'</tbody>';
+}
+
+function pwdBuildIdGrid(){
+  const g=document.getElementById('pwd-id-grid');if(!g)return;
+  let h='';
+  ['A','B','C','D','E'].forEach((letter,i)=>{
+    const opts=PWD_POWDERS.map((p,pi)=>`<option value="${pi}">${p.name}</option>`).join('');
+    h+=`<div style="display:flex;flex-direction:column;gap:6px;align-items:center">
+      <div style="font-size:1rem;font-weight:800;color:#6366f1;font-family:var(--mono)">${letter}</div>
+      <select id="pwd-id-sel-${i}" style="width:100%;padding:7px 4px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text);font-family:var(--sans);font-size:.68rem;outline:none;cursor:pointer;text-align:center;-webkit-appearance:none;transition:border-color .2s">
+        <option value="-1">— בחר —</option>${opts}
+      </select>
+      <div id="pwd-id-res-${i}" style="font-size:.75rem;height:18px;font-weight:800;text-align:center"></div>
+    </div>`;
+  });
+  g.innerHTML=h;
+}
+
+function pwdSelectTest(testId){
+  pwdSelTest=testId;
+  PWD_TESTS.forEach(ts=>{
+    const b=document.getElementById(`pwd-tbtn-${ts.id}`);if(!b)return;
+    const act=ts.id===testId;
+    b.style.background=act?'#6366f1':'var(--surface2)';
+    b.style.color=act?'#fff':'var(--text2)';
+    b.style.borderColor=act?'#6366f1':'var(--border)';
+    b.style.transform=act?'scale(1.03)':'scale(1)';
+  });
+  pwdUpdateRunBtn();
+}
+
+function pwdSelectTube(tubeIdx){
+  pwdSelTube=tubeIdx;
+  for(let i=0;i<5;i++){
+    const v=document.getElementById(`pwd-tv-${i}`);if(!v)return;
+    const act=i===tubeIdx;
+    v.style.borderColor=act?'#6366f1':'#cbd5e1';
+    v.style.transform=act?'scale(1.12)':'scale(1)';
+    v.style.boxShadow=act?'0 0 0 3px rgba(99,102,241,.3)':'none';
+  }
+  pwdUpdateRunBtn();
+}
+
+function pwdUpdateRunBtn(){
+  const btn=document.getElementById('pwd-run-btn');if(!btn)return;
+  const ready=pwdSelTest!==null&&pwdSelTube!==null;
+  const done=ready&&pwdGrid[pwdSelTube]&&pwdGrid[pwdSelTube][pwdSelTest];
+  if(done){
+    btn.disabled=true;btn.style.cssText='padding:11px 0;border:none;border-radius:10px;background:#e0f2fe;color:#0284c7;font-size:.82rem;font-weight:700;cursor:not-allowed;font-family:var(--sans)';
+    btn.textContent='✓ בדיקה זו כבר בוצעה';
+  } else if(ready){
+    btn.disabled=false;
+    const tname=PWD_TESTS.find(t=>t.id===pwdSelTest)?.name||'';
+    const tletter=['A','B','C','D','E'][pwdSelTube];
+    btn.style.cssText='padding:11px 0;border:none;border-radius:10px;background:linear-gradient(135deg,#6366f1,#2563eb);color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .2s';
+    btn.textContent=`▶ ${tname} על מבחנה ${tletter}`;
+  } else {
+    btn.disabled=true;
+    btn.style.cssText='padding:11px 0;border:none;border-radius:10px;background:#e2e8f0;color:#94a3b8;font-size:.82rem;font-weight:700;cursor:not-allowed;font-family:var(--sans)';
+    btn.textContent='בצע בדיקה';
+  }
+}
+
+function pwdRunTest(){
+  if(pwdSelTest===null||pwdSelTube===null)return;
+  if(pwdGrid[pwdSelTube][pwdSelTest])return;
+  pwdGrid[pwdSelTube][pwdSelTest]=true;
+  pwdTestCount++;
+
+  const pi=pwdOrder[pwdSelTube];
+  const res=PWD_RESULTS[pi][pwdSelTest];
+  const tletter=['A','B','C','D','E'][pwdSelTube];
+  const tname=PWD_TESTS.find(t=>t.id===pwdSelTest)?.name||'';
+
+  // Result display
+  const rb=document.getElementById('pwd-result-body');
+  if(rb) rb.innerHTML=`
+    <div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px">
+      <div style="font-size:.7rem;color:var(--text3);font-weight:700">מבחנה ${tletter} · ${tname}</div>
+      <div style="width:100%;padding:14px;border-radius:12px;border:2px solid ${res.border};background:${res.color};text-align:center;animation:rowIn .4s ease">
+        <div style="font-size:1.05rem;font-weight:800;color:${res.tc};margin-bottom:5px">${res.symbol}</div>
+        <div style="font-size:.75rem;color:${res.tc};font-weight:600;line-height:1.55">${res.label}</div>
+      </div>
+    </div>`;
+  const rb2=document.getElementById('pwd-result-box');
+  if(rb2) rb2.style.borderColor=res.border;
+
+  // Update table cell
+  const cell=document.getElementById(`pwd-cell-${pwdSelTube}-${pwdSelTest}`);
+  if(cell){
+    cell.style.background=res.color;cell.style.color=res.tc;
+    cell.style.borderColor=res.border;cell.textContent=res.symbol;
+    cell.style.fontWeight='700';cell.classList.add('fresh');
+    setTimeout(()=>cell.classList.remove('fresh'),500);
+  }
+
+  // Update tube counter
+  const done=Object.values(pwdGrid[pwdSelTube]).filter(Boolean).length;
+  const cnt=document.getElementById(`pwd-tc-${pwdSelTube}`);
+  if(cnt) cnt.textContent=`${done}/4`;
+  if(done===4){const tv=document.getElementById(`pwd-tv-${pwdSelTube}`);if(tv)tv.style.background='linear-gradient(180deg,#f0fdf4,#dcfce7)';}
+
+  // Progress
+  document.getElementById('pwd-progress-fill').style.width=`${(pwdTestCount/20)*100}%`;
+  document.getElementById('pwd-progress-txt').textContent=`${pwdTestCount} / 20 בדיקות`;
+
+  pwdUpdateRunBtn();
+}
+
+function pwdCheck(){
+  let allOk=true, anyBlank=false;
+  const used=new Set();
+  ['A','B','C','D','E'].forEach((_,i)=>{
+    const sel=document.getElementById(`pwd-id-sel-${i}`);
+    const res=document.getElementById(`pwd-id-res-${i}`);
+    const chosen=parseInt(sel.value);
+    if(chosen===-1){res.textContent='?';res.style.color='var(--text3)';allOk=false;anyBlank=true;return;}
+    if(chosen===pwdOrder[i]){
+      res.textContent='✓';res.style.color='var(--green)';
+      sel.style.borderColor='var(--green)';
+    } else {
+      res.textContent='✗';res.style.color='var(--red)';
+      sel.style.borderColor='var(--red)';allOk=false;
+    }
+    used.add(chosen);
+  });
+
+  const verdict=document.getElementById('pwd-verdict');
+  if(anyBlank){
+    verdict.innerHTML=`<div style="padding:10px 14px;border-radius:10px;background:var(--yellow-l);border:1.5px solid var(--yellow-m);color:var(--yellow);font-size:.78rem;font-weight:700">⚠️ יש למלא את כל הזיהויים לפני הבדיקה.</div>`;
+  } else if(allOk){
+    verdict.innerHTML=`<div style="padding:14px;border-radius:10px;background:var(--green-l);border:1.5px solid var(--green-m);color:var(--green)"><div style="font-size:.9rem;font-weight:800;margin-bottom:6px">🎉 מצוין! זיהוי מושלם!</div><div style="font-size:.78rem;line-height:1.7">זיהית נכון את כל חמש האבקות באמצעות בדיקות שיטתיות. כך עובד כימאי אנליטי אמיתי!</div></div>`;
+    pwdConfetti();
+    // Reveal answers in table
+    ['A','B','C','D','E'].forEach((_,i)=>{
+      const lbl=document.getElementById(`pwd-tl-${i}`);
+      if(lbl) lbl.textContent=`${['A','B','C','D','E'][i]}: ${PWD_POWDERS[pwdOrder[i]].name}`;
+    });
+  } else {
+    verdict.innerHTML=`<div style="padding:10px 14px;border-radius:10px;background:var(--red-l);border:1.5px solid var(--red-m);color:var(--red);font-size:.78rem;font-weight:700">✗ יש שגיאות — בצעו בדיקות נוספות ונסו שוב.</div>`;
+  }
+}
+
+function pwdReset(){pwdInited=false;pwdInit();}
+
+function pwdToggleIntro(){
+  const p=document.getElementById('pwd-intro-panel');
+  if(p) p.style.display=p.style.display==='none'?'block':'none';
+}
+
+function pwdConfetti(){
+  const colors=['#6366f1','#7c3aed','#2563eb','#059669','#f59e0b'];
+  const wrap=document.createElement('div');wrap.className='confetti-wrap';document.body.appendChild(wrap);
+  for(let i=0;i<70;i++){
+    const el=document.createElement('div');el.className='cp';
+    el.style.cssText=`left:${Math.random()*100}%;width:${6+Math.random()*8}px;height:${10+Math.random()*14}px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*1.5}s;animation-duration:${2+Math.random()}s`;
+    wrap.appendChild(el);
+  }
+  setTimeout(()=>wrap.remove(),4000);
+}
 </script>
 
 </body>

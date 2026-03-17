@@ -685,29 +685,142 @@ tbody tr.fresh{animation:rowIn .5s ease}
 
         <!-- Lab visual -->
         <div class="sp-section" id="lab-panel">
-          <div class="lab-visual">
+          <div class="lab-visual" style="padding:10px 6px 8px">
             <div class="burette-label" id="burette-label-txt">ביורטה — NaOH 0.50M</div>
-            <div class="burette-outer">
-              <div class="burette-body"><div class="burette-fill" id="burette-fill"></div></div>
-              <div class="burette-tap"><div class="drip" id="drip"></div></div>
-            </div>
-            <div class="flask-wrap">
-              <svg width="110" height="120" viewBox="0 0 110 120">
+
+            <!-- ── COMPOSITE ILLUSTRATION ── -->
+            <div style="position:relative;width:220px;height:300px">
+
+              <!-- Static + semi-static SVG illustration -->
+              <svg width="220" height="300" viewBox="0 0 220 300" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0">
                 <defs>
-                  <clipPath id="fc"><polygon points="44,8 66,8 66,50 100,110 10,110"/></clipPath>
+                  <!-- Flask liquid clip -->
+                  <clipPath id="fc">
+                    <polygon points="89,210 103,210 103,226 140,268 52,268 89,226"/>
+                  </clipPath>
+                  <!-- Flask glass shine -->
                   <linearGradient id="fg" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stop-color="rgba(255,255,255,.4)"/>
+                    <stop offset="0%" stop-color="rgba(255,255,255,.45)"/>
+                    <stop offset="55%" stop-color="rgba(255,255,255,0)"/>
+                  </linearGradient>
+                  <!-- Burette glass shine -->
+                  <linearGradient id="bg-shine" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(255,255,255,.5)"/>
+                    <stop offset="45%" stop-color="rgba(255,255,255,.1)"/>
                     <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
                   </linearGradient>
                 </defs>
-                <rect id="flask-liquid" x="0" y="0" width="110" height="120" fill="rgba(219,234,254,.6)" clip-path="url(#fc)" style="transition:fill .5s ease"/>
-                <rect x="0" y="0" width="110" height="120" fill="url(#fg)" clip-path="url(#fc)"/>
-                <polygon points="44,8 66,8 66,50 100,110 10,110" fill="none" stroke="#93c5fd" stroke-width="2.5" stroke-linejoin="round"/>
-                <line x1="40" y1="8" x2="70" y2="8" stroke="#93c5fd" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- ═══ STAND BASE ═══ -->
+                <rect x="140" y="275" width="62" height="7" rx="3" fill="#e2e8f0" stroke="#475569" stroke-width="1.3"/>
+
+                <!-- ═══ STAND POLE ═══ -->
+                <rect x="167" y="22" width="5" height="255" rx="2" fill="#cbd5e1" stroke="#475569" stroke-width="1.1"/>
+
+                <!-- ═══ CLAMP ARM ═══ -->
+                <rect x="99" y="60" width="69" height="5" rx="2" fill="#cbd5e1" stroke="#475569" stroke-width="1.1"/>
+                <!-- Clamp screw (pole side) -->
+                <circle cx="172" cy="62" r="6" fill="#e2e8f0" stroke="#475569" stroke-width="1.2"/>
+                <circle cx="172" cy="62" r="2.5" fill="#94a3b8"/>
+                <!-- Clamp screw (burette side) -->
+                <circle cx="99" cy="62" r="6" fill="#e2e8f0" stroke="#475569" stroke-width="1.2"/>
+                <circle cx="99" cy="62" r="2.5" fill="#94a3b8"/>
+
+                <!-- ═══ BURETTE HOLDER ═══ -->
+                <rect x="88" y="54" width="16" height="17" rx="2" fill="rgba(203,213,225,.8)" stroke="#64748b" stroke-width="1.2"/>
+                <line x1="88" y1="62" x2="104" y2="62" stroke="#94a3b8" stroke-width=".8"/>
+
+                <!-- ═══ BURETTE GLASS TUBE ═══ -->
+                <rect x="89" y="18" width="14" height="150" rx="3" fill="rgba(219,234,254,.18)" stroke="#93c5fd" stroke-width="1.5"/>
+                <!-- Shine strip -->
+                <rect x="90" y="19" width="5" height="148" rx="2" fill="url(#bg-shine)"/>
+
+                <!-- ═══ GRADUATION MARKS ═══ -->
+                <text x="109" y="14" font-family="monospace" font-size="6" fill="#64748b">mL</text>
+                <!-- 0 mL -->
+                <line x1="103" y1="22" x2="109" y2="22" stroke="#64748b" stroke-width="1"/>
+                <text x="110" y="25" font-family="monospace" font-size="6" fill="#64748b">0</text>
+                <!-- 5mL minor -->
+                <line x1="103" y1="37" x2="106" y2="37" stroke="#94a3b8" stroke-width=".7"/>
+                <!-- 10 mL -->
+                <line x1="103" y1="52" x2="109" y2="52" stroke="#64748b" stroke-width="1"/>
+                <text x="110" y="55" font-family="monospace" font-size="6" fill="#64748b">10</text>
+                <!-- 15mL minor -->
+                <line x1="103" y1="67" x2="106" y2="67" stroke="#94a3b8" stroke-width=".7"/>
+                <!-- 20 mL -->
+                <line x1="103" y1="82" x2="109" y2="82" stroke="#64748b" stroke-width="1"/>
+                <text x="110" y="85" font-family="monospace" font-size="6" fill="#64748b">20</text>
+                <!-- 25mL minor -->
+                <line x1="103" y1="97" x2="106" y2="97" stroke="#94a3b8" stroke-width=".7"/>
+                <!-- 30 mL -->
+                <line x1="103" y1="112" x2="109" y2="112" stroke="#64748b" stroke-width="1"/>
+                <text x="110" y="115" font-family="monospace" font-size="6" fill="#64748b">30</text>
+                <!-- 35mL minor -->
+                <line x1="103" y1="127" x2="106" y2="127" stroke="#94a3b8" stroke-width=".7"/>
+                <!-- 40 mL -->
+                <line x1="103" y1="142" x2="109" y2="142" stroke="#64748b" stroke-width="1"/>
+                <text x="110" y="145" font-family="monospace" font-size="6" fill="#64748b">40</text>
+                <!-- 45mL minor -->
+                <line x1="103" y1="157" x2="106" y2="157" stroke="#94a3b8" stroke-width=".7"/>
+                <!-- 50 mL -->
+                <line x1="103" y1="163" x2="109" y2="163" stroke="#64748b" stroke-width="1"/>
+                <text x="110" y="166" font-family="monospace" font-size="6" fill="#64748b">50</text>
+
+                <!-- ═══ STOPCOCK ═══ -->
+                <!-- Body block -->
+                <rect x="90" y="167" width="12" height="11" rx="2" fill="rgba(203,213,225,.95)" stroke="#64748b" stroke-width="1.2"/>
+                <!-- Horizontal handle -->
+                <rect x="75" y="170" width="42" height="4" rx="2" fill="rgba(148,163,184,.9)" stroke="#64748b" stroke-width="1"/>
+                <circle cx="75" cy="172" r="3.5" fill="#94a3b8" stroke="#64748b" stroke-width="1"/>
+                <circle cx="117" cy="172" r="3.5" fill="#94a3b8" stroke="#64748b" stroke-width="1"/>
+
+                <!-- ═══ BURETTE TIP ═══ -->
+                <polygon points="94,178 98,178 97.5,200 94.5,200" fill="rgba(219,234,254,.45)" stroke="#93c5fd" stroke-width="1.2" stroke-linejoin="round"/>
+
+                <!-- ═══ FLASK LIQUID (JS setAttribute fill) ═══ -->
+                <rect id="flask-liquid" x="48" y="215" width="96" height="58" fill="rgba(219,234,254,.6)" clip-path="url(#fc)" style="transition:fill .5s ease"/>
+                <!-- Flask glass shine -->
+                <rect x="48" y="210" width="96" height="62" fill="url(#fg)" clip-path="url(#fc)"/>
+
+                <!-- ═══ FLASK OUTLINE ═══ -->
+                <polygon points="89,210 103,210 103,226 140,268 52,268 89,226" fill="none" stroke="#93c5fd" stroke-width="1.8" stroke-linejoin="round"/>
+                <!-- Flask mouth -->
+                <line x1="86" y1="210" x2="106" y2="210" stroke="#93c5fd" stroke-width="1.8" stroke-linecap="round"/>
+                <!-- Stir bar (subtle, inside flask) -->
+                <ellipse cx="96" cy="262" rx="15" ry="3.5" fill="rgba(100,116,139,.18)"/>
+
+                <!-- ═══ MAGNETIC STIRRER ═══ -->
+                <!-- Top plate -->
+                <rect x="38" y="268" width="108" height="7" rx="2" fill="#e2e8f0" stroke="#475569" stroke-width="1.2"/>
+                <!-- Main body -->
+                <rect x="32" y="275" width="120" height="25" rx="5" fill="#f1f5f9" stroke="#475569" stroke-width="1.2"/>
+                <!-- Front panel recess -->
+                <rect x="40" y="279" width="104" height="16" rx="3" fill="rgba(203,213,225,.4)" stroke="#cbd5e1" stroke-width=".8"/>
+                <!-- Knob -->
+                <circle cx="127" cy="287" r="7.5" fill="#cbd5e1" stroke="#64748b" stroke-width="1.2"/>
+                <circle cx="127" cy="287" r="3" fill="#94a3b8"/>
+                <!-- Power switch -->
+                <rect x="52" y="281" width="15" height="10" rx="2" fill="#cbd5e1" stroke="#64748b" stroke-width="1"/>
+                <!-- LED -->
+                <circle cx="60" cy="286" r="2.5" fill="#4ade80" opacity=".9"/>
               </svg>
-              <canvas id="vortex-canvas" width="110" height="120" style="position:absolute;top:0;left:0;pointer-events:none"></canvas>
-            </div>
-            <div id="flask-label-txt" style="font-size:.6rem;font-family:var(--mono);color:var(--text3);margin-top:2px">ארלנמייר — HCl 20 מ"ל</div>
+
+              <!-- ── BURETTE LIQUID FILL (JS controls style.height) ── -->
+              <div style="position:absolute;left:90px;top:19px;width:12px;height:148px;overflow:hidden;border-radius:2px 2px 0 0;pointer-events:none">
+                <div id="burette-fill" style="position:absolute;bottom:0;width:100%;background:linear-gradient(180deg,#60a5fa,#2563eb);height:80%;border-radius:2px 2px 0 0;transition:height .5s cubic-bezier(.4,0,.2,1)"></div>
+              </div>
+
+              <!-- ── DRIP ── -->
+              <div style="position:absolute;left:89px;top:197px;width:14px;height:28px">
+                <div id="drip" class="drip"></div>
+              </div>
+
+              <!-- ── VORTEX CANVAS (overlays flask body) ── -->
+              <canvas id="vortex-canvas" width="110" height="120" style="position:absolute;left:41px;top:159px;pointer-events:none"></canvas>
+
+            </div><!-- /relative container -->
+
+            <div id="flask-label-txt" style="font-size:.6rem;font-family:var(--mono);color:var(--text3);margin-top:4px;text-align:center">ארלנמייר — HCl 20 מ"ל</div>
           </div>
           <div style="margin-top:12px">
             <div class="plabel">סקלת pH</div>
@@ -839,16 +952,6 @@ tbody tr.fresh{animation:rowIn .5s ease}
           </div>
         </div>
 
-        <!-- Params + challenge answer -->
-        <div class="rp-section">
-          <div class="plabel">פרמטרי ניסוי</div>
-          <div class="params-grid">
-            <div class="param-card"><div class="plabel">חומצה</div><div class="param-val" id="p-acid-name" style="color:var(--red)">HCl</div><div class="param-sub">25.0 מ"ל</div></div>
-            <div class="param-card"><div class="plabel">ריכוז Ca</div><div class="param-val" id="p-acid-conc" style="color:var(--yellow)">??? M</div></div>
-            <div class="param-card"><div class="plabel">נ.ש.מ. תיאורטית</div><div class="param-val" id="p-eq" style="color:var(--text3)">???</div></div>
-            <div class="param-card"><div class="plabel">pH בנ.ש.מ.</div><div class="param-val" id="p-eq-ph" style="color:var(--green)">7.00</div></div>
-          </div>
-        </div>
 
       </div><!-- /right-panel -->
 
@@ -1113,7 +1216,7 @@ function startVortex(){
   const canvas=document.getElementById('vortex-canvas'),ctx=canvas.getContext('2d'),cx=55,cy=82;
   function frame(){
     ctx.clearRect(0,0,110,120);vortexAngle+=0.08;
-    ctx.save();ctx.beginPath();ctx.moveTo(44,8);ctx.lineTo(66,8);ctx.lineTo(66,50);ctx.lineTo(100,110);ctx.lineTo(10,110);ctx.closePath();ctx.clip();
+    ctx.save();ctx.beginPath();ctx.moveTo(48,51);ctx.lineTo(62,51);ctx.lineTo(62,67);ctx.lineTo(99,109);ctx.lineTo(11,109);ctx.lineTo(48,67);ctx.closePath();ctx.clip();
     for(let i=0;i<4;i++){const a=vortexAngle+(i*Math.PI*2/4);ctx.beginPath();ctx.strokeStyle=`rgba(255,255,255,${0.35-i*0.07})`;ctx.lineWidth=2;ctx.arc(cx,cy,5+i*7,a,a+Math.PI*1.6);ctx.stroke();}
     ctx.restore();vortexRAF=requestAnimationFrame(frame);
   }
@@ -1274,12 +1377,7 @@ function setJuice(j){
   document.getElementById('btn-strong').className='acid-btn';
   document.getElementById('btn-citric').className='acid-btn';
   clearJuiceBtns();document.getElementById(`btn-j-${j}`).className='acid-btn act-juice';
-  const nm=document.getElementById('p-acid-name');nm.textContent=d.emoji+' '+d.heLabel;nm.style.color=d.color;
-  document.getElementById('p-eq-ph').textContent='> 7';
   document.getElementById('hdr-sub').textContent=`${d.emoji} ${d.name} ← NaOH ${cBase.toFixed(2)}M — גלה את ריכוז החומצה הציטרית!`;
-  document.getElementById('p-acid-conc').textContent='??? M';
-  document.getElementById('p-acid-conc').style.color='var(--yellow)';
-  document.getElementById('p-eq').textContent='? מ"ל';
   updateFormulaHint();
   document.getElementById('base-conc-row').style.display='flex';
   document.getElementById('flask-label-txt').textContent=`ארלנמייר — ${d.emoji} ${d.heLabel} 20 מ"ל`;
@@ -1289,10 +1387,9 @@ function setAcidType(t){
   acidType=t;clearJuiceBtns();
   document.getElementById('btn-strong').className='acid-btn'+(t==='strong'?' act-strong':'');
   document.getElementById('btn-citric').className='acid-btn'+(t==='citric'?' act-citric':'');
-  const nm=document.getElementById('p-acid-name');
   const base=`NaOH ${cBase.toFixed(2)}M`;
-  if(t==='strong'){cAcid=0.5;nm.textContent='HCl';nm.style.color='var(--red)';document.getElementById('p-eq-ph').textContent='7.00';document.getElementById('hdr-sub').textContent=`HCl (חומצה הידרוכלורית) ← ${base}`;document.getElementById('flask-label-txt').textContent='ארלנמייר — HCl 20 מ"ל';}
-  else if(t==='citric'){cAcid=0.5;nm.textContent='H₃Cit';nm.style.color='var(--teal)';document.getElementById('p-eq-ph').textContent='> 7';document.getElementById('hdr-sub').textContent=`H₃Cit (חומצה ציטרית) ← ${base}`;document.getElementById('flask-label-txt').textContent='ארלנמייר — H₃Cit 20 מ"ל';}
+  if(t==='strong'){cAcid=0.5;document.getElementById('hdr-sub').textContent=`HCl (חומצה הידרוכלורית) ← ${base}`;document.getElementById('flask-label-txt').textContent='ארלנמייר — HCl 20 מ"ל';}
+  else if(t==='citric'){cAcid=0.5;document.getElementById('hdr-sub').textContent=`H₃Cit (חומצה ציטרית) ← ${base}`;document.getElementById('flask-label-txt').textContent='ארלנמייר — H₃Cit 20 מ"ל';}
   updateFormulaHint();resetSimulation();
 }
 function setMode(m){
@@ -1320,10 +1417,6 @@ function resetSimulation(k){
   if(!k){
     document.getElementById('base-conc-row').style.display='flex';
     clearJuiceBtns();
-    document.getElementById('p-acid-conc').textContent='??? M';
-    document.getElementById('p-acid-conc').style.color='var(--yellow)';
-    document.getElementById('p-eq').textContent='???';
-    document.getElementById('p-eq').style.color='var(--text3)';
   }
   [0,1,2].forEach(i=>document.getElementById(`qp${i}`).className='qphase'+(i===0?' active':''));
   showQuiz(0);

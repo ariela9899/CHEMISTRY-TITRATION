@@ -582,8 +582,111 @@ tbody tr.fresh{animation:rowIn .5s ease}
       </div>
       <div class="hdr-right">
         <button class="btn btn-outline-blue" style="font-size:.72rem;padding:6px 12px" onclick="toggleTheory()">📖 רקע</button>
+        <button class="btn btn-outline-purple" style="font-size:.72rem;padding:6px 12px" onclick="toggleTeams()">🏆 אתגרי צוותים</button>
       </div>
     </header>
+
+    <!-- Teams panel — FULL SCREEN OVERLAY -->
+    <div id="teams-panel" style="display:none;position:absolute;inset:0;z-index:100;
+      background:#faf5ff;overflow-y:auto;padding:28px 24px 40px;">
+      <div style="max-width:980px;margin:0 auto">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px">
+          <h2 style="font-size:1.05rem;font-weight:800;color:var(--purple)">🏆 אתגרי הצוותים — לאחר חלוקה לקבוצות</h2>
+          <button onclick="toggleTeams()" class="btn btn-outline-purple" style="padding:8px 18px;font-size:.8rem">⬅ חזרה לניסוי</button>
+        </div>
+
+        <!-- Instruction cards -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-bottom:22px">
+
+          <!-- Team 1 -->
+          <div style="background:#fff;border:2px solid #fde68a;border-radius:12px;padding:16px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+              <span style="background:#fef3c7;border:1.5px solid #fde68a;color:#92400e;font-size:.65rem;font-weight:800;padding:3px 10px;border-radius:20px">צוות 1</span>
+              <span style="font-size:.82rem;font-weight:800;color:#92400e">🍋 דגימת מיץ לימון — אתגר "הביורטה הרטובה"</span>
+            </div>
+            <div style="font-size:.75rem;line-height:1.8;color:var(--text2);margin-bottom:10px">רגע לפני שהתחלתם, שמתם לב שהביורטה הייתה מלוכלכת. שטפתם אותה היטב עם מים מזוקקים, ומיד לאחר מכן (בעודה <strong>רטובה מבפנים</strong>) מילאתם אותה בתמיסת NaOH (0.5M) והתחלתם בטיטור.</div>
+            <div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:8px;padding:10px;font-size:.73rem;line-height:1.7;color:#78350f">
+              <strong>עצרו רגע לחשוב לפני שמטפטפים!</strong><br>
+              <strong>1.</strong> בגלל טיפות המים שנשארו בביורטה — האם תצטרכו לטפטף <em>יותר, פחות, או אותה כמות</em> של נוזל מהביורטה כדי להגיע לנקודת הסיום (לעומת ביורטה יבשה)?<br>
+              <strong>2.</strong> האם הטעות תגרום לריכוז החומצה שתחשבו בסוף להיראות <em>גבוה</em> ממה שהוא באמת, או <em>נמוך</em>? נמקו!
+            </div>
+          </div>
+
+          <!-- Team 2 -->
+          <div style="background:#fff;border:2px solid #fed7aa;border-radius:12px;padding:16px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+              <span style="background:#fff7ed;border:1.5px solid #fed7aa;color:#7c2d12;font-size:.65rem;font-weight:800;padding:3px 10px;border-radius:20px">צוות 2</span>
+              <span style="font-size:.82rem;font-weight:800;color:#7c2d12">🍊 דגימת מיץ תפוזים — אפקט המסווה</span>
+            </div>
+            <div style="font-size:.75rem;line-height:1.8;color:var(--text2);margin-bottom:10px">למיץ התפוזים שלכם יש צבע כתום חזק ועכור. כשהאינדיקטור יהפוך לוורוד, יהיה קשה מאוד לראות את זה בתוך הנוזל הכתום (ייווצר <strong>צבע אפרסק חלש</strong>).</div>
+            <div style="background:#fff7ed;border:1.5px solid #fed7aa;border-radius:8px;padding:10px;font-size:.73rem;line-height:1.7;color:#7c2d12">
+              <strong>המשימה:</strong> מותר לכם להוסיף חומר אחד פשוט שיש בכל מעבדה כדי לראות את שינוי הצבע בבירור, מבלי לפגוע בתוצאות החישוב. מה תוסיפו? בצעו את הטיטור לאחר ההוספה.
+            </div>
+          </div>
+
+          <!-- Team 3 -->
+          <div style="background:#fff;border:2px solid #a7f3d0;border-radius:12px;padding:16px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+              <span style="background:#ecfdf5;border:1.5px solid #a7f3d0;color:#065f46;font-size:.65rem;font-weight:800;padding:3px 10px;border-radius:20px">צוות 3</span>
+              <span style="font-size:.82rem;font-weight:800;color:#065f46">🍊 דגימת מיץ קלמנטינה — תעלומת הטיפה הבודדת</span>
+            </div>
+            <div style="font-size:.75rem;line-height:1.8;color:var(--text2);margin-bottom:10px">הקלמנטינה מתוקה מאוד והחמיצות שלה נמוכה. סביר להניח שכבר אחרי <strong>טיפות בודדות של NaOH</strong> התמיסה תהפוך לוורודה — מדידה של נפח קטן כל כך גורמת לשגיאת מדידה גדולה.</div>
+            <div style="background:#ecfdf5;border:1.5px solid #a7f3d0;border-radius:8px;padding:10px;font-size:.73rem;line-height:1.7;color:#064e3b">
+              <strong>המשימה:</strong> איזה שינוי טכני הייתם עושים כדי שהטיטור ייקח נפח משמעותי יותר (~10 מ"ל)? הציעו לפחות שני פתרונות. לאחר מכן בצעו את הטיטור עם הציוד הקיים.
+            </div>
+          </div>
+
+          <!-- Team 4 -->
+          <div style="background:#fff;border:2px solid #c7d2fe;border-radius:12px;padding:16px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+              <span style="background:#eef2ff;border:1.5px solid #c7d2fe;color:#3730a3;font-size:.65rem;font-weight:800;padding:3px 10px;border-radius:20px">צוות 4</span>
+              <span style="font-size:.82rem;font-weight:800;color:#3730a3">🍈 דגימת מיץ אשכוליות — המתכון המעודן</span>
+            </div>
+            <div style="font-size:.75rem;line-height:1.8;color:var(--text2);margin-bottom:10px">אתם בודקים מיץ אשכוליות עבור חברת משקאות. צוות הפיתוח הוסיף מראש <strong>מעט סודה לשתייה (חומר בסיסי)</strong> למיכל לפני שהדגימה הגיעה אליכם.</div>
+            <div style="background:#eef2ff;border:1.5px solid #c7d2fe;border-radius:8px;padding:10px;font-size:.73rem;line-height:1.7;color:#3730a3">
+              <strong>המשימה:</strong> בצעו את הטיטור. האם תצטרכו יותר או פחות NaOH לעומת מיץ טבעי? האם התוצאה תשקף את החמיצות המקורית של הפרי? הסבירו.
+            </div>
+          </div>
+
+          <!-- Team 5 -->
+          <div style="background:#fff;border:2px solid var(--purple-m);border-radius:12px;padding:16px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+              <span style="background:var(--purple-l);border:1.5px solid var(--purple-m);color:#5b21b6;font-size:.65rem;font-weight:800;padding:3px 10px;border-radius:20px">צוות 5</span>
+              <span style="font-size:.82rem;font-weight:800;color:#5b21b6">⚗️ חומצה ציטרית נקייה — קבוצת הביקורת</span>
+            </div>
+            <div style="font-size:.75rem;line-height:1.8;color:var(--text2);margin-bottom:10px">אתם עובדים עם תמיסת חומצה ציטרית טהורה. <strong>סוד:</strong> בכוס שלכם יש בדיוק <strong>0.01 mol</strong> של חומצה.</div>
+            <div style="background:var(--purple-l);border:1.5px solid var(--purple-m);border-radius:8px;padding:10px;font-size:.73rem;line-height:1.7;color:#4c1d95">
+              <strong>המשימה:</strong> לפני שפותחים את הברז — היו נביאים! חשבו מראש כמה מ"ל NaOH תצטרכו. רק לאחר החישוב בצעו את הטיטור הווירטואלי ובדקו אם צדקתם. (רמז: זכרו כמה "ראשים" יש למולקולת חומצה ציטרית).
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Summary section -->
+        <div style="background:#fff;border:2px solid var(--purple-m);border-radius:12px;padding:18px">
+          <div style="font-size:.85rem;font-weight:800;color:var(--purple);margin-bottom:12px">🏆 לקראת ישיבת הסיכום — מכתירים את אלוף החמיצות!</div>
+          <div style="font-size:.75rem;line-height:1.8;color:var(--text2);margin-bottom:12px">לאחר שסיימתם את הטיטור והתמודדתם עם האתגר, חשבו את ריכוז החומצה ב-3 שלבים:</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px">
+            <div style="background:var(--green-l);border:1.5px solid var(--green-m);border-radius:9px;padding:12px">
+              <div style="font-size:.7rem;font-weight:800;color:var(--green);margin-bottom:5px">① כמה בסיס הגבנו?</div>
+              <div style="font-size:.72rem;font-family:var(--mono);color:var(--text2);line-height:1.7">n(NaOH) = C × V<br><span style="color:var(--text3);font-size:.65rem">המירו נפח לליטרים!</span></div>
+            </div>
+            <div style="background:var(--blue-l);border:1.5px solid var(--blue-m);border-radius:9px;padding:12px">
+              <div style="font-size:.7rem;font-weight:800;color:var(--blue);margin-bottom:5px">② חוק השליש</div>
+              <div style="font-size:.72rem;font-family:var(--mono);color:var(--text2);line-height:1.7">n(H₃Cit) = n(NaOH) ÷ 3<br><span style="color:var(--text3);font-size:.65rem">חומצה ציטרית = תלת-פרוטונית</span></div>
+            </div>
+            <div style="background:var(--purple-l);border:1.5px solid var(--purple-m);border-radius:9px;padding:12px">
+              <div style="font-size:.7rem;font-weight:800;color:var(--purple);margin-bottom:5px">③ ריכוז סופי</div>
+              <div style="font-size:.72rem;font-family:var(--mono);color:var(--text2);line-height:1.7">C = n(H₃Cit) ÷ 0.02 L<br><span style="color:var(--text3);font-size:.65rem">נפח מיץ מקורי = 20 מ"ל</span></div>
+            </div>
+          </div>
+          <div style="margin-top:12px;padding:10px 14px;background:var(--yellow-l);border:1.5px solid var(--yellow-m);border-radius:8px;font-size:.73rem;color:#78350f;line-height:1.7">
+            <strong>🎤 הצגה:</strong> בחרו נציג שיציג את האתגר שלכם, איך התמודדתם איתו, ואת הריכוז הסופי שגיליתם — כדי שנוכל להזין אותו בלוח התוצאות המרכזי.
+          </div>
+        </div>
+
+      </div>
+    </div>
 
     <!-- Theory panel — FULL SCREEN OVERLAY -->
     <div id="theory-panel" style="display:none;position:absolute;inset:0;z-index:100;
@@ -1346,6 +1449,10 @@ function updateAcidPhLabels(){
   acidType=savedType;cAcid=savedC;
   document.getElementById('ph-lbl-strong').textContent=`pH ≈ ${phS.toFixed(1)}`;
   document.getElementById('ph-lbl-citric').textContent=`pH ≈ ${phCit.toFixed(2)}`;
+}
+function toggleTeams(){
+  const p=document.getElementById('teams-panel');
+  p.style.display=p.style.display==='none'?'block':'none';
 }
 function toggleTheory(){
   const p=document.getElementById('theory-panel');

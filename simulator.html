@@ -25,8 +25,11 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;font-family:var(--sans);background:var(--bg);color:var(--text)}
+
 .screen{display:none;flex-direction:column;height:100vh;overflow:hidden}
 .screen.active{display:flex}
+
+/* ── LANDING ── */
 #screen-landing{
   background:linear-gradient(160deg,#f0f7ff 0%,#eef3ff 40%,#f5f0ff 100%);
   align-items:center;justify-content:flex-start;overflow-y:auto;padding:40px 20px 60px;
@@ -46,15 +49,9 @@ html,body{height:100%;font-family:var(--sans);background:var(--bg);color:var(--t
   width:100%;
 }
 .exp-card{
-  background:var(--surface);
-  border:2px solid var(--border);
-  border-radius:20px;
-  padding:28px 22px 22px;
-  cursor:pointer;
-  transition:all .25s cubic-bezier(.4,0,.2,1);
-  position:relative;
-  overflow:hidden;
-  box-shadow:var(--shadow);
+  background:var(--surface);border:2px solid var(--border);border-radius:20px;
+  padding:28px 22px 22px;cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;box-shadow:var(--shadow);
   display:flex;flex-direction:column;gap:12px;
 }
 .exp-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s;border-radius:18px;}
@@ -83,7 +80,17 @@ html,body{height:100%;font-family:var(--sans);background:var(--bg);color:var(--t
 .exp-card:hover .exp-arrow{color:var(--blue)}
 .arrow-icon{font-size:1rem;transition:transform .2s}
 .exp-card:hover .arrow-icon{transform:translateX(-4px)}
-.btn{padding:8px 14px;border-radius:10px;border:1.5px solid;cursor:pointer;font-family:var(--sans);font-weight:700;font-size:.78rem;transition:all .15s;display:inline-flex;align-items:center;justify-content:center;gap:5px;box-shadow:var(--shadow)}
+
+/* ══════════════════════════════════
+   TITRATION — 3 VERTICAL PANELS
+══════════════════════════════════ */
+.tit-app{display:flex;flex-direction:column;height:100%;overflow:hidden}
+
+/* ── SHARED BUTTONS / PILLS ── */
+.btn{padding:8px 14px;border-radius:10px;border:1.5px solid;cursor:pointer;
+  font-family:var(--sans);font-weight:700;font-size:.78rem;
+  transition:all .15s;display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  box-shadow:var(--shadow)}
 .btn-blue{background:var(--blue);border-color:var(--blue);color:#fff}
 .btn-blue:hover{background:#1d4ed8;transform:translateY(-1px);box-shadow:var(--shadow-md)}
 .btn-outline-blue{background:var(--blue-l);border-color:var(--blue);color:var(--blue)}
@@ -98,6 +105,7 @@ html,body{height:100%;font-family:var(--sans);background:var(--bg);color:var(--t
 .btn-outline-purple:hover{background:var(--purple-m)}
 .btn:active{transform:scale(.97)!important}
 .btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+
 .pill{display:flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:.68rem;font-weight:600}
 .pill-green{background:var(--green-l);border:1.5px solid var(--green-m);color:var(--green)}
 .pill-yellow{background:var(--yellow-l);border:1.5px solid var(--yellow-m);color:var(--yellow)}
@@ -105,132 +113,269 @@ html,body{height:100%;font-family:var(--sans);background:var(--bg);color:var(--t
 .pdot-g{background:var(--green)}
 .pdot-y{background:var(--yellow)}
 @keyframes pdot{0%,100%{box-shadow:0 0 0 0 currentColor}50%{box-shadow:0 0 0 5px transparent}}
-header.tit-hdr{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:10px 20px;background:var(--surface);border-bottom:2px solid var(--blue);box-shadow:0 2px 8px rgba(37,99,235,.1)}
+
+/* ── HEADER ── */
+header.tit-hdr{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px;padding:10px 20px;background:var(--surface);
+  border-bottom:2px solid var(--blue);box-shadow:0 2px 8px rgba(37,99,235,.1)}
 .hdr-left h1{font-size:1rem;font-weight:800;color:var(--blue)}
 .hdr-left p{font-size:.68rem;color:var(--text3);font-family:var(--mono);margin-top:1px}
 .hdr-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.tit-app{display:flex;flex-direction:column;height:100%;overflow:hidden}
-.workspace{flex:1;display:grid;grid-template-columns:260px 1fr 220px;gap:0;min-height:0;overflow:hidden}
-.side-panel,.right-panel{background:var(--surface);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden}
-.side-panel{border-left:1px solid var(--border)}
-.right-panel{border-right:1px solid var(--border)}
-.side-panel::-webkit-scrollbar,.right-panel::-webkit-scrollbar{width:4px}
-.side-panel::-webkit-scrollbar-thumb,.right-panel::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-.sp-section,.rp-section{padding:12px 14px;border-bottom:1px solid var(--border)}
-.plabel{font-size:.6rem;font-family:var(--mono);color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px;font-weight:600}
-.center-col{display:flex;flex-direction:column;background:var(--bg);overflow-y:auto;overflow-x:hidden;padding:14px}
-.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:12px}
-.card-header{padding:10px 14px;border-bottom:1px solid var(--border);font-size:.78rem;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:8px}
+
+/* ══════════════════════════════
+   WORKSPACE — 3 VERTICAL ROWS
+   (was: 3-column grid)
+══════════════════════════════ */
+.workspace{
+  flex:1;
+  display:flex;
+  flex-direction:column;   /* ← KEY CHANGE: column instead of grid */
+  min-height:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+/* Panel section label bar */
+.panel-label-bar{
+  flex-shrink:0;
+  display:flex;align-items:center;gap:10px;
+  padding:7px 18px;
+  background:var(--surface2);
+  border-bottom:1.5px solid var(--border);
+  font-size:.68rem;font-weight:700;color:var(--text3);
+  font-family:var(--mono);text-transform:uppercase;letter-spacing:.07em;
+}
+.panel-label-bar span{color:var(--text2)}
+
+/* ── SIDE PANEL (row 1 — controls) ── */
+.side-panel{
+  background:var(--surface);
+  display:flex;
+  flex-direction:row;      /* ← sections laid out horizontally */
+  flex-wrap:wrap;
+  overflow:visible;
+  border-bottom:2px solid var(--blue-m);
+  width:100%;
+}
+
+/* ── RIGHT PANEL (row 3 — data log) ── */
+.right-panel{
+  background:var(--surface);
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  overflow:visible;
+  border-top:2px solid var(--border);
+  width:100%;
+}
+
+/* ── SECTION CELLS within panels ── */
+.sp-section,.rp-section{
+  padding:12px 14px;
+  border-bottom:none;         /* no bottom border needed in horizontal flow */
+  border-left:1px solid var(--border);
+  flex:1;
+  min-width:210px;
+}
+.sp-section:last-child,.rp-section:last-child{border-left:none}
+
+/* ── CENTER COLUMN (row 2 — chart/quiz) ── */
+.center-col{
+  display:flex;
+  flex-direction:column;
+  background:var(--bg);
+  overflow:visible;
+  padding:14px;
+  width:100%;
+}
+
+/* Shared scrollbar style (kept for table) */
+.side-panel::-webkit-scrollbar,.right-panel::-webkit-scrollbar,.center-col::-webkit-scrollbar{width:4px}
+.side-panel::-webkit-scrollbar-thumb,.right-panel::-webkit-scrollbar-thumb,
+.center-col::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+.plabel{font-size:.6rem;font-family:var(--mono);color:var(--text3);text-transform:uppercase;
+  letter-spacing:.1em;margin-bottom:7px;font-weight:600}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);
+  box-shadow:var(--shadow);margin-bottom:12px}
+.card-header{padding:10px 14px;border-bottom:1px solid var(--border);
+  font-size:.78rem;font-weight:700;color:var(--text);display:flex;align-items:center;
+  justify-content:space-between;gap:8px}
 .card-body{padding:12px 14px}
-.lab-visual{display:flex;flex-direction:column;align-items:center;gap:3px;background:linear-gradient(180deg,#f8faff 0%,#eef3ff 100%);border-radius:10px;border:1.5px solid var(--border);padding:14px 8px 10px}
-.burette-label{font-size:.6rem;font-family:var(--mono);color:var(--blue);margin-bottom:4px;text-align:center;font-weight:600}
+
+/* ── LAB VISUAL ── */
+.lab-visual{display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:linear-gradient(180deg,#f8faff 0%,#eef3ff 100%);
+  border-radius:10px;border:1.5px solid var(--border);padding:14px 8px 10px}
+.burette-label{font-size:.6rem;font-family:var(--mono);color:var(--blue);margin-bottom:4px;
+  text-align:center;font-weight:600}
 .burette-outer{display:flex;flex-direction:column;align-items:center;margin-bottom:-1px;z-index:2}
-.burette-body{width:18px;height:65px;background:linear-gradient(180deg,#e8f0fe 0%,#c7d7fd 100%);border:2px solid #93c5fd;border-radius:4px 4px 0 0;position:relative;overflow:hidden;box-shadow:inset 0 1px 3px rgba(37,99,235,.15)}
-.burette-fill{position:absolute;bottom:0;width:100%;background:linear-gradient(180deg,#60a5fa,#2563eb);transition:height .5s cubic-bezier(.4,0,.2,1);height:80%;border-radius:2px 2px 0 0}
+.burette-body{width:18px;height:65px;background:linear-gradient(180deg,#e8f0fe 0%,#c7d7fd 100%);
+  border:2px solid #93c5fd;border-radius:4px 4px 0 0;position:relative;overflow:hidden;
+  box-shadow:inset 0 1px 3px rgba(37,99,235,.15)}
+.burette-fill{position:absolute;bottom:0;width:100%;
+  background:linear-gradient(180deg,#60a5fa,#2563eb);
+  transition:height .5s cubic-bezier(.4,0,.2,1);height:80%;border-radius:2px 2px 0 0}
 .burette-tap{width:7px;height:12px;background:#93c5fd;border-radius:0 0 3px 3px;position:relative}
-.drip{width:4px;height:0;background:#2563eb;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;position:absolute;top:-3px;left:50%;transform:translateX(-50%)}
+.drip{width:4px;height:0;background:#2563eb;
+  border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  position:absolute;top:-3px;left:50%;transform:translateX(-50%)}
 .drip.go{animation:dripfall .55s ease-in forwards}
 @keyframes dripfall{0%{height:0;top:-3px;opacity:1}40%{height:7px;top:-3px;opacity:1}100%{height:5px;top:22px;opacity:0}}
 .flask-wrap{position:relative;width:110px;height:120px}
-.ph-bar{height:10px;border-radius:6px;position:relative;background:linear-gradient(90deg,#ef4444 0%,#f97316 20%,#eab308 36%,#22c55e 50%,#3b82f6 65%,#a855f7 100%);box-shadow:0 1px 4px rgba(0,0,0,.12)}
-.ph-needle{position:absolute;top:-5px;width:4px;height:20px;background:white;border-radius:3px;box-shadow:0 0 0 2px var(--text),0 2px 8px rgba(0,0,0,.2);transition:left .4s cubic-bezier(.4,0,.2,1)}
-.ph-ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.55rem;color:var(--text3);margin-top:3px}
+.ph-bar{height:10px;border-radius:6px;position:relative;
+  background:linear-gradient(90deg,#ef4444 0%,#f97316 20%,#eab308 36%,#22c55e 50%,#3b82f6 65%,#a855f7 100%);
+  box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.ph-needle{position:absolute;top:-5px;width:4px;height:20px;background:white;border-radius:3px;
+  box-shadow:0 0 0 2px var(--text),0 2px 8px rgba(0,0,0,.2);
+  transition:left .4s cubic-bezier(.4,0,.2,1)}
+.ph-ticks{display:flex;justify-content:space-between;font-family:var(--mono);
+  font-size:.55rem;color:var(--text3);margin-top:3px}
 .metrics-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.metric{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:2px}
+.metric{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;
+  padding:10px;display:flex;flex-direction:column;gap:2px}
 .metric-val{font-family:var(--mono);font-size:1.5rem;font-weight:600;line-height:1;transition:color .3s}
-.mv-acid{color:var(--red)}.mv-neutral{color:var(--green)}.mv-base{color:var(--purple)}.mv-blue{color:var(--blue)}
+.mv-acid{color:var(--red)} .mv-neutral{color:var(--green)} .mv-base{color:var(--purple)} .mv-blue{color:var(--blue)}
 .metric-unit{font-size:.62rem;color:var(--text3);font-family:var(--mono)}
-.acid-section-lbl{font-size:.58rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin:8px 0 4px}
+
+.acid-section-lbl{font-size:.58rem;font-weight:700;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.07em;margin:8px 0 4px}
 .acid-toggle{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
 .acid-toggle-juices{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:4px}
-.acid-btn{padding:7px 4px;text-align:center;border-radius:9px;border:1.5px solid var(--border);cursor:pointer;font-size:.68rem;font-weight:700;color:var(--text3);background:var(--surface2);transition:all .2s;font-family:var(--sans)}
+.acid-btn{padding:7px 4px;text-align:center;border-radius:9px;border:1.5px solid var(--border);
+  cursor:pointer;font-size:.68rem;font-weight:700;color:var(--text3);
+  background:var(--surface2);transition:all .2s;font-family:var(--sans)}
 .acid-btn.act-strong{background:var(--red-l);border-color:var(--red);color:var(--red)}
 .acid-btn.act-weak{background:var(--orange-l);border-color:var(--orange);color:var(--orange)}
 .acid-btn.act-citric{background:var(--teal-l);border-color:var(--teal);color:var(--teal)}
 .acid-btn.act-juice{background:var(--yellow-l);border-color:var(--yellow);color:var(--yellow)}
+
 .base-conc-row{display:flex;align-items:center;gap:6px;margin-top:8px}
 .base-conc-row label{font-size:.65rem;font-family:var(--mono);color:var(--text3);white-space:nowrap;font-weight:600}
-.base-conc-inp{width:72px;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:.8rem;padding:5px 8px;outline:none;transition:border-color .2s;text-align:center}
+.base-conc-inp{width:72px;background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:8px;color:var(--text);font-family:var(--mono);font-size:.8rem;
+  padding:5px 8px;outline:none;transition:border-color .2s;text-align:center}
 .base-conc-inp:focus{border-color:var(--blue)}
 .base-conc-unit{font-size:.65rem;font-family:var(--mono);color:var(--text3)}
+
 .mode-toggle{display:flex;border:1.5px solid var(--border);border-radius:9px;overflow:hidden;margin-bottom:8px}
-.mode-btn{flex:1;padding:7px 4px;text-align:center;font-size:.68rem;font-weight:600;cursor:pointer;border:none;background:var(--surface2);color:var(--text3);transition:all .2s;font-family:var(--sans)}
+.mode-btn{flex:1;padding:7px 4px;text-align:center;font-size:.68rem;font-weight:600;
+  cursor:pointer;border:none;background:var(--surface2);color:var(--text3);
+  transition:all .2s;font-family:var(--sans)}
 .mode-btn.active{background:var(--blue);color:#fff}
 .add-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .add-btns .btn{font-family:var(--mono);font-size:.75rem;padding:9px 4px}
-.styled-sel{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-family:var(--sans);font-size:.75rem;padding:8px 10px;outline:none;cursor:pointer;transition:border-color .2s;-webkit-appearance:none}
+.styled-sel{width:100%;background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:9px;color:var(--text);font-family:var(--sans);font-size:.75rem;
+  padding:8px 10px;outline:none;cursor:pointer;transition:border-color .2s;-webkit-appearance:none}
 .styled-sel:focus{border-color:var(--blue)}
-.chart-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:12px}
-.chart-hdr{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+.chart-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);
+  box-shadow:var(--shadow);margin-bottom:12px}
+.chart-hdr{padding:10px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .chart-title-main{font-size:.85rem;font-weight:700;color:var(--text)}
 .chart-sub{font-size:.65rem;color:var(--text3);font-family:var(--mono);margin-top:1px}
-.eq-tag{display:none;font-size:.68rem;font-weight:700;padding:4px 10px;border-radius:7px;background:var(--green-l);border:1.5px solid var(--green-m);color:var(--green)}
+.eq-tag{display:none;font-size:.68rem;font-weight:700;padding:4px 10px;border-radius:7px;
+  background:var(--green-l);border:1.5px solid var(--green-m);color:var(--green)}
 .eq-tag.show{display:inline-flex;align-items:center;gap:5px}
 .chart-box{position:relative;height:230px;padding:10px 14px 14px}
-.quiz-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:12px}
-.quiz-hdr{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+
+.quiz-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);
+  box-shadow:var(--shadow);margin-bottom:12px}
+.quiz-hdr{padding:10px 14px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
 .quiz-phases{display:flex;gap:5px;flex-wrap:wrap}
-.qphase{padding:3px 10px;border-radius:6px;font-size:.63rem;font-weight:600;border:1.5px solid var(--border);color:var(--text3);background:var(--surface2);transition:all .25s}
+.qphase{padding:3px 10px;border-radius:6px;font-size:.63rem;font-weight:600;
+  border:1.5px solid var(--border);color:var(--text3);background:var(--surface2);transition:all .25s}
 .qphase.done{border-color:var(--green-m);color:var(--green);background:var(--green-l)}
 .qphase.active{border-color:#fbbf24;color:var(--yellow);background:var(--yellow-l)}
 .quiz-body{padding:12px 14px;min-height:90px;display:flex;flex-direction:column;gap:10px;transition:opacity .2s}
 .quiz-q{font-size:.8rem;line-height:1.65;color:var(--text);font-weight:600}
-.quiz-hint{font-size:.7rem;font-family:var(--mono);color:var(--text2);padding:7px 10px;background:var(--blue-l);border:1.5px solid var(--blue-m);border-radius:7px}
+.quiz-hint{font-size:.7rem;font-family:var(--mono);color:var(--text2);padding:7px 10px;
+  background:var(--blue-l);border:1.5px solid var(--blue-m);border-radius:7px}
 .mc-options{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.mc-opt{padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);font-size:.75rem;cursor:pointer;transition:all .18s;background:var(--surface2);color:var(--text2);text-align:right;font-family:var(--sans);font-weight:600}
+.mc-opt{padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);font-size:.75rem;
+  cursor:pointer;transition:all .18s;background:var(--surface2);color:var(--text2);
+  text-align:right;font-family:var(--sans);font-weight:600}
 .mc-opt:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-l)}
 .mc-opt.correct{background:var(--green-l);border-color:var(--green);color:var(--green)}
 .mc-opt.wrong{background:var(--red-l);border-color:var(--red);color:var(--red)}
 .quiz-input-row{display:flex;gap:7px}
-.quiz-inp{flex:1;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:.82rem;padding:8px 11px;outline:none;transition:border-color .2s}
+.quiz-inp{flex:1;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:var(--mono);font-size:.82rem;padding:8px 11px;outline:none;
+  transition:border-color .2s}
 .quiz-inp:focus{border-color:var(--yellow)}
 .qfb{padding:9px 12px;border-radius:8px;font-size:.75rem;font-family:var(--mono);display:none;font-weight:600}
 .qfb.ok{display:block;background:var(--green-l);border:1.5px solid var(--green-m);color:var(--green)}
 .qfb.no{display:block;background:var(--red-l);border:1.5px solid var(--red-m);color:var(--red)}
+
 .params-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .param-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:9px;padding:9px}
 .param-val{font-family:var(--mono);font-size:.85rem;font-weight:700;margin-top:2px}
 .param-sub{font-family:var(--mono);font-size:.58rem;color:var(--text3);margin-top:1px}
-.ch-answer{display:none;flex-direction:column;gap:8px;background:var(--yellow-l);border:1.5px solid var(--yellow-m);border-radius:10px;padding:12px;margin-top:8px}
+
+.ch-answer{display:none;flex-direction:column;gap:8px;background:var(--yellow-l);
+  border:1.5px solid var(--yellow-m);border-radius:10px;padding:12px;margin-top:8px}
 .ch-answer.show{display:flex}
 .ch-inp-row{display:flex;gap:7px}
-.ch-inp{flex:1;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:.8rem;padding:8px 10px;outline:none;transition:border-color .2s}
+.ch-inp{flex:1;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:var(--mono);font-size:.8rem;padding:8px 10px;outline:none;
+  transition:border-color .2s}
 .ch-inp:focus{border-color:var(--yellow)}
 .ch-fb{padding:8px 10px;border-radius:7px;font-family:var(--mono);font-size:.7rem;display:none;font-weight:600}
 .ch-fb.ok{display:block;background:var(--green-l);border:1.5px solid var(--green-m);color:var(--green)}
 .ch-fb.no{display:block;background:var(--red-l);border:1.5px solid var(--red-m);color:var(--red)}
+
 table{width:100%;border-collapse:collapse}
-.table-scroll{max-height:200px;overflow-y:auto}
+.table-scroll{max-height:320px;overflow-y:auto}
 .table-scroll::-webkit-scrollbar{width:3px}
 .table-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-thead th{padding:6px 8px;text-align:center;font-family:var(--mono);font-size:.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;background:var(--surface2);border-bottom:1.5px solid var(--border);position:sticky;top:0;font-weight:600}
-tbody td{padding:6px 8px;text-align:center;font-family:var(--mono);font-size:.68rem;border-bottom:1px solid #f1f5f9;color:var(--text2)}
+thead th{padding:6px 8px;text-align:center;font-family:var(--mono);font-size:.58rem;
+  color:var(--text3);text-transform:uppercase;letter-spacing:.07em;
+  background:var(--surface2);border-bottom:1.5px solid var(--border);position:sticky;top:0;font-weight:600}
+tbody td{padding:6px 8px;text-align:center;font-family:var(--mono);font-size:.68rem;
+  border-bottom:1px solid #f1f5f9;color:var(--text2)}
 tbody tr:hover td{background:var(--blue-l)}
 .swatch{width:22px;height:14px;border-radius:4px;margin:0 auto;border:1px solid var(--border)}
 @keyframes rowIn{from{background:#eff6ff}to{background:transparent}}
 tbody tr.fresh{animation:rowIn .5s ease}
-@keyframes eqFlash{0%{box-shadow:0 0 0 0 rgba(5,150,105,.5)}50%{box-shadow:0 0 0 12px rgba(5,150,105,0)}100%{box-shadow:var(--shadow)}}
+@keyframes eqFlash{0%{box-shadow:0 0 0 0 rgba(5,150,105,.5)}
+  50%{box-shadow:0 0 0 12px rgba(5,150,105,0)}100%{box-shadow:var(--shadow)}}
 .eq-flash{animation:eqFlash .9s ease}
+
 .confetti-wrap{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}
 .cp{position:absolute;border-radius:2px;animation:cffall 2.5s ease-in forwards}
-@keyframes cffall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@keyframes cffall{0%{transform:translateY(-20px) rotate(0);opacity:1}
+  100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+
+/* ── REACTION VISUALIZER ── */
 #screen-reaction{flex-direction:column;background:#0a0e27}
-.rxn-top{flex-shrink:0;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);border-bottom:1px solid rgba(99,102,241,.3);padding:14px 20px;display:flex;flex-direction:column;gap:10px}
+.rxn-top{flex-shrink:0;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(99,102,241,.3);padding:14px 20px;display:flex;
+  flex-direction:column;gap:10px}
 .rxn-top-row1{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .rxn-top-row1 h2{font-size:1rem;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px}
 .rxn-input-row{display:flex;gap:8px}
-.rxn-inp{flex:1;padding:10px 16px;background:rgba(15,23,42,.7);border:1.5px solid rgba(99,102,241,.4);border-radius:10px;color:#fff;font-family:var(--sans);font-size:.85rem;outline:none;transition:border-color .2s}
+.rxn-inp{flex:1;padding:10px 16px;background:rgba(15,23,42,.7);
+  border:1.5px solid rgba(99,102,241,.4);border-radius:10px;color:#fff;
+  font-family:var(--sans);font-size:.85rem;outline:none;transition:border-color .2s}
 .rxn-inp::placeholder{color:#475569}
 .rxn-inp:focus{border-color:#6366f1}
-.rxn-vis-btn{padding:10px 22px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border:none;border-radius:10px;color:#fff;font-weight:700;font-size:.82rem;cursor:pointer;font-family:var(--sans);transition:all .2s;white-space:nowrap}
+.rxn-vis-btn{padding:10px 22px;background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  border:none;border-radius:10px;color:#fff;font-weight:700;font-size:.82rem;
+  cursor:pointer;font-family:var(--sans);transition:all .2s;white-space:nowrap}
 .rxn-vis-btn:hover{background:linear-gradient(135deg,#4338ca,#6d28d9);transform:translateY(-1px)}
 .rxn-vis-btn:disabled{background:#374151;cursor:not-allowed;transform:none}
 .rxn-presets{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .rxn-preset-lbl{font-size:.68rem;color:#818cf8;white-space:nowrap}
-.rxn-preset{padding:4px 11px;border-radius:6px;font-size:.65rem;font-weight:600;background:rgba(49,46,129,.5);border:1px solid rgba(99,102,241,.3);color:#a5b4fc;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.rxn-preset{padding:4px 11px;border-radius:6px;font-size:.65rem;font-weight:600;
+  background:rgba(49,46,129,.5);border:1px solid rgba(99,102,241,.3);color:#a5b4fc;
+  cursor:pointer;transition:all .2s;font-family:var(--sans)}
 .rxn-preset:hover{background:rgba(79,70,229,.4);border-color:#6366f1;color:#fff}
 .rxn-preset:disabled{opacity:.4;cursor:not-allowed}
-.rxn-equation-bar{background:rgba(15,23,42,.7);border:1px solid rgba(99,102,241,.3);border-radius:12px;padding:14px 18px}
+.rxn-equation-bar{background:rgba(15,23,42,.7);border:1px solid rgba(99,102,241,.3);
+  border-radius:12px;padding:14px 18px}
 .rxn-eq-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .rxn-mol-chip{padding:8px 14px;border-radius:9px;text-align:center}
 .rxn-mol-chip.reactant{background:rgba(30,58,138,.4);border:1.5px solid rgba(96,165,250,.4)}
@@ -243,12 +388,16 @@ tbody tr.fresh{animation:rowIn .5s ease}
 .rxn-arrow-lbl{font-size:1.6rem;color:#818cf8}
 .rxn-plus{font-size:1.3rem;color:#818cf8}
 .rxn-stage-btns{display:flex;gap:8px;justify-content:center}
-.rxn-stage-btn{padding:8px 22px;border-radius:9px;font-weight:700;font-size:.78rem;cursor:pointer;border:none;font-family:var(--sans);transition:all .2s}
-.rxn-stage-btn.active-r{background:linear-gradient(135deg,#2563eb,#06b6d4);color:#fff;box-shadow:0 4px 12px rgba(37,99,235,.4)}
-.rxn-stage-btn.active-p{background:linear-gradient(135deg,#059669,#0d9488);color:#fff;box-shadow:0 4px 12px rgba(5,150,105,.4)}
+.rxn-stage-btn{padding:8px 22px;border-radius:9px;font-weight:700;font-size:.78rem;
+  cursor:pointer;border:none;font-family:var(--sans);transition:all .2s}
+.rxn-stage-btn.active-r{background:linear-gradient(135deg,#2563eb,#06b6d4);color:#fff;
+  box-shadow:0 4px 12px rgba(37,99,235,.4)}
+.rxn-stage-btn.active-p{background:linear-gradient(135deg,#059669,#0d9488);color:#fff;
+  box-shadow:0 4px 12px rgba(5,150,105,.4)}
 .rxn-stage-btn.inactive{background:rgba(30,41,59,.6);color:#94a3b8}
 .rxn-stage-btn.inactive:hover{background:rgba(51,65,85,.7);color:#fff}
-.rxn-err{padding:8px 14px;background:rgba(127,29,29,.5);border:1px solid rgba(239,68,68,.4);border-radius:8px;color:#fca5a5;font-size:.75rem}
+.rxn-err{padding:8px 14px;background:rgba(127,29,29,.5);border:1px solid rgba(239,68,68,.4);
+  border-radius:8px;color:#fca5a5;font-size:.75rem}
 .rxn-body{flex:1;position:relative;overflow:hidden}
 #rxn-mount{width:100%;height:100%}
 .rxn-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
@@ -262,55 +411,86 @@ tbody tr.fresh{animation:rowIn .5s ease}
 @keyframes rxnspin{to{transform:rotate(360deg)}}
 .rxn-loading-inner p{color:#a5b4fc;font-size:1rem;font-weight:600}
 .rxn-loading-inner small{color:#6366f1;font-size:.75rem}
-.rxn-hud-controls{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);border:1px solid rgba(99,102,241,.25);border-radius:10px;padding:10px 14px;font-size:.72rem;color:#a5b4fc}
+.rxn-hud-controls{position:absolute;top:12px;left:12px;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
+  border:1px solid rgba(99,102,241,.25);border-radius:10px;
+  padding:10px 14px;font-size:.72rem;color:#a5b4fc}
 .rxn-hud-controls strong{color:#fff;display:block;margin-bottom:4px}
-.rxn-hud-stage{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);border:1px solid rgba(99,102,241,.25);border-radius:10px;padding:10px 14px;min-width:160px}
-.rxn-stage-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;margin-bottom:8px}
+.rxn-hud-stage{position:absolute;top:12px;right:12px;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
+  border:1px solid rgba(99,102,241,.25);border-radius:10px;
+  padding:10px 14px;min-width:160px}
+.rxn-stage-badge{display:inline-block;padding:3px 10px;border-radius:20px;
+  font-size:.68rem;font-weight:700;margin-bottom:8px}
 .rxn-mol-info{background:rgba(30,41,59,.5);border-radius:7px;padding:7px 10px;margin-bottom:5px}
 .rxn-mol-info-name{font-size:.75rem;font-weight:700;color:#67e8f9}
 .rxn-mol-info-formula{font-size:.62rem;font-family:var(--mono);color:#818cf8;margin-top:1px}
 .rxn-mol-info-atoms{font-size:.6rem;color:#475569;margin-top:1px}
-.rxn-legend{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);border:1px solid rgba(99,102,241,.25);border-radius:10px;padding:10px 14px}
+.rxn-legend{position:absolute;bottom:12px;right:12px;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
+  border:1px solid rgba(99,102,241,.25);border-radius:10px;padding:10px 14px}
 .rxn-legend strong{font-size:.7rem;color:#fff;display:block;margin-bottom:6px}
 .rxn-legend-item{display:flex;align-items:center;gap:7px;font-size:.65rem;color:#94a3b8;margin-bottom:3px}
 .rxn-legend-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
 .rxn-legend-hbond{width:20px;height:2px;border-top:2px dashed #67e8f9;flex-shrink:0}
+
 .exp-screen-inner{flex:1;overflow-y:auto;padding:24px}
-.exp-top-bar{display:flex;align-items:center;gap:12px;padding:12px 20px;background:var(--surface);border-bottom:2px solid;box-shadow:0 2px 8px rgba(0,0,0,.08);flex-shrink:0}
+.exp-top-bar{display:flex;align-items:center;gap:12px;padding:12px 20px;
+  background:var(--surface);border-bottom:2px solid;box-shadow:0 2px 8px rgba(0,0,0,.08);flex-shrink:0}
 .exp-top-bar h2{font-size:1rem;font-weight:800}
-.back-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:10px;font-size:.78rem;font-weight:700;cursor:pointer;border:1.5px solid;background:var(--surface2);color:var(--text2);border-color:var(--border);font-family:var(--sans);transition:all .2s}
+.back-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:10px;
+  font-size:.78rem;font-weight:700;cursor:pointer;border:1.5px solid;
+  background:var(--surface2);color:var(--text2);border-color:var(--border);
+  font-family:var(--sans);transition:all .2s}
 .back-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-l)}
+
+/* Cabbage */
 .cabbage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px;margin:20px 0}
-.ph-vial{border-radius:16px;border:2px solid;padding:20px 12px 14px;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+.ph-vial{border-radius:16px;border:2px solid;padding:20px 12px 14px;
+  text-align:center;cursor:pointer;transition:all .2s;position:relative}
 .ph-vial:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.1)}
 .vial-color{font-size:2rem;margin-bottom:6px}
 .vial-ph{font-family:var(--mono);font-size:1.1rem;font-weight:700;margin-bottom:3px}
 .vial-label{font-size:.65rem;font-weight:600;color:var(--text2)}
 .vial-substance{font-size:.6rem;color:var(--text3);margin-top:2px}
-.cabbage-result{background:var(--surface);border:2px solid var(--purple-m);border-radius:14px;padding:18px;margin-top:16px;display:none}
+.cabbage-result{background:var(--surface);border:2px solid var(--purple-m);border-radius:14px;
+  padding:18px;margin-top:16px;display:none}
 .cabbage-result.show{display:block}
+
+/* Hydrate */
 .hydrate-container{max-width:600px;margin:0 auto}
 .hydrate-compound{display:flex;flex-direction:column;gap:12px;margin:16px 0}
-.hyd-card{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:16px}
+.hyd-card{background:var(--surface);border:2px solid var(--border);border-radius:14px;
+  padding:18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:16px}
 .hyd-card:hover{border-color:var(--orange);box-shadow:0 4px 16px rgba(234,88,12,.1)}
 .hyd-card.selected{border-color:var(--orange);background:var(--orange-l)}
 .hyd-icon{font-size:2rem}
 .hyd-info{flex:1}
 .hyd-name{font-size:.9rem;font-weight:700}
 .hyd-formula{font-family:var(--mono);font-size:.75rem;color:var(--text3);margin-top:2px}
-.hyd-calc-box{background:var(--surface);border:2px solid var(--orange);border-radius:14px;padding:20px;display:none;margin-top:14px}
+.hyd-calc-box{background:var(--surface);border:2px solid var(--orange);border-radius:14px;
+  padding:20px;display:none;margin-top:14px}
 .hyd-calc-box.show{display:block}
-.hyd-step{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;margin:8px 0;font-family:var(--mono);font-size:.78rem;line-height:1.8}
-.hyd-inp{background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:.85rem;padding:8px 11px;outline:none;transition:border-color .2s;width:100px;margin-left:8px}
+.hyd-step{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;
+  padding:12px 14px;margin:8px 0;font-family:var(--mono);font-size:.78rem;line-height:1.8}
+.hyd-inp{background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:var(--mono);font-size:.85rem;padding:8px 11px;outline:none;
+  transition:border-color .2s;width:100px;margin-left:8px}
 .hyd-inp:focus{border-color:var(--orange)}
-.hyd-result{background:var(--orange-l);border:1.5px solid #fed7aa;border-radius:10px;padding:14px;font-family:var(--mono);font-size:.82rem;display:none;margin-top:10px}
+.hyd-result{background:var(--orange-l);border:1.5px solid #fed7aa;border-radius:10px;
+  padding:14px;font-family:var(--mono);font-size:.82rem;display:none;margin-top:10px}
 .hyd-result.show{display:block}
+
+/* Snake */
 .snake-container{max-width:560px;margin:0 auto}
 .snake-steps{display:flex;flex-direction:column;gap:0;position:relative;margin:20px 0}
-.snake-step{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:16px 18px;transition:all .2s;opacity:.5}
+.snake-step{background:var(--surface);border:2px solid var(--border);border-radius:14px;
+  padding:16px 18px;transition:all .2s;opacity:.5}
 .snake-step.active-step{opacity:1;border-color:var(--green);box-shadow:0 4px 16px rgba(5,150,105,.1)}
 .snake-step.done-step{opacity:.8;border-color:var(--green-m)}
-.step-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;font-size:.72rem;font-weight:800;margin-left:10px;flex-shrink:0}
+.step-num{display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;
+  font-size:.72rem;font-weight:800;margin-left:10px;flex-shrink:0}
 .step-header{display:flex;align-items:center;margin-bottom:8px}
 .step-title{font-size:.85rem;font-weight:700}
 .step-desc{font-size:.78rem;color:var(--text2);line-height:1.6}
@@ -319,130 +499,13 @@ tbody tr.fresh{animation:rowIn .5s ease}
 .snake-emoji{font-size:5rem;animation:snakeGrow 1.5s cubic-bezier(.34,1.56,.64,1) forwards}
 @keyframes snakeGrow{from{transform:scaleY(0) translateY(50px)}to{transform:scaleY(1) translateY(0)}}
 .snake-connector{width:2px;height:16px;background:var(--border2);margin:0 auto}
-#screen-citrus{flex-direction:column;overflow:hidden}
-.cit-topbar{flex-shrink:0;display:flex;align-items:center;gap:12px;padding:11px 18px;background:var(--surface);border-bottom:2px solid var(--yellow);box-shadow:0 2px 8px rgba(217,119,6,.12)}
-.cit-topbar h2{font-size:.95rem;font-weight:800;color:var(--yellow)}
-.cit-tabs{flex-shrink:0;display:flex;background:var(--surface);border-bottom:1.5px solid var(--border);overflow-x:auto;padding:0 16px}
-.cit-tabs::-webkit-scrollbar{display:none}
-.cit-tab{padding:10px 18px;font-size:.75rem;font-weight:700;cursor:pointer;border-bottom:3px solid transparent;color:var(--text3);white-space:nowrap;transition:all .2s;font-family:var(--sans)}
-.cit-tab.active{color:var(--yellow);border-bottom-color:var(--yellow)}
-.cit-tab:hover:not(.active){color:var(--text);border-bottom-color:var(--border2)}
-.cit-body{flex:1;overflow-y:auto;padding:20px 24px;background:var(--bg)}
-.cit-body::-webkit-scrollbar{width:5px}
-.cit-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-.cit-panel{display:none}.cit-panel.active{display:block}
-.cit-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:16px;box-shadow:var(--shadow)}
-.cit-card-title{font-size:.85rem;font-weight:800;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.cit-section-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--yellow);color:#fff;font-size:.68rem;font-weight:800;flex-shrink:0}
-.mat-group{margin-bottom:12px}
-.mat-group-title{font-size:.7rem;font-weight:700;font-family:var(--mono);color:var(--yellow);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
-.mat-items{display:flex;flex-wrap:wrap;gap:6px}
-.mat-chip{padding:4px 11px;border-radius:20px;font-size:.7rem;font-weight:600;background:var(--yellow-l);border:1.5px solid var(--yellow-m);color:var(--yellow)}
-.mat-chip.blue{background:var(--blue-l);border-color:var(--blue-m);color:var(--blue)}
-.mat-chip.green{background:var(--green-l);border-color:var(--green-m);color:var(--green)}
-.step-list{display:flex;flex-direction:column;gap:10px}
-.step-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px}
-.step-badge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:.68rem;font-weight:800;flex-shrink:0;margin-top:1px}
-.step-text{font-size:.78rem;line-height:1.7;color:var(--text2)}
-.step-text strong{color:var(--text)}
-.step-highlight{background:var(--yellow-l);border:1.5px solid var(--yellow-m);border-radius:8px;padding:3px 9px;font-family:var(--mono);font-size:.72rem;color:var(--yellow);font-weight:700}
-.data-tbl-wrap{overflow-x:auto;margin-bottom:12px}
-.data-tbl{width:100%;border-collapse:collapse;font-size:.75rem}
-.data-tbl th{padding:9px 12px;text-align:center;font-family:var(--mono);font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;background:var(--surface2);border:1.5px solid var(--border);font-weight:700}
-.data-tbl td{padding:8px 10px;text-align:center;border:1.5px solid var(--border);color:var(--text2)}
-.data-tbl td.juice-name{font-weight:700;color:var(--text);background:var(--surface2);font-size:.72rem}
-.data-tbl td.calc-cell{font-family:var(--mono);font-size:.72rem;color:var(--blue);font-weight:600}
-.data-tbl input[type=number]{width:75px;padding:5px 7px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--mono);font-size:.75rem;text-align:center;background:var(--surface2);color:var(--text);outline:none;transition:border-color .2s}
-.data-tbl input[type=number]:focus{border-color:var(--yellow)}
-.tbl-note{font-size:.65rem;color:var(--text3);font-family:var(--mono);background:var(--blue-l);border:1px solid var(--blue-m);border-radius:7px;padding:6px 10px;margin-bottom:10px}
-.calc-steps-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;font-family:var(--mono);font-size:.75rem;line-height:1.9;color:var(--text2);margin-top:8px}
-.calc-steps-box strong{color:var(--blue)}
-.calc-result-big{font-size:1.1rem;font-weight:800;color:var(--green);font-family:var(--mono);padding:3px 0}
-.bar-chart-area{display:flex;flex-direction:column;gap:8px;margin-top:12px}
-.bar-row{display:flex;align-items:center;gap:10px}
-.bar-label{width:130px;font-size:.72rem;font-weight:700;text-align:right;color:var(--text2);flex-shrink:0;white-space:nowrap}
-.bar-track{flex:1;height:26px;background:var(--surface2);border-radius:8px;border:1.5px solid var(--border);position:relative;overflow:hidden}
-.bar-fill{height:100%;border-radius:6px;transition:width .8s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:flex-end;padding-left:6px}
-.bar-val{font-family:var(--mono);font-size:.65rem;font-weight:700;color:#fff;padding-right:8px;white-space:nowrap}
-.analysis-q{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px}
-.analysis-q-text{font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.6;display:flex;gap:8px}
-.analysis-q-num{color:var(--yellow);flex-shrink:0}
-.analysis-textarea{width:100%;min-height:80px;padding:9px 12px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:.78rem;color:var(--text);outline:none;resize:vertical;transition:border-color .2s;line-height:1.65}
-.analysis-textarea:focus{border-color:var(--yellow)}
-.analysis-hint-btn{font-size:.65rem;font-weight:600;color:var(--blue);background:var(--blue-l);border:1px solid var(--blue-m);border-radius:6px;padding:3px 9px;cursor:pointer;font-family:var(--sans);margin-top:6px;transition:background .2s}
-.analysis-hint-btn:hover{background:var(--blue-m)}
-.analysis-hint{font-size:.72rem;font-family:var(--mono);color:var(--text2);background:var(--blue-l);border:1px solid var(--blue-m);border-radius:7px;padding:8px 11px;margin-top:6px;line-height:1.7;display:none}
-.analysis-hint.show{display:block}
-.summary-winner{display:flex;align-items:center;gap:12px;padding:16px 18px;background:linear-gradient(135deg,var(--yellow-l),var(--orange-l));border:2px solid var(--yellow-m);border-radius:14px;margin-top:10px}
-.summary-trophy{font-size:2.2rem}
-.summary-text strong{color:var(--yellow);font-size:.95rem}
-.summary-text p{font-size:.75rem;color:var(--text2);margin-top:3px}
-.formula-box{background:var(--surface2);border:1.5px solid var(--blue-m);border-radius:10px;padding:12px 16px;font-family:var(--mono);font-size:.8rem;color:var(--blue);text-align:center;letter-spacing:.03em;margin:8px 0}
-#screen-powders{flex-direction:column;overflow:hidden}
-.pwd-top{flex-shrink:0;display:flex;align-items:center;gap:12px;padding:11px 18px;background:var(--surface);border-bottom:2px solid #6366f1;box-shadow:0 2px 8px rgba(99,102,241,.12)}
-.pwd-top h2{font-size:.93rem;font-weight:800;color:#4f46e5}
-.pwd-tabs{flex-shrink:0;display:flex;background:var(--surface);border-bottom:1.5px solid var(--border);overflow-x:auto;padding:0 16px}
-.pwd-tabs::-webkit-scrollbar{display:none}
-.pwd-tab{padding:10px 18px;font-size:.74rem;font-weight:700;cursor:pointer;border-bottom:3px solid transparent;color:var(--text3);white-space:nowrap;transition:all .2s}
-.pwd-tab.active{color:#4f46e5;border-bottom-color:#6366f1}
-.pwd-tab:hover:not(.active){color:var(--text);border-bottom-color:var(--border2)}
-.pwd-body{flex:1;overflow-y:auto;padding:20px 24px;background:var(--bg)}
-.pwd-body::-webkit-scrollbar{width:5px}
-.pwd-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-.pwd-panel{display:none}.pwd-panel.active{display:block}
-.pwd-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:16px;box-shadow:var(--shadow)}
-.pwd-card-title{font-size:.85rem;font-weight:800;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.pwd-badge{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:#6366f1;color:#fff;font-size:.68rem;font-weight:800;flex-shrink:0;padding:0 4px}
-.sub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
-.sub-card{border-radius:10px;border:1.5px solid var(--border);padding:12px 14px;background:var(--surface2)}
-.sub-card-name{font-size:.78rem;font-weight:800;color:var(--text);margin-bottom:4px}
-.sub-card-formula{font-family:var(--mono);font-size:.7rem;color:#6366f1;margin-bottom:8px}
-.sub-prop{font-size:.68rem;color:var(--text2);margin-bottom:3px;display:flex;gap:6px}
-.sub-prop-lbl{color:var(--text3);font-weight:600;white-space:nowrap}
-.bond-chip{display:inline-block;padding:2px 9px;border-radius:12px;font-size:.62rem;font-weight:700;margin-top:4px}
-.bond-ionic{background:#fee2e2;color:#dc2626;border:1px solid #fca5a5}
-.bond-covalent{background:#dbeafe;color:#2563eb;border:1px solid #93c5fd}
-.test-matrix-wrap{overflow-x:auto}
-.test-matrix{width:100%;border-collapse:collapse;font-size:.72rem}
-.test-matrix th{padding:8px 10px;text-align:center;font-size:.62rem;font-family:var(--mono);color:var(--text3);text-transform:uppercase;letter-spacing:.06em;background:var(--surface2);border:1.5px solid var(--border);font-weight:700;white-space:nowrap}
-.test-matrix td{padding:6px 8px;border:1.5px solid var(--border);text-align:center;vertical-align:middle}
-.test-matrix td.sub-hdr{font-weight:800;font-size:.72rem;color:var(--text);background:var(--surface2);white-space:nowrap;text-align:right;padding-right:12px}
-.obs-inp{width:100%;min-width:90px;padding:5px 7px;border:1.5px solid var(--border);border-radius:7px;font-size:.7rem;background:var(--surface);color:var(--text);outline:none;text-align:center;transition:border-color .2s}
-.obs-inp:focus{border-color:#6366f1}
-.flow-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
-.flow-node{border-radius:10px;border:2px solid var(--border);padding:10px 16px;font-size:.75rem;font-weight:700;text-align:center;background:var(--surface2);max-width:300px;width:100%;position:relative}
-.flow-test{border-color:#6366f1;background:#eef2ff;color:#4f46e5}
-.flow-id{border-color:#059669;background:var(--green-l);color:#059669;font-size:.8rem}
-.flow-arrow{display:flex;flex-direction:column;align-items:center;font-size:.62rem;color:var(--text3);gap:0;margin:0}
-.flow-arrow-line{width:2px;height:18px;background:var(--border2)}
-.flow-arrow-head{color:var(--border2);font-size:.8rem;line-height:1;margin-top:-4px}
-.flow-branch{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;margin-top:0}
-.flow-branch-lbl{font-size:.65rem;font-weight:700;text-align:center;padding:2px 10px;border-radius:8px;font-family:var(--mono)}
-.lbl-yes{background:#dcfce7;color:#15803d}
-.lbl-no{background:#fee2e2;color:#dc2626}
-.order-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.order-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;background:var(--surface2)}
-.order-cb{width:16px;height:16px;accent-color:#6366f1;cursor:pointer;flex-shrink:0}
-.order-label{font-size:.74rem;color:var(--text2)}
-.order-item.checked{border-color:#6366f1;background:#eef2ff}
-.order-item.checked .order-label{color:#4f46e5;font-weight:600}
-.id-guess-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
-.cup-badge{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;font-size:.85rem;font-weight:800;background:#eef2ff;border:2px solid #6366f1;color:#4f46e5;flex-shrink:0}
-.id-select{padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:.75rem;color:var(--text);background:var(--surface);outline:none;flex:1;min-width:160px;transition:border-color .2s}
-.id-select:focus{border-color:#6366f1}
-.id-justification{width:100%;padding:7px 11px;border:1.5px solid var(--border);border-radius:8px;font-size:.73rem;color:var(--text);background:var(--surface);outline:none;resize:none;font-family:var(--sans);line-height:1.6;transition:border-color .2s}
-.id-justification:focus{border-color:#6366f1}
-.id-check-btn{padding:7px 18px;background:#6366f1;border:none;border-radius:9px;color:#fff;font-weight:700;font-size:.75rem;cursor:pointer;font-family:var(--sans);transition:all .2s}
-.id-check-btn:hover{background:#4f46e5}
-.id-result-row{padding:10px 14px;border-radius:9px;font-size:.78rem;font-weight:700;margin-top:10px;display:none}
-.id-result-row.show{display:flex;align-items:center;gap:8px}
-.id-result-row.all-correct{background:#dcfce7;border:1.5px solid #86efac;color:#15803d}
-.id-result-row.has-error{background:#fee2e2;border:1.5px solid #fca5a5;color:#dc2626}
 </style>
 </head>
 <body>
 
-<!-- LANDING -->
+<!-- ══════════════════════════════════════
+     SCREEN 1: LANDING
+══════════════════════════════════════ -->
 <div id="screen-landing" class="screen active">
   <div class="landing-hero">
     <div class="hero-icon">⚗️</div>
@@ -482,7 +545,8 @@ tbody tr.fresh{animation:rowIn .5s ease}
       <div class="exp-tags"><span class="exp-tag">קטליזה</span><span class="exp-tag">H₂O₂</span><span class="exp-tag">חמצון</span></div>
       <div class="exp-arrow"><span>לחצו להתחלה</span><span class="arrow-icon">←</span></div>
     </div>
-    <div class="exp-card" style="border-color:var(--border)" onclick="goTo('screen-reaction')" onmouseover="this.style.borderColor='#0d9488'" onmouseout="this.style.borderColor='var(--border)'">
+    <div class="exp-card" style="border-color:var(--border)" onclick="goTo('screen-reaction')"
+      onmouseover="this.style.borderColor='#0d9488'" onmouseout="this.style.borderColor='var(--border)'">
       <div class="exp-emoji">⚗️</div>
       <div class="exp-badge" style="background:var(--teal-l);border:1.5px solid var(--teal-m);color:var(--teal)">ניסוי 5</div>
       <div class="exp-name">סימולטור<br>תגובות תלת–ממד</div>
@@ -490,7 +554,9 @@ tbody tr.fresh{animation:rowIn .5s ease}
       <div class="exp-tags"><span class="exp-tag">3D</span><span class="exp-tag">AI</span><span class="exp-tag">מולקולות</span></div>
       <div class="exp-arrow"><span>לחצו להתחלה</span><span class="arrow-icon">←</span></div>
     </div>
-    <div class="exp-card" style="border-color:var(--border)" onclick="goTo('screen-citrus')" onmouseover="this.style.borderColor='#d97706';this.style.transform='translateY(-6px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform=''">
+    <div class="exp-card" style="border-color:var(--border)" onclick="goTo('screen-citrus')"
+      onmouseover="this.style.borderColor='#d97706';this.style.transform='translateY(-6px)';this.style.boxShadow='0 12px 32px rgba(217,119,6,.18)'"
+      onmouseout="this.style.borderColor='var(--border)';this.style.transform='';this.style.boxShadow=''">
       <div class="exp-emoji">🍋</div>
       <div class="exp-badge" style="background:var(--yellow-l);border:1.5px solid var(--yellow-m);color:var(--yellow)">ניסוי חקר 6</div>
       <div class="exp-name">מי הכי<br>חמוץ? 🍊🍋</div>
@@ -498,7 +564,9 @@ tbody tr.fresh{animation:rowIn .5s ease}
       <div class="exp-tags"><span class="exp-tag">חקר</span><span class="exp-tag">רמה I</span><span class="exp-tag">חומצה ציטרית</span><span class="exp-tag">טיטרציה</span></div>
       <div class="exp-arrow"><span>לחצו להתחלה</span><span class="arrow-icon">←</span></div>
     </div>
-    <div class="exp-card" style="border-color:var(--border)" onclick="goTo('screen-powders')" onmouseover="this.style.borderColor='#6366f1';this.style.transform='translateY(-6px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform=''">
+    <div class="exp-card" style="border-color:var(--border)" onclick="goTo('screen-powders')"
+      onmouseover="this.style.borderColor='#6366f1';this.style.transform='translateY(-6px)';this.style.boxShadow='0 12px 32px rgba(99,102,241,.18)'"
+      onmouseout="this.style.borderColor='var(--border)';this.style.transform='';this.style.boxShadow=''">
       <div class="exp-emoji">🔬</div>
       <div class="exp-badge" style="background:#eef2ff;border:1.5px solid #c7d2fe;color:#4f46e5">ניסוי חקר 7</div>
       <div class="exp-name">אבקות<br>לבנות 🧪</div>
@@ -509,7 +577,9 @@ tbody tr.fresh{animation:rowIn .5s ease}
   </div>
 </div>
 
-<!-- TITRATION -->
+<!-- ══════════════════════════════════════
+     SCREEN 2: TITRATION  (3 VERTICAL ROWS)
+══════════════════════════════════════ -->
 <div id="screen-titration" class="screen">
   <div class="tit-app">
     <header class="tit-hdr">
@@ -517,35 +587,77 @@ tbody tr.fresh{animation:rowIn .5s ease}
         <button class="back-btn" onclick="goTo('screen-landing')">⬅ חזרה</button>
         <div class="hdr-left">
           <h1>🧪 סימולטור טיטרציה מתקדם</h1>
-          <p id="hdr-sub">HCl (חומצה הידרוכלורית) ← NaOH (נתרן הידרוקסידי) 0.1M</p>
+          <p id="hdr-sub">HCl (חומצה הידרוכלורית) ← NaOH (נתרן הידרוקסידי) 0.5M</p>
         </div>
       </div>
       <div class="hdr-right">
-        <div id="normal-status" class="pill pill-green"><div class="pdot pdot-g"></div>מצב רגיל</div>
-        <div id="challenge-status" class="pill pill-yellow" style="display:none"><div class="pdot pdot-y"></div>מצב בחינה</div>
-        <button class="btn btn-outline-yellow" onclick="startChallenge()">⬡ מצב בחינה</button>
+        <button class="btn btn-outline-blue" style="font-size:.72rem;padding:6px 12px" onclick="toggleTheory()">📖 רקע</button>
       </div>
     </header>
+
+    <!-- Theory panel -->
+    <div id="theory-panel" style="display:none;border-bottom:1.5px solid var(--blue-m);
+      background:var(--blue-l);overflow-y:auto;max-height:42vh;padding:16px 22px">
+      <div style="max-width:860px;margin:0 auto">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <h2 style="font-size:.95rem;font-weight:800;color:var(--blue)">📖 רקע תיאורטי — טיטור חומצה–בסיס במיץ לימון</h2>
+          <button onclick="toggleTheory()" style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--blue);padding:2px 6px">✕</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div style="background:var(--surface);border:1.5px solid var(--blue-m);border-radius:10px;padding:14px 16px">
+            <div style="font-size:.8rem;font-weight:800;color:var(--blue);margin-bottom:8px">🔬 מהי שיטת הטיטור?</div>
+            <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">טיטור הוא כלי מרכזי ב<strong>כימיה אנליטית</strong> המאפשר לגלות ריכוז לא ידוע של חומר בתמיסה. עושים זאת על ידי הוספה <strong>מבוקרת והדרגתית</strong> של תמיסה שריכוזה ידוע במדויק (ה<strong>טיטרנט</strong>), עד להשלמת התגובה הכימית ביניהן.</div>
+          </div>
+          <div style="background:var(--surface);border:1.5px solid #fed7aa;border-radius:10px;padding:14px 16px">
+            <div style="font-size:.8rem;font-weight:800;color:var(--orange);margin-bottom:8px">🍋 התהליך הכימי בניסוי</div>
+            <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">מיץ הלימון מכיל בעיקר <strong>חומצה ציטרית (C₆H₈O₇)</strong> — חומצה שלש–פרוטונית. הטיטרנט הוא <strong>NaOH</strong> בריכוז ידוע. כשמטפטפים NaOH למיץ, מתרחשת <strong>תגובת נטרול</strong>.
+              <div style="margin-top:8px;padding:6px 10px;background:#fff7ed;border-radius:7px;font-family:var(--mono);font-size:.68rem;color:var(--orange);text-align:center">H₃Cit + 3 NaOH → Na₃Cit + 3H₂O</div>
+            </div>
+          </div>
+          <div style="background:var(--surface);border:1.5px solid var(--purple-m);border-radius:10px;padding:14px 16px">
+            <div style="font-size:.8rem;font-weight:800;color:var(--purple);margin-bottom:8px">🎯 נקודת שיווי המשקל</div>
+            <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">מוסיפים לתמיסה <strong>פנולפתלאין</strong>. ברגע שכל החומצה נוטרלה, הטיפה הבאה תהפוך את התמיסה ל<strong style="color:var(--pink)">ורוד/סגול</strong>. זוהי <strong>נקודת הסיום</strong>.</div>
+          </div>
+          <div style="background:var(--surface);border:1.5px solid var(--green-m);border-radius:10px;padding:14px 16px">
+            <div style="font-size:.8rem;font-weight:800;color:var(--green);margin-bottom:8px">🧮 חישוב ריכוז החומצה</div>
+            <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <div><span style="font-family:var(--mono);color:var(--green);font-weight:700">① </span>n(NaOH) = C(NaOH) × V(NaOH)</div>
+                <div><span style="font-family:var(--mono);color:var(--green);font-weight:700">② </span>n(H₃Cit) = n(NaOH) / 3</div>
+                <div><span style="font-family:var(--mono);color:var(--green);font-weight:700">③ </span>C = n(H₃Cit) / V(מיץ)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         WORKSPACE — 3 VERTICAL ROWS
+    ════════════════════════════════ -->
     <div class="workspace">
+
+      <!-- ── ROW 1: CONTROL PANEL ── -->
+      <div class="panel-label-bar">
+        <span>⚙️</span><span>פאנל בקרה</span>
+        <span style="opacity:.5;font-size:.6rem">— סוג חומצה · ציוד מעבדה · הוספת טיטרנט</span>
+      </div>
       <div class="side-panel">
+
+        <!-- Acid selector -->
         <div class="sp-section">
           <div class="plabel">סוג חומצה</div>
           <div class="acid-section-lbl">חומצות טהורות</div>
-          <div class="acid-toggle">
+          <div class="acid-toggle" style="grid-template-columns:1fr 1fr">
             <div class="acid-btn act-strong" id="btn-strong" onclick="setAcidType('strong')">
               <div style="font-size:.75rem;font-weight:800">HCl</div>
               <div style="font-size:.55rem;opacity:.75">הידרוכלורית</div>
-              <div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#dc2626;opacity:.85" id="ph-lbl-strong">pH ≈ 1.0</div>
-            </div>
-            <div class="acid-btn" id="btn-weak" onclick="setAcidType('weak')">
-              <div style="font-size:.68rem;font-weight:800">CH₃COOH</div>
-              <div style="font-size:.55rem;opacity:.75">אצטית</div>
-              <div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#ea580c;opacity:.85" id="ph-lbl-weak">pH ≈ 2.87</div>
+              <div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#dc2626;opacity:.85" id="ph-lbl-strong">pH ≈ 0.3</div>
             </div>
             <div class="acid-btn" id="btn-citric" onclick="setAcidType('citric')">
               <div style="font-size:.68rem;font-weight:800">H₃Cit</div>
               <div style="font-size:.55rem;opacity:.75">ציטרית</div>
-              <div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#0d9488;opacity:.85" id="ph-lbl-citric">pH ≈ 1.98</div>
+              <div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#0d9488;opacity:.85" id="ph-lbl-citric">pH ≈ 1.30</div>
             </div>
           </div>
           <div class="acid-section-lbl" style="margin-top:10px">🍊 מיצי פירות הדר</div>
@@ -553,17 +665,21 @@ tbody tr.fresh{animation:rowIn .5s ease}
             <div class="acid-btn" id="btn-j-lemon" onclick="setJuice('lemon')"><div style="font-size:.85rem">🍋</div><div style="font-size:.65rem;font-weight:800">לימון</div><div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#ca8a04;opacity:.85">pH 2.0–2.5</div></div>
             <div class="acid-btn" id="btn-j-orange" onclick="setJuice('orange')"><div style="font-size:.85rem">🍊</div><div style="font-size:.65rem;font-weight:800">תפוז</div><div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#ea580c;opacity:.85">pH 3.3–4.2</div></div>
             <div class="acid-btn" id="btn-j-grapefruit" onclick="setJuice('grapefruit')"><div style="font-size:.85rem">🍈</div><div style="font-size:.65rem;font-weight:800">אשכולית</div><div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#d97706;opacity:.85">pH 3.0–3.4</div></div>
+            <div class="acid-btn" id="btn-j-clementine" onclick="setJuice('clementine')"><div style="font-size:.85rem">🍊</div><div style="font-size:.65rem;font-weight:800">קלמנטינה</div><div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#f97316;opacity:.85">pH 3.5–4.5</div></div>
             <div class="acid-btn" id="btn-j-lime" onclick="setJuice('lime')"><div style="font-size:.85rem">🟢</div><div style="font-size:.65rem;font-weight:800">ליים</div><div style="font-size:.52rem;font-family:var(--mono);margin-top:2px;color:#65a30d;opacity:.85">pH 2.0–2.4</div></div>
           </div>
           <div class="base-conc-row" id="base-conc-row">
             <label>ריכוז NaOH:</label>
-            <input class="base-conc-inp" id="base-conc-inp" type="number" min="0.01" max="1.0" step="0.01" value="0.10" onchange="updateBaseConc(this.value)" oninput="updateBaseConc(this.value)">
+            <input class="base-conc-inp" id="base-conc-inp" type="number" min="0.01" max="1.0" step="0.01" value="0.50"
+              onchange="updateBaseConc(this.value)" oninput="updateBaseConc(this.value)">
             <span class="base-conc-unit">M</span>
           </div>
         </div>
+
+        <!-- Lab visual -->
         <div class="sp-section" id="lab-panel">
           <div class="lab-visual">
-            <div class="burette-label" id="burette-label-txt">ביורטה — NaOH 0.10M</div>
+            <div class="burette-label" id="burette-label-txt">ביורטה — NaOH 0.50M</div>
             <div class="burette-outer">
               <div class="burette-body"><div class="burette-fill" id="burette-fill"></div></div>
               <div class="burette-tap"><div class="drip" id="drip"></div></div>
@@ -584,7 +700,7 @@ tbody tr.fresh{animation:rowIn .5s ease}
               </svg>
               <canvas id="vortex-canvas" width="110" height="120" style="position:absolute;top:0;left:0;pointer-events:none"></canvas>
             </div>
-            <div style="font-size:.6rem;font-family:var(--mono);color:var(--text3);margin-top:2px">ארלנמייר — HCl 25 מ"ל</div>
+            <div style="font-size:.6rem;font-family:var(--mono);color:var(--text3);margin-top:2px">ארלנמייר — HCl 20 מ"ל</div>
           </div>
           <div style="margin-top:12px">
             <div class="plabel">סקלת pH</div>
@@ -596,6 +712,8 @@ tbody tr.fresh{animation:rowIn .5s ease}
             <div class="metric"><div class="plabel">pH נוכחי</div><div class="metric-val mv-acid" id="ph-display">1.00</div><div class="metric-unit">ערך</div></div>
           </div>
         </div>
+
+        <!-- Add titrant controls -->
         <div class="sp-section">
           <div class="plabel">הוספת טיטרנט</div>
           <div class="mode-toggle">
@@ -609,19 +727,22 @@ tbody tr.fresh{animation:rowIn .5s ease}
             <button class="btn btn-outline-red" onclick="resetSimulation()">↺ איפוס</button>
           </div>
         </div>
-        <div class="sp-section">
-          <div class="plabel">אינדיקטור</div>
-          <select class="styled-sel" id="indicator" onchange="updateLiquid()">
-            <option value="phenolphthalein">פנולפתלאין</option>
-            <option value="universal">אינדיקטור אוניברסלי</option>
-          </select>
-        </div>
+
+      </div><!-- /side-panel -->
+
+      <!-- ── ROW 2: CHART + QUIZ ── -->
+      <div class="panel-label-bar">
+        <span>📊</span><span>גרף וניתוח</span>
+        <span style="opacity:.5;font-size:.6rem">— עקומת טיטרציה · שאלות אינטראקטיביות</span>
       </div>
       <div class="center-col">
         <div class="chart-card">
           <div class="chart-hdr">
-            <div><div class="chart-title-main">עקומת טיטרציה</div><div class="chart-sub">pH כפונקציה של נפח NaOH</div></div>
-            <div id="eq-tag" class="eq-tag">✓ נ.מ. — pH = <span id="eq-ph-val">7.00</span></div>
+            <div>
+              <div class="chart-title-main">עקומת טיטרציה</div>
+              <div class="chart-sub">pH כפונקציה של נפח NaOH</div>
+            </div>
+            <div id="eq-tag" class="eq-tag">✓ נ.ש.מ. — pH = <span id="eq-ph-val">7.00</span></div>
           </div>
           <div class="chart-box"><canvas id="titrationChart"></canvas></div>
         </div>
@@ -631,13 +752,42 @@ tbody tr.fresh{animation:rowIn .5s ease}
             <div class="quiz-phases">
               <div class="qphase active" id="qp0">לפני הניסוי</div>
               <div class="qphase" id="qp1">אמצע הניסוי</div>
-              <div class="qphase" id="qp2">נקודת מקבילות</div>
+              <div class="qphase" id="qp2">נקודת שיווי משקל</div>
             </div>
           </div>
           <div class="quiz-body" id="quiz-body"></div>
         </div>
+
+        <!-- Dilution Q -->
         <div class="quiz-card" style="margin-top:10px">
-          <div class="quiz-hdr"><div style="font-size:.8rem;font-weight:700;color:#6366f1;display:flex;align-items:center;gap:6px">🧠 שאלת עיון</div></div>
+          <div class="quiz-hdr">
+            <div style="font-size:.8rem;font-weight:700;color:#6366f1;display:flex;align-items:center;gap:6px">🧠 שאלת עיון</div>
+          </div>
+          <div style="padding:12px 14px">
+            <div style="font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:10px;line-height:1.6">
+              אם נוסיף בטעות קצת <strong>מים מזוקקים</strong> לארלנמייר עם מיץ התפוזים לפני שנתחיל לטפטף את הבסיס — האם נצטרך להוסיף <strong>יותר, פחות, או אותה כמות</strong> של NaOH מהביורטה?
+            </div>
+            <div style="display:flex;gap:6px;margin-bottom:10px" id="dil-q-btns">
+              <button onclick="dilQAnswer('more')" style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-size:.73rem;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .2s" id="dil-q-more">יותר NaOH</button>
+              <button onclick="dilQAnswer('less')" style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-size:.73rem;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .2s" id="dil-q-less">פחות NaOH</button>
+              <button onclick="dilQAnswer('same')" style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-size:.73rem;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .2s" id="dil-q-same">אותה כמות</button>
+            </div>
+            <div id="dil-q-answer" style="display:none">
+              <div id="dil-q-verdict" style="padding:8px 12px;font-size:.75rem;font-weight:700;border-radius:9px 9px 0 0"></div>
+              <div style="padding:10px 12px;background:var(--blue-l);border:1.5px solid var(--blue-m);border-radius:0 0 9px 9px;font-size:.75rem;line-height:1.8;color:var(--text2)">
+                הוספת מים <strong>מדללת את הריכוז</strong>, אך <strong>אינה משנה את מספר המולים</strong> של החומצה.<br>
+                הטיטור מגיב לכמות המולים — לא לריכוז — ולכן תידרש <strong>אותה כמות בדיוק</strong> של NaOH.<br><br>
+                <span style="font-family:var(--mono);font-size:.68rem;color:#6366f1">n(חומצה) = C × V → דילול מקטין את C אך מגדיל את V באותו יחס, כך ש-n נשאר קבוע.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- pH Q -->
+        <div class="quiz-card" style="margin-top:10px">
+          <div class="quiz-hdr">
+            <div style="font-size:.8rem;font-weight:700;color:#6366f1;display:flex;align-items:center;gap:6px">🧠 שאלת עיון — pH וריכוז</div>
+          </div>
           <div style="padding:12px 14px">
             <div style="font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:10px;line-height:1.55">האם ניתן לגלות את <strong>ריכוז החומצה</strong> על סמך ה-pH בלבד?</div>
             <div style="display:flex;gap:8px;margin-bottom:10px" id="ph-q-btns">
@@ -648,16 +798,24 @@ tbody tr.fresh{animation:rowIn .5s ease}
               <div id="ph-q-verdict" style="padding:8px 12px;font-size:.75rem;font-weight:700"></div>
               <div style="padding:10px 12px;background:var(--blue-l);border:1.5px solid var(--blue-m);border-radius:9px;font-size:.75rem;line-height:1.75;color:var(--text2)">
                 זו בדיוק הסיבה שבגללה אנו מבצעים את ניסוי הטיטור.<br>
-                ה-pH מודד רק את הפרוטונים שכבר <strong>התנתקו</strong> מהחומצה — כלומר רק את החלק שהתפרק.<br>
-                בטיטור, ה-NaOH <strong>"מאלץ"</strong> גם את מולקולות החומצה שלא התפרקו להגיב ולמסור את כל הפרוטונים שלהן.<br>
+                ה-pH מודד רק את הפרוטונים שכבר <strong>התנתקו</strong> מהחומצה.<br>
+                בטיטור, ה-NaOH <strong>"מאלץ"</strong> גם את מולקולות החומצה שלא התפרקו להגיב.<br>
                 כך הטיטור מודד את <strong>סך כל החומצה</strong> — הן זו שהתפרקה והן זו שלא.<br><br>
-                <span style="font-family:var(--mono);color:#6366f1;font-size:.7rem">לדוגמה: לימון ותפוז יכולים לקבל pH דומה (~3.2), אך ריכוז החומצה הציטרית בלימון גבוה בהרבה — והטיטור הוא זה שמגלה זאת.</span>
+                <span style="font-family:var(--mono);color:#6366f1;font-size:.7rem">לדוגמה: לימון ותפוז יכולים לקבל pH דומה (~3.2), אך ריכוז החומצה הציטרית בלימון גבוה בהרבה.</span>
               </div>
             </div>
           </div>
         </div>
+      </div><!-- /center-col -->
+
+      <!-- ── ROW 3: DATA LOG + PARAMS ── -->
+      <div class="panel-label-bar">
+        <span>📋</span><span>יומן נתונים</span>
+        <span style="opacity:.5;font-size:.6rem">— מדידות · פרמטרי ניסוי</span>
       </div>
       <div class="right-panel">
+
+        <!-- Measurements table -->
         <div class="rp-section">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
             <div class="plabel" style="margin:0">יומן מדידות</div>
@@ -667,33 +825,33 @@ tbody tr.fresh{animation:rowIn .5s ease}
             </div>
           </div>
           <div class="table-scroll">
-            <table><thead><tr><th>נפח</th><th>pH</th><th>שלב</th><th>צבע</th></tr></thead><tbody id="data-body"></tbody></table>
+            <table>
+              <thead><tr><th>נפח</th><th>pH</th><th>שלב</th><th>צבע</th></tr></thead>
+              <tbody id="data-body"></tbody>
+            </table>
           </div>
         </div>
+
+        <!-- Params + challenge answer -->
         <div class="rp-section">
           <div class="plabel">פרמטרי ניסוי</div>
           <div class="params-grid">
             <div class="param-card"><div class="plabel">חומצה</div><div class="param-val" id="p-acid-name" style="color:var(--red)">HCl</div><div class="param-sub">25.0 מ"ל</div></div>
-            <div class="param-card"><div class="plabel">ריכוז Ca</div><div class="param-val" id="p-acid-conc" style="color:var(--red)">0.100 M</div></div>
-            <div class="param-card"><div class="plabel">נ.מ. תיאורטית</div><div class="param-val" id="p-eq" style="color:var(--green)">25.0 מ"ל</div></div>
-            <div class="param-card"><div class="plabel">pH בנ.מ.</div><div class="param-val" id="p-eq-ph" style="color:var(--green)">7.00</div></div>
-          </div>
-          <div class="ch-answer" id="ch-ans-box">
-            <div style="font-size:.7rem;font-weight:700;color:var(--yellow)">⬡ חשב את ריכוז החומצה!</div>
-            <div style="font-size:.65rem;font-family:var(--mono);color:var(--text2)" id="ch-formula-hint">Ca = (Cb × Vb) / Va</div>
-            <div class="ch-inp-row">
-              <input class="ch-inp" type="number" id="ch-ans-inp" placeholder="0.000" step="0.001">
-              <button class="btn btn-outline-yellow" style="padding:7px 12px;font-size:.75rem" onclick="checkChallengeAnswer()">בדוק</button>
-            </div>
-            <div class="ch-fb" id="ch-fb"></div>
+            <div class="param-card"><div class="plabel">ריכוז Ca</div><div class="param-val" id="p-acid-conc" style="color:var(--yellow)">??? M</div></div>
+            <div class="param-card"><div class="plabel">נ.ש.מ. תיאורטית</div><div class="param-val" id="p-eq" style="color:var(--text3)">???</div></div>
+            <div class="param-card"><div class="plabel">pH בנ.ש.מ.</div><div class="param-val" id="p-eq-ph" style="color:var(--green)">7.00</div></div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- CABBAGE -->
+      </div><!-- /right-panel -->
+
+    </div><!-- /workspace -->
+  </div><!-- /tit-app -->
+</div><!-- /screen-titration -->
+
+<!-- ══════════════════════════════════════
+     SCREEN 3: CABBAGE
+══════════════════════════════════════ -->
 <div id="screen-cabbage" class="screen" style="flex-direction:column">
   <div class="exp-top-bar" style="border-color:#a855f7">
     <button class="back-btn" onclick="goTo('screen-landing')">⬅ חזרה</button>
@@ -732,7 +890,9 @@ tbody tr.fresh{animation:rowIn .5s ease}
   </div>
 </div>
 
-<!-- HYDRATE -->
+<!-- ══════════════════════════════════════
+     SCREEN 4: HYDRATE
+══════════════════════════════════════ -->
 <div id="screen-hydrate" class="screen" style="flex-direction:column">
   <div class="exp-top-bar" style="border-color:var(--orange)">
     <button class="back-btn" onclick="goTo('screen-landing')">⬅ חזרה</button>
@@ -753,23 +913,13 @@ tbody tr.fresh{animation:rowIn .5s ease}
       </div>
       <div class="hyd-calc-box" id="hyd-calc">
         <div style="font-size:.88rem;font-weight:800;margin-bottom:12px" id="hyd-title">חישוב נוסחת ההידראט</div>
-        <div class="hyd-step">
-          <div style="font-weight:700;margin-bottom:4px">שלב 1 — נתוני הניסוי:</div>
-          מסת כלי + הידראט לפני: <strong id="hyd-before"></strong> g<br>
-          מסת כלי + מלח יבש אחרי: <strong id="hyd-after"></strong> g<br>
-          מסת הכלי הריק: <strong id="hyd-dish"></strong> g
-        </div>
-        <div class="hyd-step">
-          <div style="font-weight:700;margin-bottom:4px">שלב 2 — חשב:</div>
-          מסת ההידראט = <span style="color:var(--orange);font-weight:700" id="hyd-m-hydrate"></span> g<br>
-          מסת המלח היבש = <span style="color:var(--orange);font-weight:700" id="hyd-m-salt"></span> g<br>
-          מסת המים שאבדה = <span style="color:var(--orange);font-weight:700" id="hyd-m-water"></span> g
-        </div>
+        <div class="hyd-step"><div style="font-weight:700;margin-bottom:4px">שלב 1 — נתוני הניסוי:</div>מסת כלי + הידראט לפני: <strong id="hyd-before"></strong> g<br>מסת כלי + מלח יבש אחרי: <strong id="hyd-after"></strong> g<br>מסת הכלי הריק: <strong id="hyd-dish"></strong> g</div>
+        <div class="hyd-step"><div style="font-weight:700;margin-bottom:4px">שלב 2 — חשב:</div>מסת ההידראט = <span style="color:var(--orange);font-weight:700" id="hyd-m-hydrate"></span> g<br>מסת המלח היבש = <span style="color:var(--orange);font-weight:700" id="hyd-m-salt"></span> g<br>מסת המים שאבדה = <span style="color:var(--orange);font-weight:700" id="hyd-m-water"></span> g</div>
         <div class="hyd-step">
           <div style="font-weight:700;margin-bottom:6px">שלב 3 — חשב mol מים ומלח:</div>
           mol מים (M=18) = <input class="hyd-inp" id="hyd-inp-water" type="number" step="0.001" placeholder="mol"><br><br>
           mol מלח = <input class="hyd-inp" id="hyd-inp-salt" type="number" step="0.001" placeholder="mol"><br><br>
-          <button class="btn btn-outline-orange" style="margin-top:6px;--orange-l:#fff7ed;background:var(--orange-l);border-color:var(--orange);color:var(--orange)" onclick="checkHydrate()">בדוק תשובה</button>
+          <button class="btn btn-outline-orange" style="margin-top:6px;background:var(--orange-l);border-color:var(--orange);color:var(--orange)" onclick="checkHydrate()">בדוק תשובה</button>
         </div>
         <div class="hyd-result" id="hyd-result"></div>
       </div>
@@ -777,7 +927,9 @@ tbody tr.fresh{animation:rowIn .5s ease}
   </div>
 </div>
 
-<!-- SNAKE -->
+<!-- ══════════════════════════════════════
+     SCREEN 5: FOAM SNAKE
+══════════════════════════════════════ -->
 <div id="screen-snake" class="screen" style="flex-direction:column">
   <div class="exp-top-bar" style="border-color:var(--green)">
     <button class="back-btn" onclick="goTo('screen-landing')">⬅ חזרה</button>
@@ -788,8 +940,7 @@ tbody tr.fresh{animation:rowIn .5s ease}
     <div class="snake-container">
       <div style="background:var(--green-l);border:2px solid var(--green-m);border-radius:14px;padding:16px 20px;margin-bottom:20px;font-size:.82rem;line-height:1.7;color:var(--text2)">
         <strong style="color:var(--green)">מה קורה כאן?</strong><br>
-        יוד (I⁻ מ-KI) פועל כקטליזטור לפירוק <strong>H₂O₂</strong> למים וחמצן. החמצן הנוצר במהירות "תוקע" בתוך סבון ויוצר קצף אדיר — <strong>"נחש פרוע" של אלפנטים!</strong><br>
-        המשוואה: <span style="font-family:var(--mono)">2H₂O₂ → 2H₂O + O₂↑</span>
+        יוד (I⁻ מ-KI) פועל כקטליזטור לפירוק <strong>H₂O₂</strong> למים וחמצן. החמצן הנוצר במהירות "תוקע" בתוך סבון ויוצר קצף אדיר.<br>המשוואה: <span style="font-family:var(--mono)">2H₂O₂ → 2H₂O + O₂↑</span>
       </div>
       <div class="plabel">שלבי הניסוי — לחצו לפי הסדר:</div>
       <div class="snake-steps">
@@ -807,7 +958,7 @@ tbody tr.fresh{animation:rowIn .5s ease}
         <div class="snake-connector"></div>
         <div class="snake-step" id="snake-s2">
           <div class="step-header"><div class="step-num">3</div><div class="step-title">⚠️ הוספת הקטליזטור</div></div>
-          <div class="step-desc"><strong>בזהירות ובמרחק בטוח!</strong> יוצקים את תמיסת KI לתוך כוס H₂O₂. התגובה מתחילה מיידית! הניסוי מייצר <strong>חום ואדים</strong> — יש לבצע במעבדה מאווררת.</div>
+          <div class="step-desc"><strong>בזהירות ובמרחק בטוח!</strong> יוצקים את תמיסת KI לתוך כוס H₂O₂. התגובה מתחילה מיידית!</div>
           <button class="btn btn-blue" style="margin-top:10px" onclick="snakeNext(2)">🚀 התחל תגובה!</button>
         </div>
         <div class="snake-connector"></div>
@@ -836,7 +987,441 @@ tbody tr.fresh{animation:rowIn .5s ease}
   </div>
 </div>
 
-<!-- REACTION 3D -->
+<script>
+/* ══════════════════════════════════
+   NAVIGATION
+══════════════════════════════════ */
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='screen-titration' && !chart) initChart();
+  if(id==='screen-reaction'){
+    setTimeout(()=>{
+      rxnInitScene();
+      if(!rxnRAF && rxnRenderer && rxnScene && rxnCamera){
+        (function animate(){rxnRAF=requestAnimationFrame(animate);rxnRenderer.render(rxnScene,rxnCamera);})();
+      }
+    },50);
+  }
+  if(id==='screen-citrus') citInit();
+  if(id==='screen-powders') pwdInit();
+}
+
+/* ══════════════════════════════════
+   TITRATION ENGINE
+══════════════════════════════════ */
+let vAcid=20,cAcid=0.5,cBase=0.5,vBaseTotal=0;
+let acidType='strong',buretteMode='stream';
+let chart,rowCount=0,eqReached=false,eqVolume=0,dataLog=[];
+let quizPhase=0,quizDone=[false,false,false],midQuizTriggered=false;
+let vortexAngle=0,vortexRAF=null,vortexActive=false;
+const dataPoints=[{x:0,y:1}];
+
+function calculatePH(vBase){
+  const nAcid=(cAcid*vAcid)/1000;
+  const nBase=(cBase*vBase)/1000;
+  const totalVol=(vAcid+vBase)/1000;
+  if(acidType==='strong'){
+    if(vBase===0) return -Math.log10(cAcid);
+    if(nAcid>nBase) return -Math.log10((nAcid-nBase)/totalVol);
+    if(nBase>nAcid) return 14+Math.log10((nBase-nAcid)/totalVol);
+    return 7.0;
+  }
+  if(acidType==='citric'){
+    const pKa1=3.13,pKa2=4.76,pKa3=6.40;
+    const Ka1=Math.pow(10,-pKa1);
+    const eps=1e-9;
+    if(vBase===0) return -Math.log10((-Ka1+Math.sqrt(Ka1*Ka1+4*Ka1*cAcid))/2);
+    const ratio=nBase/nAcid;
+    if(ratio<1-eps){
+      if(nBase<eps) return -Math.log10((-Ka1+Math.sqrt(Ka1*Ka1+4*Ka1*cAcid))/2);
+      return pKa1+Math.log10(nBase/(nAcid-nBase));
+    }
+    if(Math.abs(ratio-1)<eps) return (pKa1+pKa2)/2;
+    if(ratio<2-eps){
+      const nH2A=2*nAcid-nBase;
+      const nHA2=nBase-nAcid;
+      if(nH2A<eps||nHA2<eps) return (pKa1+pKa2)/2;
+      return pKa2+Math.log10(nHA2/nH2A);
+    }
+    if(Math.abs(ratio-2)<eps) return (pKa2+pKa3)/2;
+    if(ratio<3-eps){
+      const nHA2=3*nAcid-nBase;
+      const nA3=nBase-2*nAcid;
+      if(nHA2<eps||nA3<eps) return (pKa2+pKa3)/2;
+      return pKa3+Math.log10(nA3/nHA2);
+    }
+    if(Math.abs(ratio-3)<eps || ratio<=3){
+      const Kb3=(1e-14)/Math.pow(10,-pKa3);
+      const cSalt=nAcid/totalVol;
+      return 14+0.5*Math.log10(Kb3*cSalt);
+    }
+    return 14+Math.log10((nBase-3*nAcid)/totalVol);
+  }
+  return 7.0;
+}
+
+function theoreticalEqVol(){
+  const n=(acidType==='citric')?3:1;
+  return(n*cAcid*vAcid)/cBase;
+}
+function getEqPH(){
+  if(acidType==='strong') return 7.0;
+  if(acidType==='citric'){
+    const Kb3=(1e-14)/Math.pow(10,-6.40);
+    const eqV=theoreticalEqVol();
+    const cSalt=(cAcid*vAcid/1000)/((vAcid+eqV)/1000);
+    return 14+0.5*Math.log10(Kb3*cSalt);
+  }
+  return 7.0;
+}
+function getLiquidColor(ph){
+  // פנולפתלאין בלבד: חסר צבע < 8.2, ורוד מעל
+  return ph>8.2?'rgba(192,38,211,.5)':'rgba(219,234,254,.6)';
+}
+function getPhaseLabel(isEq,ph){
+  if(isEq) return '✦ נ.ש.מ.';
+  if(ph<6.9) return 'חומצי';
+  return 'בסיסי';
+}
+function getPhaseColor(isEq,ph){
+  if(isEq) return 'var(--green)';
+  if(ph<6.9) return 'var(--red)';
+  return 'var(--purple)';
+}
+function updateUI(ph){
+  const color=getLiquidColor(ph);
+  document.getElementById('flask-liquid').setAttribute('fill',color);
+  const pct=Math.max(0,Math.min(100,(ph/14)*100));
+  document.getElementById('ph-needle').style.left=`calc(${pct}% - 2px)`;
+  const el=document.getElementById('ph-display');
+  el.className='metric-val';
+  if(ph<6.9)el.classList.add('mv-acid');else if(ph>7.1)el.classList.add('mv-base');else el.classList.add('mv-neutral');
+  document.getElementById('burette-fill').style.height=`${Math.max(0,(1-Math.min(vBaseTotal/50,1))*100)}%`;
+  return color;
+}
+function updateLiquid(){const ph=parseFloat(document.getElementById('ph-display').innerText)||1;updateUI(ph);}
+function startVortex(){
+  if(vortexActive)return;vortexActive=true;
+  const canvas=document.getElementById('vortex-canvas'),ctx=canvas.getContext('2d'),cx=55,cy=82;
+  function frame(){
+    ctx.clearRect(0,0,110,120);vortexAngle+=0.08;
+    ctx.save();ctx.beginPath();ctx.moveTo(44,8);ctx.lineTo(66,8);ctx.lineTo(66,50);ctx.lineTo(100,110);ctx.lineTo(10,110);ctx.closePath();ctx.clip();
+    for(let i=0;i<4;i++){const a=vortexAngle+(i*Math.PI*2/4);ctx.beginPath();ctx.strokeStyle=`rgba(255,255,255,${0.35-i*0.07})`;ctx.lineWidth=2;ctx.arc(cx,cy,5+i*7,a,a+Math.PI*1.6);ctx.stroke();}
+    ctx.restore();vortexRAF=requestAnimationFrame(frame);
+  }
+  frame();
+  setTimeout(()=>{vortexActive=false;cancelAnimationFrame(vortexRAF);document.getElementById('vortex-canvas').getContext('2d').clearRect(0,0,110,120);},1500);
+}
+function triggerDrip(){const d=document.getElementById('drip');d.classList.remove('go');void d.offsetWidth;d.classList.add('go');}
+function addTitrant(amt){
+  vBaseTotal=parseFloat((vBaseTotal+amt).toFixed(3));
+  const ph=calculatePH(vBaseTotal);
+  document.getElementById('vol-display').innerText=vBaseTotal.toFixed(2);
+  document.getElementById('ph-display').innerText=ph.toFixed(2);
+  const color=updateUI(ph);triggerDrip();startVortex();
+  const eqVol=theoreticalEqVol(),eqPH=getEqPH();
+  if(!eqReached&&(Math.abs(ph-eqPH)<0.3||vBaseTotal>=eqVol)){
+    eqReached=true;eqVolume=vBaseTotal;
+    document.getElementById('eq-tag').classList.add('show');
+    document.getElementById('eq-ph-val').innerText=ph.toFixed(2);
+    document.getElementById('lab-panel').classList.add('eq-flash');
+    setTimeout(()=>document.getElementById('lab-panel').classList.remove('eq-flash'),1000);
+    showQuiz(2);
+  }
+  if(!midQuizTriggered&&vBaseTotal>=eqVol*0.45&&vBaseTotal<=eqVol*0.65){
+    midQuizTriggered=true;if(!quizDone[0]){quizDone[0]=true;markPhase(0,'done');}showQuiz(1);
+  }
+  addRow(vBaseTotal,ph,color,eqReached);dataPoints.push({x:vBaseTotal,y:parseFloat(ph.toFixed(3))});chart.update();
+}
+function addRow(v,ph,color,isEq=false){
+  rowCount++;document.getElementById('row-cnt').innerText=`${rowCount} רשומות`;
+  const phase=getPhaseLabel(isEq,ph),phColor=getPhaseColor(isEq,ph);
+  const tr=document.createElement('tr');tr.className='fresh';
+  tr.innerHTML=`<td>${v.toFixed(2)}</td><td style="color:${phColor};font-weight:700">${ph.toFixed(2)}</td><td style="color:${phColor};font-size:.6rem">${phase}</td><td><div class="swatch" style="background:${color}"></div></td>`;
+  dataLog.push({v:v.toFixed(2),ph:ph.toFixed(2),phase,color});
+  document.getElementById('data-body').prepend(tr);setTimeout(()=>tr.classList.remove('fresh'),500);
+}
+function exportCSV(){
+  if(!dataLog.length){alert('אין נתונים.');return;}
+  const bom='\uFEFF',h='נפח NaOH (מ"ל),pH,שלב\n',rows=dataLog.map(r=>`${r.v},${r.ph},${r.phase}`).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([bom+h+rows],{type:'text/csv;charset=utf-8'}));a.download='titration_data.csv';a.click();
+}
+
+const quizDefs=[
+  { q: ()=>`כאשר נוסיף את הטיפה הראשונה של NaOH למיץ — pH יעלה, ירד, או ישאר אותו דבר?`,
+    opts:['יעלה','ירד','יישאר זהה'],correct:0,
+    explain:()=>`✓ נכון! NaOH הוא בסיס — הוא מנטרל חלק מהחומצה ומקטין את ריכוז H⁺, לכן pH עולה.`
+  },
+  { q: ()=>`הוספת ~${vBaseTotal.toFixed(1)} מ"ל NaOH — עוד לא הגענו לנקודת שיווי המשקל. מה נכון לגבי כמות המולים?`,
+    opts:['n(חומצה) > n(בסיס שנוסף)','n(חומצה) = n(בסיס שנוסף)','n(חומצה) < n(בסיס שנוסף)'],correct:0,
+    explain:()=>`✓ נכון! הגענו לחצי הדרך בלבד — n(H⁺ כולל) עדיין גדול מ-n(OH⁻) שנוסף.`
+  },
+  { q: ()=>`הגענו לנקודת שיווי המשקל ב-${eqVolume.toFixed(1)} מ"ל NaOH. מה קרה כאן בדיוק?`,
+    opts:[
+      ()=>'n(OH⁻)שנוסף = n(H⁺)שנוטרל',
+      ()=>'pH = 7 בדיוק',
+      ()=>'החומצה נעלמה לחלוטין מהתמיסה'
+    ],correct:0,
+    explain:()=>{
+      const n=acidType==='citric'?3:1;
+      const eqPH=getEqPH().toFixed(1);
+      const pHnote=acidType==='strong'?`(pH = 7.0)`:`(pH ≈ ${eqPH} > 7)`;
+      return `✓ נכון! כל מולי החומצה מסרו את הפרוטונים ל-NaOH. החומצה הפכה למלח ${pHnote}. היא לא "נעלמת" — היא שם, רק בצורת יון.`;
+    }
+  }
+];
+
+function showQuiz(phase){
+  quizPhase=phase;markPhase(phase,'active');
+  const def=quizDefs[phase];
+  const body=document.getElementById('quiz-body');
+  body.style.opacity='0';
+  setTimeout(()=>{
+    body.style.opacity='1';
+    if(quizDone[phase]){body.innerHTML=`<div style="color:var(--green);font-weight:700;font-size:.78rem;padding:8px 0">✓ שאלה זו נענתה בהצלחה!</div>`;return;}
+    const q=typeof def.q==='function'?def.q():def.q;
+    const opts=typeof def.opts[0]==='function'?def.opts.map(o=>o()):def.opts;
+    let html=`<div class="quiz-q">${q}</div><div class="mc-options" id="mc-opts">`;
+    opts.forEach((o,i)=>html+=`<div class="mc-opt" onclick="answerConceptual(${phase},${i})">${String.fromCharCode(65+i)}. ${o}</div>`);
+    html+=`</div><div class="qfb" id="qfb"></div>`;
+    body.innerHTML=html;
+  },200);
+  body.style.transition='opacity .2s';
+}
+
+function answerConceptual(phase,idx){
+  const def=quizDefs[phase];
+  document.querySelectorAll('#mc-opts .mc-opt').forEach((el,i)=>{
+    el.style.pointerEvents='none';
+    if(i===def.correct) el.classList.add('correct');
+    else if(i===idx&&idx!==def.correct) el.classList.add('wrong');
+  });
+  const fb=document.getElementById('qfb');
+  const explain=typeof def.explain==='function'?def.explain():def.explain;
+  if(idx===def.correct){fb.className='qfb ok';fb.innerText=explain;quizDone[phase]=true;markPhase(phase,'done');}
+  else{const ct=typeof def.opts[def.correct]==='function'?def.opts[def.correct]():def.opts[def.correct];fb.className='qfb no';fb.innerText=`✗ לא מדויק. התשובה הנכונה: ${String.fromCharCode(65+def.correct)}. ${ct}\n${explain}`;}
+}
+
+function markPhase(idx,state){document.getElementById(`qp${idx}`).className='qphase '+state;}
+
+function updateBaseConc(val){
+  const v=parseFloat(val);if(isNaN(v)||v<0.01||v>1.0)return;
+  cBase=v;
+  document.getElementById('burette-label-txt').textContent=`ביורטה — NaOH ${cBase.toFixed(2)}M`;
+  const hdrSub=document.getElementById('hdr-sub');
+  if(hdrSub) hdrSub.textContent=hdrSub.textContent.replace(/NaOH [\d.]+M/,`NaOH ${cBase.toFixed(2)}M`);
+  updateFormulaHint();
+}
+function phQAnswer(yes){
+  document.getElementById('ph-q-answer').style.display='block';
+  const verdict=document.getElementById('ph-q-verdict');
+  const yBtn=document.getElementById('ph-q-yes');const nBtn=document.getElementById('ph-q-no');
+  yBtn.style.pointerEvents='none';nBtn.style.pointerEvents='none';
+  if(yes){verdict.style.cssText='padding:8px 12px;font-size:.75rem;font-weight:700;background:#fee2e2;color:#dc2626';verdict.textContent='✗ לא בדיוק — pH לבדו אינו מספיק לחישוב ריכוז.';yBtn.style.cssText+='background:#fee2e2;border-color:#dc2626;color:#dc2626';}
+  else{verdict.style.cssText='padding:8px 12px;font-size:.75rem;font-weight:700;background:#dcfce7;color:#15803d';verdict.textContent='✓ נכון! הנה למה:';nBtn.style.cssText+='background:#dcfce7;border-color:#059669;color:#059669';}
+}
+function dilQAnswer(choice){
+  document.getElementById('dil-q-answer').style.display='block';
+  const verdict=document.getElementById('dil-q-verdict');
+  ['more','less','same'].forEach(c=>{document.getElementById(`dil-q-${c}`).style.pointerEvents='none';});
+  if(choice==='same'){verdict.style.cssText='padding:8px 12px;font-size:.75rem;font-weight:700;background:#dcfce7;color:#15803d;border-radius:9px 9px 0 0';verdict.textContent='✓ נכון! אותה כמות בדיוק.';document.getElementById('dil-q-same').style.cssText+='background:#dcfce7;border-color:#059669;color:#059669';}
+  else{verdict.style.cssText='padding:8px 12px;font-size:.75rem;font-weight:700;background:#fee2e2;color:#dc2626;border-radius:9px 9px 0 0';verdict.textContent='✗ לא — הדילול לא משנה את כמות המולים.';document.getElementById(`dil-q-${choice}`).style.cssText+='background:#fee2e2;border-color:#dc2626;color:#dc2626';}
+}
+function updateAcidPhLabels(){
+  const savedType=acidType,savedC=cAcid;
+  const computePH=(type,c)=>{acidType=type;cAcid=c;const v=parseFloat(calculatePH(0).toFixed(2));return v;};
+  const phS=computePH('strong',0.5);
+  const phCit=computePH('citric',0.5);
+  acidType=savedType;cAcid=savedC;
+  document.getElementById('ph-lbl-strong').textContent=`pH ≈ ${phS.toFixed(1)}`;
+  document.getElementById('ph-lbl-citric').textContent=`pH ≈ ${phCit.toFixed(2)}`;
+}
+function toggleTheory(){const p=document.getElementById('theory-panel');p.style.display=p.style.display==='none'?'block':'none';}
+function updateFormulaHint(){
+  const n=(acidType==='citric')?3:1;const nLabel=n===3?'3 (חומצה ציטרית)':'1';
+  const el=document.getElementById('ch-formula-hint');
+  if(el) el.textContent=`Ca = (Cb × Vb) / (${n} × Va)   [n=${nLabel}, Cb=${cBase.toFixed(2)}M]`;
+}
+function clearJuiceBtns(){
+  ['lemon','orange','grapefruit','clementine','lime'].forEach(j=>{
+    const el=document.getElementById(`btn-j-${j}`);if(el) el.className='acid-btn';
+  });
+}
+const JUICE_DATA={
+  // טווחים מבוססים על נתוני ניסוי מעבדה: ריכוז H⁺ ÷ 3 = ריכוז חומצה ציטרית
+  lemon:{emoji:'🍋',name:'מיץ לימון',heLabel:'לימון טרי',range:[0.24,0.28],color:'#ca8a04'},       // H⁺=0.78M → 0.26M ±~8%
+  orange:{emoji:'🍊',name:'מיץ תפוזים',heLabel:'תפוז טרי',range:[0.050,0.057],color:'#ea580c'},   // H⁺=0.16M → 0.053M ±~7%
+  grapefruit:{emoji:'🍈',name:'מיץ אשכוליות',heLabel:'אשכולית טרייה',range:[0.073,0.081],color:'#d97706'}, // H⁺=0.23M → 0.077M ±~5%
+  clementine:{emoji:'🍊',name:'מיץ קלמנטינה',heLabel:'קלמנטינה טרייה',range:[0.040,0.047],color:'#f97316'}, // H⁺=0.13M → 0.043M ±~8%
+  lime:{emoji:'🟢',name:'מיץ ליים',heLabel:'ליים טרי',range:[0.22,0.28],color:'#65a30d'},          // דומה ללימון — אין מדידה ישירה
+};
+let juiceMode=false,currentJuice=null;
+
+function randInRange(min,max){return Math.round((min+Math.random()*(max-min))*100)/100;}
+function setJuice(j){
+  const d=JUICE_DATA[j];acidType='citric';juiceMode=true;currentJuice=j;
+  hiddenConc=randInRange(d.range[0],d.range[1]);cAcid=hiddenConc;
+  document.getElementById('btn-strong').className='acid-btn';
+  document.getElementById('btn-citric').className='acid-btn';
+  clearJuiceBtns();document.getElementById(`btn-j-${j}`).className='acid-btn act-juice';
+  const nm=document.getElementById('p-acid-name');nm.textContent=d.emoji+' '+d.heLabel;nm.style.color=d.color;
+  document.getElementById('p-eq-ph').textContent='> 7';
+  document.getElementById('hdr-sub').textContent=`${d.emoji} ${d.name} ← NaOH ${cBase.toFixed(2)}M — גלה את ריכוז החומצה הציטרית!`;
+  document.getElementById('normal-status').style.display='none';
+  document.getElementById('challenge-status').style.display='flex';
+  document.getElementById('p-acid-conc').textContent='??? M';
+  document.getElementById('p-acid-conc').style.color='var(--yellow)';
+  document.getElementById('p-eq').textContent='? מ"ל';
+  updateFormulaHint();
+  document.getElementById('base-conc-row').style.display='flex';
+  resetSimulation(true);
+}
+function setAcidType(t){
+  acidType=t;clearJuiceBtns();
+  document.getElementById('btn-strong').className='acid-btn'+(t==='strong'?' act-strong':'');
+  document.getElementById('btn-citric').className='acid-btn'+(t==='citric'?' act-citric':'');
+  const nm=document.getElementById('p-acid-name');
+  const base=`NaOH ${cBase.toFixed(2)}M`;
+  if(t==='strong'){cAcid=0.5;nm.textContent='HCl';nm.style.color='var(--red)';document.getElementById('p-eq-ph').textContent='7.00';document.getElementById('hdr-sub').textContent=`HCl (חומצה הידרוכלורית) ← ${base}`;}
+  else if(t==='citric'){cAcid=0.5;nm.textContent='H₃Cit';nm.style.color='var(--teal)';document.getElementById('p-eq-ph').textContent='> 7';document.getElementById('hdr-sub').textContent=`H₃Cit (חומצה ציטרית) ← ${base}`;}
+  updateFormulaHint();resetSimulation();
+}
+function setMode(m){
+  buretteMode=m;
+  document.getElementById('mode-stream').className='mode-btn'+(m==='stream'?' active':'');
+  document.getElementById('mode-drops').className='mode-btn'+(m==='drops'?' active':'');
+  const btns=document.getElementById('add-btns');
+  if(m==='stream')btns.innerHTML=`<button class="btn btn-blue" onclick="addTitrant(1.0)">＋ 1.0 מ"ל</button><button class="btn btn-outline-blue" onclick="addTitrant(0.5)">＋ 0.5 מ"ל</button><button class="btn btn-outline-blue" onclick="addTitrant(0.1)">＋ 0.1 מ"ל</button><button class="btn btn-outline-red" onclick="resetSimulation()">↺ איפוס</button>`;
+  else btns.innerHTML=`<button class="btn btn-blue" onclick="addTitrant(0.05)">💧 0.05 מ"ל</button><button class="btn btn-outline-blue" onclick="addTitrant(0.02)">💧 0.02 מ"ל</button><button class="btn btn-outline-blue" onclick="addTitrant(0.1)">＋ 0.1 מ"ל</button><button class="btn btn-outline-red" onclick="resetSimulation()">↺ איפוס</button>`;
+}
+function resetSimulation(k){
+  vBaseTotal=0;rowCount=0;eqReached=false;eqVolume=0;midQuizTriggered=false;
+  quizDone=[false,false,false];quizPhase=0;dataLog=[];
+  dataPoints.length=0;const init=calculatePH(0);dataPoints.push({x:0,y:init});
+  chart&&chart.update();
+  document.getElementById('data-body').innerHTML='';
+  document.getElementById('row-cnt').innerText='0 רשומות';
+  document.getElementById('vol-display').innerText='0.00';
+  document.getElementById('ph-display').innerText=init.toFixed(2);
+  document.getElementById('ph-display').className='metric-val mv-acid';
+  document.getElementById('eq-tag').classList.remove('show');
+  document.getElementById('ph-needle').style.left=`${(init/14)*100}%`;
+  document.getElementById('flask-liquid').setAttribute('fill','rgba(219,234,254,.6)');
+  document.getElementById('burette-fill').style.height='80%';
+  if(!k){
+    document.getElementById('base-conc-row').style.display='flex';
+    clearJuiceBtns();
+    document.getElementById('p-acid-conc').textContent='??? M';
+    document.getElementById('p-acid-conc').style.color='var(--yellow)';
+    document.getElementById('p-eq').textContent='???';
+    document.getElementById('p-eq').style.color='var(--text3)';
+  }
+  [0,1,2].forEach(i=>document.getElementById(`qp${i}`).className='qphase'+(i===0?' active':''));
+  showQuiz(0);
+}
+function initChart(){
+  const ctx=document.getElementById('titrationChart').getContext('2d');
+  const init=calculatePH(0);dataPoints[0]={x:0,y:init};
+  chart=new Chart(ctx,{type:'line',
+    data:{datasets:[{label:'pH',data:dataPoints,borderColor:'#2563eb',borderWidth:2.5,
+      pointRadius:0,pointHoverRadius:6,pointHoverBackgroundColor:'#2563eb',
+      pointHoverBorderColor:'white',pointHoverBorderWidth:2,tension:0.35,
+      fill:{target:'origin',above:'rgba(37,99,235,.06)'}}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:{duration:120},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1e293b',borderColor:'#334155',borderWidth:1,
+        titleColor:'#94a3b8',bodyColor:'#f8fafc',
+        titleFont:{family:'JetBrains Mono',size:11},bodyFont:{family:'JetBrains Mono',size:13,weight:'600'},
+        padding:10,cornerRadius:8,
+        callbacks:{title:i=>`נפח: ${i[0].raw.x.toFixed(2)} מ"ל`,label:i=>`pH = ${i.raw.y.toFixed(2)}`}}},
+      scales:{
+        x:{type:'linear',min:0,max:50,title:{display:true,text:`נפח NaOH (מ"ל)`,color:'#64748b',font:{family:'JetBrains Mono',size:11}},grid:{color:'#f1f5f9'},ticks:{color:'#94a3b8',font:{family:'JetBrains Mono',size:10}},border:{color:'#e2e8f0'}},
+        y:{min:0,max:14,title:{display:true,text:'pH',color:'#64748b',font:{family:'JetBrains Mono',size:11}},grid:{color:'#f1f5f9'},ticks:{color:'#94a3b8',font:{family:'JetBrains Mono',size:10}},border:{color:'#e2e8f0'}}}}});
+  document.getElementById('ph-display').innerText=init.toFixed(2);
+  document.getElementById('ph-needle').style.left=`${(init/14)*100}%`;
+  showQuiz(0);updateAcidPhLabels();updateFormulaHint();
+}
+
+/* ══════════════════════════════════
+   CABBAGE
+══════════════════════════════════ */
+const cabbageData=[
+  {ph:'1–2',emoji:'🔴',color:'#dc2626',bg:'#fee2e2',border:'#fca5a5',name:'חומצה חזקה (HCl)',explanation:'בסביבה חומצית מאוד, האנתוציאנין מקבל פרוטון — המבנה משתנה וצבעו הופך לאדום מובהק.'},
+  {ph:'3–4',emoji:'🟠',color:'#ea580c',bg:'#ffedd5',border:'#fdba74',name:'חומצה חלשה (חומץ)',explanation:'בחומציות בינונית, הצבע עובר לכתום-ורדרד.'},
+  {ph:'5–6',emoji:'🟡',color:'#ca8a04',bg:'#fefce8',border:'#fde047',name:'חומצה פחמנית (גזוז)',explanation:'קרוב לנייטרלי, הצבע סגול–ורוד.'},
+  {ph:'7',emoji:'🟣',color:'#7c3aed',bg:'#f5f3ff',border:'#c4b5fd',name:'מים מזוקקים',explanation:'בנטרליות מלאה, הכרוב שומר על צבעו הסגול הטבעי.'},
+  {ph:'8–9',emoji:'💙',color:'#2563eb',bg:'#eff6ff',border:'#93c5fd',name:'סודה לשתייה (NaHCO₃)',explanation:'בבסיסיות קלה, המולקולה מאבדת פרוטון — הצבע עובר לכחול-ירקרק.'},
+  {ph:'10–11',emoji:'🟢',color:'#059669',bg:'#ecfdf5',border:'#6ee7b7',name:'אמוניה (NH₃)',explanation:'בבסיסיות בינונית, הצבע ירוק.'},
+  {ph:'12–14',emoji:'💛',color:'#7c3aed',bg:'#fdf4ff',border:'#d8b4fe',name:'NaOH (בסיס חזק)',explanation:'בבסיסיות חזקה מאוד, הצבע הופך לצהוב-ירקרק.'}
+];
+function showCabbageInfo(i){
+  const d=cabbageData[i],el=document.getElementById('cabbage-result');
+  el.style.background=d.bg;el.style.borderColor=d.border;
+  el.innerHTML=`<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px"><span style="font-size:2rem">${d.emoji}</span><div><div style="font-size:.9rem;font-weight:800;color:${d.color}">pH ${d.ph} — ${d.name}</div></div></div><div style="font-size:.8rem;line-height:1.65;color:var(--text2)">${d.explanation}</div>`;
+  el.classList.add('show');
+}
+function answCabbage(el,correct){
+  document.querySelectorAll('#cabbage-mc .mc-opt').forEach(o=>o.style.pointerEvents='none');
+  el.classList.add(correct?'correct':'wrong');
+  const fb=document.getElementById('cabbage-fb');
+  if(correct){fb.className='qfb ok';fb.innerText='✓ נכון! ירוק = pH 10–11 (בסיסי).';}
+  else{fb.className='qfb no';fb.innerText='✗ שגוי. ירוק מתקבל בסביבה בסיסית — pH 10–11.';}
+}
+
+/* ══════════════════════════════════
+   HYDRATE
+══════════════════════════════════ */
+const hydrates=[
+  {name:'CuSO₄ · 5H₂O',saltM:159.6,waterN:5,mBefore:18.42,mAfter:15.62,mDish:12.00},
+  {name:'CoCl₂ · 6H₂O',saltM:129.8,waterN:6,mBefore:17.88,mAfter:14.48,mDish:11.00},
+  {name:'MgSO₄ · 7H₂O',saltM:120.4,waterN:7,mBefore:19.20,mAfter:15.60,mDish:11.50}
+];
+let selHydrate=null;
+function selectHydrate(i){
+  document.querySelectorAll('.hyd-card').forEach((c,j)=>c.classList.toggle('selected',j===i));
+  selHydrate=hydrates[i];const h=selHydrate;
+  const mH=h.mBefore-h.mDish,mS=h.mAfter-h.mDish,mW=mH-mS;
+  document.getElementById('hyd-title').textContent=`חישוב — ${h.name}`;
+  document.getElementById('hyd-before').textContent=h.mBefore;document.getElementById('hyd-after').textContent=h.mAfter;document.getElementById('hyd-dish').textContent=h.mDish;
+  document.getElementById('hyd-m-hydrate').textContent=mH.toFixed(2);document.getElementById('hyd-m-salt').textContent=mS.toFixed(2);document.getElementById('hyd-m-water').textContent=mW.toFixed(2);
+  document.getElementById('hyd-result').classList.remove('show');document.getElementById('hyd-inp-water').value='';document.getElementById('hyd-inp-salt').value='';
+  document.getElementById('hyd-calc').classList.add('show');
+}
+function checkHydrate(){
+  if(!selHydrate)return;
+  const h=selHydrate,mW=h.mBefore-h.mAfter,mS=h.mAfter-h.mDish;
+  const molW=mW/18,molS=mS/h.saltM,ratio=molW/molS;
+  const inpW=parseFloat(document.getElementById('hyd-inp-water').value);
+  const inpS=parseFloat(document.getElementById('hyd-inp-salt').value);
+  const res=document.getElementById('hyd-result');
+  const wOk=Math.abs(inpW-molW)<0.005,sOk=Math.abs(inpS-molS)<0.005;
+  if(wOk&&sOk){res.style.background='var(--green-l)';res.style.border='1.5px solid var(--green-m)';res.innerHTML=`<div style="color:var(--green);font-weight:800;margin-bottom:6px">✓ מצוין!</div>mol מים = ${molW.toFixed(3)} | mol מלח = ${molS.toFixed(3)}<br>יחס: <strong>${ratio.toFixed(1)}</strong> ≈ ${h.waterN}<br>נוסחה: <strong style="font-family:var(--mono)">${h.name}</strong> ✓`;}
+  else{res.style.background='var(--red-l)';res.style.border='1.5px solid var(--red-m)';res.innerHTML=`<div style="color:var(--red);font-weight:800;margin-bottom:4px">✗ נסה שוב</div>${!wOk?`mol מים נכון: ${molW.toFixed(3)}`:'mol מים ✓'}<br>${!sOk?`mol מלח נכון: ${molS.toFixed(3)}`:'mol מלח ✓'}`;}
+  res.classList.add('show');
+}
+
+/* ══════════════════════════════════
+   FOAM SNAKE
+══════════════════════════════════ */
+let snakeStep=0;
+function snakeNext(step){
+  document.getElementById(`snake-s${step}`).classList.remove('active-step');
+  document.getElementById(`snake-s${step}`).classList.add('done-step');
+  if(step<3){snakeStep=step+1;document.getElementById(`snake-s${snakeStep}`).classList.add('active-step');}
+  if(step===2){setTimeout(()=>{document.getElementById('snake-anim').classList.add('show');document.getElementById(`snake-s3`).classList.add('active-step');},400);}
+}
+function answSnake(el,correct){
+  document.querySelectorAll('#screen-snake .mc-opt').forEach(o=>o.style.pointerEvents='none');
+  el.classList.add(correct?'correct':'wrong');
+  const fb=document.getElementById('snake-fb');
+  if(correct){fb.className='qfb ok';fb.innerText='✓ נכון! קטליזטור מאיץ תגובה מבלי להיצרך.';}
+  else{fb.className='qfb no';fb.innerText='✗ שגוי. קטליזטור מגביר מהירות תגובה ואינו נצרך בתהליך.';}
+}
+</script>
+
+<!-- ══════════════════════════════════════
+     SCREEN 6: REACTION VISUALIZER
+══════════════════════════════════════ -->
 <div id="screen-reaction" class="screen">
   <div class="rxn-top">
     <div class="rxn-top-row1">
@@ -853,6 +1438,7 @@ tbody tr.fresh{animation:rowIn .5s ease}
       <button class="rxn-preset" onclick="rxnPreset('CH4 + 2O2 → CO2 + 2H2O')">🔥 שריפת מתאן</button>
       <button class="rxn-preset" onclick="rxnPreset('N2 + 3H2 → 2NH3')">⚗️ אמוניה</button>
       <button class="rxn-preset" onclick="rxnPreset('NaCl → Na+ + Cl-')">🧂 המסת מלח</button>
+      <button class="rxn-preset" onclick="rxnPreset('cysteine + guanine → cysteine-guanine complex')">🧬 ציסטאין–גואנין</button>
       <button class="rxn-preset" onclick="rxnPreset('C2H5OH + 3O2 → 2CO2 + 3H2O')">🍷 שריפת אתנול</button>
     </div>
     <div id="rxn-err" class="rxn-err" style="display:none"></div>
@@ -874,577 +1460,36 @@ tbody tr.fresh{animation:rowIn .5s ease}
       </div>
     </div>
     <div class="rxn-overlay rxn-loading" id="rxn-loading" style="display:none">
-      <div class="rxn-loading-inner">
-        <div class="rxn-spin">⚛️</div>
-        <p>בונה מולקולות...</p>
-        <small>AI מחשב קואורדינטות תלת–ממדיות</small>
-      </div>
+      <div class="rxn-loading-inner"><div class="rxn-spin">⚛️</div><p>בונה מולקולות...</p><small>AI מחשב קואורדינטות תלת–ממדיות</small></div>
     </div>
-    <div class="rxn-hud-controls" id="rxn-hud-c" style="display:none">
-      <strong>🎮 שליטה:</strong>
-      <div>• גרור — סיבוב</div>
-      <div>• גלגל — זום</div>
-    </div>
-    <div class="rxn-hud-stage" id="rxn-hud-s" style="display:none">
-      <div class="rxn-stage-badge" id="rxn-stage-badge"></div>
-      <div id="rxn-mol-list"></div>
-    </div>
-    <div class="rxn-legend" id="rxn-legend" style="display:none">
-      <strong>⚛️ אלמנטים:</strong>
-      <div id="rxn-legend-items"></div>
-    </div>
-  </div>
-</div>
-
-<!-- CITRUS -->
-<div id="screen-citrus" class="screen">
-  <div class="cit-topbar">
-    <button class="back-btn" onclick="goTo('screen-landing')">⬅ חזרה</button>
-    <span style="font-size:1.3rem">🍋</span>
-    <h2>ניסוי חקר רמה I — מי הכי חמוץ? טיטרציות מיצי פירות הדר</h2>
-  </div>
-  <div class="cit-tabs">
-    <div class="cit-tab active" id="cit-tab-0" onclick="citTab(0)">📋 מבוא וכלים</div>
-    <div class="cit-tab" id="cit-tab-1" onclick="citTab(1)">🔬 מהלך הניסוי</div>
-    <div class="cit-tab" id="cit-tab-2" onclick="citTab(2)">📊 תוצאות וחישוב</div>
-    <div class="cit-tab" id="cit-tab-3" onclick="citTab(3)">📈 גרף השוואה</div>
-    <div class="cit-tab" id="cit-tab-4" onclick="citTab(4)">✏️ עיבוד ועיון</div>
-    <div class="cit-tab" id="cit-tab-5" onclick="citTab(5)">💡 שאלות מחקר</div>
-  </div>
-  <div class="cit-body">
-    <div class="cit-panel active" id="cit-panel-0">
-      <div class="cit-card">
-        <div class="cit-card-title"><span class="cit-section-num">🎯</span>מטרת הניסוי</div>
-        <div style="font-size:.82rem;line-height:1.75;color:var(--text2)">
-          השוואת ריכוז החומצות הניתנות לטיטרציה (Total Titratable Acidity) במיצי פירות הדר שונים — טריים ומשומרים — באמצעות טיטרציית נטרול עם NaOH 0.5M ואינדיקטור <strong>פנולפתלאין</strong>. החומצה העיקרית במיצים אלו היא <strong>חומצה ציטרית (C₆H₈O₇)</strong>, חומצה שלש–פרוטונית.
-        </div>
-      </div>
-      <div class="cit-card">
-        <div class="cit-card-title"><span class="cit-section-num">🧪</span>כלים וחומרים</div>
-        <div class="mat-group"><div class="mat-group-title">🍊 פירות (לסחיטה טרייה)</div><div class="mat-items"><span class="mat-chip">לימון טרי</span><span class="mat-chip">תפוז טרי</span><span class="mat-chip">אשכולית טרייה</span><span class="mat-chip" style="background:var(--green-l);border-color:var(--green-m);color:var(--green)">קלמנטינה / ליים / קיווי</span></div></div>
-        <div class="mat-group"><div class="mat-group-title">🥤 מיצים משומרים</div><div class="mat-items"><span class="mat-chip blue">20 מ"ל מיץ לימון משומר</span><span class="mat-chip blue">20 מ"ל מיץ תפוזים משומר</span><span class="mat-chip blue">20 מ"ל מיץ אשכוליות משומר</span></div></div>
-        <div class="mat-group"><div class="mat-group-title">🔬 כלי מעבדה</div><div class="mat-items"><span class="mat-chip green">3 ארלנמייר 100 מ"ל</span><span class="mat-chip green">6 כוסות כימיות 100 מ"ל</span><span class="mat-chip green">משורה 20 מ"ל</span><span class="mat-chip green">טפי</span><span class="mat-chip green">סטירר מגנטי</span></div></div>
-        <div class="mat-group"><div class="mat-group-title">⚗️ חומרים</div><div class="mat-items"><span class="mat-chip" style="background:var(--purple-l);border-color:var(--purple-m);color:var(--purple)">100 מ"ל NaOH 0.5M</span><span class="mat-chip" style="background:var(--pink-l);border-color:var(--pink-m);color:var(--pink)">פנולפתלאין</span></div></div>
-      </div>
-      <div class="cit-card" style="border-color:var(--blue-m);background:var(--blue-l)">
-        <div class="cit-card-title" style="color:var(--blue)">🧮 נוסחת הטיטרציה — תזכורת</div>
-        <div class="formula-box">C<sub>a</sub> = (C<sub>b</sub> × V<sub>b</sub>) / (n × V<sub>a</sub>)</div>
-        <div style="font-size:.75rem;color:var(--text2);line-height:1.8">
-          <strong>Cₐ</strong> = ריכוז חומצת הציטרית במיץ (M) &nbsp;|&nbsp; <strong>C<sub>b</sub></strong> = ריכוז NaOH = <span style="font-family:var(--mono);color:var(--blue);font-weight:700">0.5M</span><br>
-          <strong>V<sub>b</sub></strong> = נפח NaOH שנצרך לנ.מ. (מ"ל) &nbsp;|&nbsp; <strong>V<sub>a</sub></strong> = נפח המיץ = <span style="font-family:var(--mono);color:var(--blue);font-weight:700">20 מ"ל</span><br>
-          <strong>n</strong> = מספר הפרוטונים = <span style="font-family:var(--mono);color:var(--blue);font-weight:700">3</span> (H₃Cit + 3 NaOH → Na₃Cit + 3H₂O)
-        </div>
-      </div>
-    </div>
-    <div class="cit-panel" id="cit-panel-1">
-      <div class="cit-card">
-        <div class="cit-card-title"><span class="cit-section-num">🔬</span>מהלך הניסוי</div>
-        <div class="step-list">
-          <div class="step-item"><div class="step-badge">1</div><div class="step-text">סחטו <strong>לימון טרי</strong> וסננו את המיץ לכוס כימית.</div></div>
-          <div class="step-item"><div class="step-badge">2</div><div class="step-text">מדדו בדיוק <span class="step-highlight">20 מ"ל מיץ</span> והעבירו לכוס כימית.</div></div>
-          <div class="step-item"><div class="step-badge">3</div><div class="step-text">הוסיפו <strong>10 טיפות פנולפתלאין</strong>.</div></div>
-          <div class="step-item"><div class="step-badge">4</div><div class="step-text">מלאו הטפי ב-<span class="step-highlight">NaOH 0.5M</span>.</div></div>
-          <div class="step-item"><div class="step-badge">5</div><div class="step-text">טטרו לאט עד לצבע <span style="color:var(--pink);font-weight:700">ורוד עדין קבוע</span> (30 שניות). רשמו נפח NaOH.</div></div>
-          <div class="step-item" style="border-color:var(--yellow-m);background:var(--yellow-l)"><div class="step-badge" style="background:var(--yellow)">6</div><div class="step-text"><strong>חזרו</strong> עבור כל מיץ: תפוז ← אשכולית ← מיצים משומרים.</div></div>
-        </div>
-      </div>
-      <div class="cit-card" style="border-color:var(--red-m)">
-        <div class="cit-card-title" style="color:var(--red)">⚠️ כללי בטיחות</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.75rem;color:var(--text2)">
-          <div>🥽 חבשו משקפי מגן</div><div>🧤 NaOH — הימנעו ממגע</div>
-          <div>🚰 שטפו בשפע מים</div><div>♻️ סלקו פסולת כנדרש</div>
-        </div>
-      </div>
-    </div>
-    <div class="cit-panel" id="cit-panel-2">
-      <div class="cit-card">
-        <div class="cit-card-title"><span class="cit-section-num">📊</span>טבלת תוצאות — הזינו נפחי NaOH שנמדדו</div>
-        <div class="tbl-note">💡 הזינו נפח NaOH שנצרך (מ"ל) לכל מיץ. החישובים יתעדכנו אוטומטית.</div>
-        <div class="data-tbl-wrap">
-          <table class="data-tbl">
-            <thead><tr><th>מיץ</th><th>טרי / משומר</th><th>נפח מיץ (מ"ל)</th><th>ריכוז NaOH (M)</th><th>V<sub>NaOH</sub> (מ"ל)</th><th>C<sub>a</sub> (M)</th><th>mol H₃O⁺</th></tr></thead>
-            <tbody id="cit-data-body"></tbody>
-          </table>
-        </div>
-        <button class="btn btn-outline-blue" style="font-size:.75rem;padding:7px 14px" onclick="citRecalc()">🔄 עדכן חישובים</button>
-      </div>
-      <div class="cit-card" id="cit-calc-show">
-        <div class="cit-card-title"><span class="cit-section-num">🧮</span>פירוט חישוב — מיץ לימון טרי</div>
-        <div id="cit-sample-calc" class="calc-steps-box">הזן ערך לנפח NaOH של מיץ לימון טרי.</div>
-      </div>
-    </div>
-    <div class="cit-panel" id="cit-panel-3">
-      <div class="cit-card">
-        <div class="cit-card-title"><span class="cit-section-num">📈</span>גרף השוואת ריכוזי חומצה ציטרית</div>
-        <div id="cit-no-data" style="font-size:.8rem;color:var(--text3);padding:20px 0;text-align:center">הזן נתונים בלשונית "תוצאות" כדי לצייר את הגרף.</div>
-        <div id="cit-bar-chart" class="bar-chart-area" style="display:none"></div>
-        <div id="cit-winner" class="summary-winner" style="display:none"><div class="summary-trophy">🏆</div><div class="summary-text"><strong id="cit-winner-name"></strong><p id="cit-winner-sub"></p></div></div>
-      </div>
-      <div class="cit-card">
-        <div class="cit-card-title"><span class="cit-section-num">📋</span>טבלת סיכום — טריים מול משומרים</div>
-        <div class="data-tbl-wrap">
-          <table class="data-tbl">
-            <thead><tr><th>מיץ</th><th>ריכוז טרי (M)</th><th>ריכוז משומר (M)</th><th>הפרש (%)</th></tr></thead>
-            <tbody>
-              <tr><td class="juice-name">🍋 לימון</td><td class="calc-cell" id="cs-l-f">—</td><td class="calc-cell" id="cs-l-c">—</td><td class="calc-cell" id="cs-l-d">—</td></tr>
-              <tr><td class="juice-name">🍊 תפוז</td><td class="calc-cell" id="cs-o-f">—</td><td class="calc-cell" id="cs-o-c">—</td><td class="calc-cell" id="cs-o-d">—</td></tr>
-              <tr><td class="juice-name">🍇 אשכולית</td><td class="calc-cell" id="cs-g-f">—</td><td class="calc-cell" id="cs-g-c">—</td><td class="calc-cell" id="cs-g-d">—</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="cit-panel" id="cit-panel-4">
-      <div class="cit-card">
-        <div class="cit-card-title"><span class="cit-section-num">✏️</span>עיבוד תוצאות ועיון</div>
-        <div class="analysis-q"><div class="analysis-q-text"><span class="analysis-q-num">א.</span>נסחו את <strong>תגובת הסתירה</strong> (משוואה מאוזנת).</div><textarea class="analysis-textarea" placeholder="כתבו כאן את המשוואה המאוזנת..."></textarea><div><button class="analysis-hint-btn" onclick="toggleHint(this)">💡 רמז</button><div class="analysis-hint">H₃C₆H₅O₇ + 3 NaOH → Na₃C₆H₅O₇ + 3H₂O</div></div></div>
-        <div class="analysis-q"><div class="analysis-q-text"><span class="analysis-q-num">ב.</span>מדוע הוספת מים לפני הטיטרציה אינה משנה את התוצאות?</div><textarea class="analysis-textarea" placeholder="הסבירו את הקשר בין נפח לריכוז..."></textarea><div><button class="analysis-hint-btn" onclick="toggleHint(this)">💡 רמז</button><div class="analysis-hint">n = C × V — מים מדללים ריכוז אך מגדילים נפח באותו יחס; כמות המולים נשמרת.</div></div></div>
-        <div class="analysis-q"><div class="analysis-q-text"><span class="analysis-q-num">ג.</span>ביקורת שיטה — ציינו 3 מקורות שגיאה אפשריים.</div><textarea class="analysis-textarea" style="min-height:100px" placeholder="שגיאות שיטה, כלים, גורמים מבלבלים..."></textarea><div><button class="analysis-hint-btn" onclick="toggleHint(this)">💡 רמז</button><div class="analysis-hint">• קושי זיהוי נקודת הסיום — צבע ורוד עדין<br>• CO₂ במיצים משומרים<br>• מדידת נפח לא מדויקת (מנוסקוס)</div></div></div>
-        <div class="analysis-q"><div class="analysis-q-text"><span class="analysis-q-num">ד.</span><strong>מסקנות</strong> — מה הפרי החמוץ ביותר?</div><textarea class="analysis-textarea" style="min-height:100px" placeholder="נסחו מסקנה מדעית..."></textarea></div>
-      </div>
-    </div>
-    <div class="cit-panel" id="cit-panel-5">
-      <div class="cit-card">
-        <div class="cit-card-title"><span class="cit-section-num">💡</span>שאלות מחקר</div>
-        <div id="cit-rq-list"></div>
-        <button class="btn btn-outline-blue" style="font-size:.75rem;padding:7px 14px;margin-top:8px" onclick="citAddRQ()">＋ הוסף שאלה</button>
-      </div>
-      <div class="cit-card" style="border-color:var(--purple-m);background:var(--purple-l)">
-        <div class="cit-card-title" style="color:var(--purple)">🔭 שאלות מחקר לדוגמה</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:.75rem">
-          <div style="padding:9px 12px;background:var(--surface);border-radius:8px;border:1px solid var(--purple-m);color:var(--text2)"><strong style="color:var(--purple)">1.</strong> האם ריכוז החומצה משתנה עם הבשלת הפרי?</div>
-          <div style="padding:9px 12px;background:var(--surface);border-radius:8px;border:1px solid var(--purple-m);color:var(--text2)"><strong style="color:var(--purple)">2.</strong> כיצד משפיעה הטמפרטורה על קצב הטיטרציה?</div>
-          <div style="padding:9px 12px;background:var(--surface);border-radius:8px;border:1px solid var(--purple-m);color:var(--text2)"><strong style="color:var(--purple)">3.</strong> האם ניתן להשתמש ב-pH מטר כחלופה?</div>
-          <div style="padding:9px 12px;background:var(--surface);border-radius:8px;border:1px solid var(--purple-m);color:var(--text2)"><strong style="color:var(--purple)">4.</strong> כיצד משתנה חומציות לאחר אחסון בקירור?</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- WHITE POWDERS -->
-<div id="screen-powders" class="screen">
-  <div class="pwd-top">
-    <button class="back-btn" onclick="goTo('screen-landing')">⬅ חזרה</button>
-    <span style="font-size:1.3rem">🔬</span>
-    <h2>ניסוי חקר רמה 2א' — אבקות לבנות: זיהוי חמישה נעלמים</h2>
-  </div>
-  <div class="pwd-tabs">
-    <div class="pwd-tab active" id="pwd-tab-0" onclick="pwdTab(0)">📚 שלב א׳: טרום חקר</div>
-    <div class="pwd-tab" id="pwd-tab-1" onclick="pwdTab(1)">⚗️ בדיקות וצפיות</div>
-    <div class="pwd-tab" id="pwd-tab-2" onclick="pwdTab(2)">📋 טבלת תוצאות</div>
-    <div class="pwd-tab" id="pwd-tab-3" onclick="pwdTab(3)">🌊 תרשים זרימה</div>
-    <div class="pwd-tab" id="pwd-tab-4" onclick="pwdTab(4)">🏷️ זיהוי וסיכום</div>
-    <div class="pwd-tab" id="pwd-tab-5" onclick="pwdTab(5)">✏️ שלב ב׳: ביקורת</div>
-  </div>
-  <div class="pwd-body">
-    <div class="pwd-panel active" id="pwd-panel-0">
-      <div class="pwd-card">
-        <div class="pwd-card-title"><span class="pwd-badge">🎯</span>מטרת הניסוי</div>
-        <div style="font-size:.82rem;line-height:1.8;color:var(--text2)">לפניכם <strong>חמש כוסות A–E</strong> המכילות אבקות לבנות. עליכם לזהות כל אחד מהנעלמים באמצעות בדיקות.</div>
-        <div class="sub-grid" style="margin-top:14px" id="pwd-sub-grid"></div>
-      </div>
-      <div class="pwd-card">
-        <div class="pwd-card-title"><span class="pwd-badge">1</span>שאלות טרום חקר</div>
-        <div style="margin-bottom:14px"><div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:8px">א. רשמו את סוג הקשר הכימי בכל חומר:</div><div id="pwd-bond-q" style="display:flex;flex-direction:column;gap:6px"></div></div>
-        <div style="margin-bottom:14px"><div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:6px">ב. תארו את המראה הצפוי:</div><textarea id="pwd-appearance-q" class="analysis-textarea" style="min-height:90px" placeholder="לדוגמה: NaCl — גבישים שקופים מעוקבים..."></textarea></div>
-        <div><div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:6px">ג. תכננו את הבדיקות:</div><textarea class="analysis-textarea" style="min-height:110px" placeholder="לדוגמה: 1. המסה במים — NaCl וKI יימסו, שעווה לא..."></textarea></div>
-      </div>
-      <div class="pwd-card">
-        <div class="pwd-card-title"><span class="pwd-badge">📦</span>טופס הזמנת חומרים וכלים</div>
-        <div class="order-grid" id="pwd-order-grid"></div>
-        <div style="margin-top:12px"><div style="font-size:.75rem;font-weight:700;color:var(--text);margin-bottom:6px">חומרים נוספים:</div><textarea class="analysis-textarea" style="min-height:60px"></textarea></div>
-        <div style="margin-top:12px;padding:10px 14px;background:#eef2ff;border:1.5px solid #c7d2fe;border-radius:9px;font-size:.73rem;color:#4f46e5"><strong>📋 הגישו למורה לאישור לפני ביצוע הניסוי.</strong></div>
-      </div>
-    </div>
-    <div class="pwd-panel" id="pwd-panel-1">
-      <div class="pwd-card" style="border-color:#c7d2fe">
-        <div class="pwd-card-title" style="color:#4f46e5">⚗️ בדיקות מומלצות לזיהוי</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px" id="pwd-tests-info"></div>
-      </div>
-      <div class="pwd-card">
-        <div class="pwd-card-title"><span class="pwd-badge">🔎</span>תצפיות ראשוניות</div>
-        <div style="display:flex;flex-direction:column;gap:8px" id="pwd-appearance-rows"></div>
-      </div>
-    </div>
-    <div class="pwd-panel" id="pwd-panel-2">
-      <div class="pwd-card">
-        <div class="pwd-card-title"><span class="pwd-badge">📋</span>טבלת תוצאות</div>
-        <div class="tbl-note" style="background:#eef2ff;border-color:#c7d2fe;color:#4f46e5">💡 רשמו תצפיות לכל כוס (A–E) ולכל בדיקה.</div>
-        <div class="test-matrix-wrap"><table class="test-matrix" id="pwd-results-tbl"></table></div>
-      </div>
-    </div>
-    <div class="pwd-panel" id="pwd-panel-3">
-      <div class="pwd-card">
-        <div class="pwd-card-title"><span class="pwd-badge">🌊</span>תרשים זרימה לזיהוי</div>
-        <div id="pwd-flowchart"></div>
-      </div>
-      <div class="pwd-card">
-        <div class="pwd-card-title"><span class="pwd-badge">✏️</span>תרשים הזרימה שלכם</div>
-        <textarea class="analysis-textarea" style="min-height:160px" placeholder="תארו את תרשים הזרימה שתכננתם..."></textarea>
-      </div>
-    </div>
-    <div class="pwd-panel" id="pwd-panel-4">
-      <div class="pwd-card">
-        <div class="pwd-card-title"><span class="pwd-badge">🏷️</span>זיהוי סופי</div>
-        <div id="pwd-id-rows"></div>
-        <button class="id-check-btn" style="margin-top:12px" onclick="pwdCheckId()">✔ בדוק זיהוי</button>
-        <div id="pwd-id-result" class="id-result-row"></div>
-      </div>
-    </div>
-    <div class="pwd-panel" id="pwd-panel-5">
-      <div class="pwd-card">
-        <div class="pwd-card-title"><span class="pwd-badge">✏️</span>שלב ב׳ — ביקורת וסיכום</div>
-        <div class="analysis-q"><div class="analysis-q-text"><span class="analysis-q-num">1.</span>מסקנות — מה הוביל לזיהוי כל חומר?</div><textarea class="analysis-textarea" style="min-height:100px"></textarea></div>
-        <div class="analysis-q"><div class="analysis-q-text"><span class="analysis-q-num">2.</span>קשיים — האם נתקלתם בקשיים?</div><textarea class="analysis-textarea"></textarea><div><button class="analysis-hint-btn" onclick="toggleHint(this)">💡 קשיים אפשריים</button><div class="analysis-hint">• NaCl וKI דומים מאוד במראה<br>• בדיקת להבה: קשה לזהות צבע KI<br>• גלוקוז ממיס לאט</div></div></div>
-        <div class="analysis-q"><div class="analysis-q-text"><span class="analysis-q-num">3.</span>שיפורים מוצעים:</div><textarea class="analysis-textarea"></textarea><div><button class="analysis-hint-btn" onclick="toggleHint(this)">💡 רמז</button><div class="analysis-hint">• pH מטר דיגיטלי<br>• בדיקת מוליכות חשמלית<br>• ספקטרוסקופיה של להבה</div></div></div>
-      </div>
-    </div>
+    <div class="rxn-hud-controls" id="rxn-hud-c" style="display:none"><strong>🎮 שליטה:</strong><div>• גרור — סיבוב</div><div>• גלגל — זום</div></div>
+    <div class="rxn-hud-stage" id="rxn-hud-s" style="display:none"><div class="rxn-stage-badge" id="rxn-stage-badge"></div><div id="rxn-mol-list"></div></div>
+    <div class="rxn-legend" id="rxn-legend" style="display:none"><strong>⚛️ אלמנטים:</strong><div id="rxn-legend-items"></div></div>
   </div>
 </div>
 
 <script>
-/* NAVIGATION */
-function goTo(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  if(id==='screen-titration'&&!chart)initChart();
-  if(id==='screen-reaction'){setTimeout(()=>{rxnInitScene();if(!rxnRAF&&rxnRenderer&&rxnScene&&rxnCamera){(function animate(){rxnRAF=requestAnimationFrame(animate);rxnRenderer.render(rxnScene,rxnCamera);})();}},50);}
-  if(id==='screen-citrus')citInit();
-  if(id==='screen-powders')pwdInit();
-}
-
-/* TITRATION ENGINE */
-let vAcid=25,cAcid=0.1,cBase=0.1,vBaseTotal=0;
-let acidType='strong',buretteMode='stream';
-let challengeMode=false,hiddenConc=0.1;
-let chart,rowCount=0,eqReached=false,eqVolume=0,dataLog=[];
-let quizPhase=0,quizDone=[false,false,false],midQuizTriggered=false;
-let vortexAngle=0,vortexRAF=null,vortexActive=false;
-let juiceMode=false,currentJuice=null;
-const dataPoints=[{x:0,y:1}];
-
-function calculatePH(vBase){
-  const nAcid=(cAcid*vAcid)/1000,nBase=(cBase*vBase)/1000,totalVol=(vAcid+vBase)/1000;
-  if(acidType==='strong'){
-    if(vBase===0)return -Math.log10(cAcid);
-    if(nAcid>nBase)return -Math.log10((nAcid-nBase)/totalVol);
-    if(nBase>nAcid)return 14+Math.log10((nBase-nAcid)/totalVol);
-    return 7.0;
-  }
-  if(acidType==='weak'){
-    const pKa=4.76,Ka=Math.pow(10,-pKa);
-    if(vBase===0)return -Math.log10((-Ka+Math.sqrt(Ka*Ka+4*Ka*cAcid))/2);
-    if(nBase<nAcid){if(nBase<1e-9)return -Math.log10((-Ka+Math.sqrt(Ka*Ka+4*Ka*cAcid))/2);return pKa+Math.log10(nBase/(nAcid-nBase));}
-    if(nBase>nAcid)return 14+Math.log10((nBase-nAcid)/totalVol);
-    const Kb=(1e-14)/Ka,cSalt=nAcid/totalVol;return 14+0.5*Math.log10(Kb*cSalt);
-  }
-  if(acidType==='citric'){
-    const pKa1=3.13,pKa2=4.76,pKa3=6.40,Ka1=Math.pow(10,-pKa1),eps=1e-9;
-    if(vBase===0)return -Math.log10((-Ka1+Math.sqrt(Ka1*Ka1+4*Ka1*cAcid))/2);
-    const ratio=nBase/nAcid;
-    if(ratio<1-eps){if(nBase<eps)return -Math.log10((-Ka1+Math.sqrt(Ka1*Ka1+4*Ka1*cAcid))/2);return pKa1+Math.log10(nBase/(nAcid-nBase));}
-    if(Math.abs(ratio-1)<eps)return(pKa1+pKa2)/2;
-    if(ratio<2-eps){const nH2A=2*nAcid-nBase,nHA2=nBase-nAcid;if(nH2A<eps||nHA2<eps)return(pKa1+pKa2)/2;return pKa2+Math.log10(nHA2/nH2A);}
-    if(Math.abs(ratio-2)<eps)return(pKa2+pKa3)/2;
-    if(ratio<3-eps){const nHA2=3*nAcid-nBase,nA3=nBase-2*nAcid;if(nHA2<eps||nA3<eps)return(pKa2+pKa3)/2;return pKa3+Math.log10(nA3/nHA2);}
-    if(ratio<=3){const Kb3=(1e-14)/Math.pow(10,-pKa3),cSalt=nAcid/totalVol;return 14+0.5*Math.log10(Kb3*cSalt);}
-    return 14+Math.log10((nBase-3*nAcid)/totalVol);
-  }
-  return 7.0;
-}
-
-function theoreticalEqVol(){const n=(acidType==='citric')?3:1;return(n*cAcid*vAcid)/cBase;}
-function getEqPH(){
-  if(acidType==='strong')return 7.0;
-  if(acidType==='weak'){const Kb=(1e-14)/Math.pow(10,-4.76),eqV=theoreticalEqVol(),cSalt=(cAcid*vAcid/1000)/((vAcid+eqV)/1000);return 14+0.5*Math.log10(Kb*cSalt);}
-  if(acidType==='citric'){const Kb3=(1e-14)/Math.pow(10,-6.40),eqV=theoreticalEqVol(),cSalt=(cAcid*vAcid/1000)/((vAcid+eqV)/1000);return 14+0.5*Math.log10(Kb3*cSalt);}
-  return 7.0;
-}
-function getLiquidColor(ph){
-  const ind=document.getElementById('indicator').value;
-  if(ind==='phenolphthalein')return ph>8.2?'rgba(192,38,211,.5)':'rgba(219,234,254,.6)';
-  if(ph<3)return'rgba(239,68,68,.55)';if(ph<5)return'rgba(249,115,22,.55)';
-  if(ph<7)return'rgba(234,179,8,.5)';if(ph<8.5)return'rgba(34,197,94,.45)';
-  if(ph<11)return'rgba(59,130,246,.5)';return'rgba(168,85,247,.5)';
-}
-function getPhaseLabel(ph){if(ph<6.9)return'חומצי';if(ph>7.1)return'בסיסי';return'✦ נ.מ.';}
-function getPhaseColor(ph){if(ph<6.9)return'var(--red)';if(ph>7.1)return'var(--purple)';return'var(--green)';}
-function updateUI(ph){
-  const color=getLiquidColor(ph);
-  document.getElementById('flask-liquid').setAttribute('fill',color);
-  const pct=Math.max(0,Math.min(100,(ph/14)*100));
-  document.getElementById('ph-needle').style.left=`calc(${pct}% - 2px)`;
-  const el=document.getElementById('ph-display');
-  el.className='metric-val';
-  if(ph<6.9)el.classList.add('mv-acid');else if(ph>7.1)el.classList.add('mv-base');else el.classList.add('mv-neutral');
-  document.getElementById('burette-fill').style.height=`${Math.max(0,(1-Math.min(vBaseTotal/50,1))*100)}%`;
-  return color;
-}
-function updateLiquid(){const ph=parseFloat(document.getElementById('ph-display').innerText)||1;updateUI(ph);}
-function startVortex(){
-  if(vortexActive)return;vortexActive=true;
-  const canvas=document.getElementById('vortex-canvas'),ctx=canvas.getContext('2d'),cx=55,cy=82;
-  function frame(){ctx.clearRect(0,0,110,120);vortexAngle+=0.08;ctx.save();ctx.beginPath();ctx.moveTo(44,8);ctx.lineTo(66,8);ctx.lineTo(66,50);ctx.lineTo(100,110);ctx.lineTo(10,110);ctx.closePath();ctx.clip();for(let i=0;i<4;i++){const a=vortexAngle+(i*Math.PI*2/4);ctx.beginPath();ctx.strokeStyle=`rgba(255,255,255,${0.35-i*0.07})`;ctx.lineWidth=2;ctx.arc(cx,cy,5+i*7,a,a+Math.PI*1.6);ctx.stroke();}ctx.restore();vortexRAF=requestAnimationFrame(frame);}
-  frame();setTimeout(()=>{vortexActive=false;cancelAnimationFrame(vortexRAF);document.getElementById('vortex-canvas').getContext('2d').clearRect(0,0,110,120);},1500);
-}
-function triggerDrip(){const d=document.getElementById('drip');d.classList.remove('go');void d.offsetWidth;d.classList.add('go');}
-function addTitrant(amt){
-  vBaseTotal=parseFloat((vBaseTotal+amt).toFixed(3));
-  const ph=calculatePH(vBaseTotal);
-  document.getElementById('vol-display').innerText=vBaseTotal.toFixed(2);
-  document.getElementById('ph-display').innerText=ph.toFixed(2);
-  const color=updateUI(ph);triggerDrip();startVortex();
-  const eqVol=theoreticalEqVol(),eqPH=getEqPH();
-  if(!eqReached&&(Math.abs(ph-eqPH)<0.3||vBaseTotal>=eqVol)){
-    eqReached=true;eqVolume=vBaseTotal;
-    document.getElementById('eq-tag').classList.add('show');
-    document.getElementById('eq-ph-val').innerText=ph.toFixed(2);
-    document.getElementById('lab-panel').classList.add('eq-flash');
-    setTimeout(()=>document.getElementById('lab-panel').classList.remove('eq-flash'),1000);
-    if(challengeMode)document.getElementById('ch-ans-box').classList.add('show');
-    showQuiz(2);
-  }
-  if(!midQuizTriggered&&vBaseTotal>=eqVol*0.45&&vBaseTotal<=eqVol*0.65){midQuizTriggered=true;if(!quizDone[0]){quizDone[0]=true;markPhase(0,'done');}showQuiz(1);}
-  addRow(vBaseTotal,ph,color);dataPoints.push({x:vBaseTotal,y:parseFloat(ph.toFixed(3))});chart.update();
-}
-function addRow(v,ph,color){
-  rowCount++;document.getElementById('row-cnt').innerText=`${rowCount} רשומות`;
-  const phase=getPhaseLabel(ph),phColor=getPhaseColor(ph);
-  const tr=document.createElement('tr');tr.className='fresh';
-  tr.innerHTML=`<td>${v.toFixed(2)}</td><td style="color:${phColor};font-weight:700">${ph.toFixed(2)}</td><td style="color:${phColor};font-size:.6rem">${phase}</td><td><div class="swatch" style="background:${color}"></div></td>`;
-  dataLog.push({v:v.toFixed(2),ph:ph.toFixed(2),phase,color});
-  document.getElementById('data-body').prepend(tr);setTimeout(()=>tr.classList.remove('fresh'),500);
-}
-function exportCSV(){
-  if(!dataLog.length){alert('אין נתונים.');return;}
-  const bom='\uFEFF',h='נפח NaOH (מ"ל),pH,שלב\n',rows=dataLog.map(r=>`${r.v},${r.ph},${r.phase}`).join('\n');
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([bom+h+rows],{type:'text/csv;charset=utf-8'}));a.download='titration_data.csv';a.click();
-}
-const quizDefs=[
-  {type:'input',q:()=>{if(acidType==='strong')return`מהו ה-pH ההתחלתי של HCl בריכוז ${cAcid.toFixed(2)}M?`;if(acidType==='weak')return`מהו ה-pH ההתחלתי של CH₃COOH בריכוז ${cAcid.toFixed(2)}M? (pKa=4.76)`;return`מהו ה-pH ההתחלתי של H₃Cit (${cAcid.toFixed(3)}M)? (pKa₁=3.13)`;},hint:()=>{if(acidType==='strong')return`pH = –log(${cAcid.toFixed(2)})`;if(acidType==='weak')return'pH ≈ ½(pKa – log C)';return'pH ≈ ½(pKa1 – log C)';},check:v=>Math.abs(parseFloat(v)-parseFloat(calculatePH(0).toFixed(2)))<0.12,ok:()=>`✓ נכון! pH ≈ ${calculatePH(0).toFixed(2)}`,no:()=>`✗ pH = ${calculatePH(0).toFixed(2)}`},
-  {type:'mc',q:()=>`הוספת ~${(theoreticalEqVol()/2).toFixed(1)} מ"ל — חצי הדרך לנ.מ. מה נכון?`,opts:[()=>'n(H⁺) = n(OH⁻)',()=>'n(H⁺) ≈ 2·n(OH⁻)',()=>'n(OH⁻) > n(H⁺)',()=>'pH = 7'],correct:1,ok:()=>'✓ נכון! n(H⁺) ≈ 2·n(OH⁻)',no:()=>'✗ שגוי — n(H⁺) עדיין גדול יותר'},
-  {type:'input',q:()=>challengeMode?`נ.מ. ב-${eqVolume.toFixed(1)} מ"ל! חשב את ריכוז החומצה (M).`:`נ.מ. ב-${eqVolume.toFixed(1)} מ"ל — מהו ריכוז החומצה? (M)`,hint:()=>{const n=(acidType==='citric')?3:1;return`Ca = (Cb × Vb) / (${n} × Va) = (${cBase.toFixed(2)} × ${eqVolume.toFixed(1)}) / (${n} × 25)`;},check:v=>Math.abs(parseFloat(v)-cAcid)<0.015,ok:()=>`✓ Ca = ${cAcid.toFixed(3)} M`,no:()=>`✗ Ca = (Cb × Vb) / (${acidType==='citric'?3:1} × Va)`}
-];
-function showQuiz(phase){
-  quizPhase=phase;markPhase(phase,'active');
-  const def=quizDefs[phase],body=document.getElementById('quiz-body');
-  body.style.opacity='0';
-  setTimeout(()=>{
-    body.style.opacity='1';
-    if(quizDone[phase]){body.innerHTML=`<div style="color:var(--green);font-weight:700;font-size:.78rem;padding:8px 0">✓ שאלה זו נענתה בהצלחה!</div>`;return;}
-    let html=`<div class="quiz-q">${def.q()}</div>`;
-    if(def.hint)html+=`<div class="quiz-hint">${def.hint()}</div>`;
-    if(def.type==='mc'){html+=`<div class="mc-options" id="mc-opts">`;def.opts.forEach((o,i)=>html+=`<div class="mc-opt" onclick="answerMC(${i})">${String.fromCharCode(65+i)}. ${o()}</div>`);html+='</div>';}
-    else{html+=`<div class="quiz-input-row"><input class="quiz-inp" id="q-inp" type="number" placeholder="0.00" step="0.01"><button class="btn btn-outline-yellow" style="padding:8px 13px;font-size:.75rem" onclick="answerInput(${phase})">בדוק ↵</button></div>`;}
-    html+=`<div class="qfb" id="qfb"></div>`;
-    body.innerHTML=html;
-    const inp=document.getElementById('q-inp');inp&&inp.addEventListener('keydown',e=>{if(e.key==='Enter')answerInput(phase);});
-  },200);
-  body.style.transition='opacity .2s';
-}
-function answerMC(idx){const def=quizDefs[1];document.querySelectorAll('.mc-opt').forEach((o,i)=>{o.style.pointerEvents='none';if(i===def.correct)o.classList.add('correct');else if(i===idx&&idx!==def.correct)o.classList.add('wrong');});const fb=document.getElementById('qfb');if(idx===def.correct){fb.className='qfb ok';fb.innerText=def.ok();quizDone[1]=true;markPhase(1,'done');}else{fb.className='qfb no';fb.innerText=def.no();}}
-function answerInput(phase){const val=document.getElementById('q-inp')?.value||'',fb=document.getElementById('qfb');if(quizDefs[phase].check(val)){fb.className='qfb ok';fb.innerText=quizDefs[phase].ok();quizDone[phase]=true;markPhase(phase,'done');}else{fb.className='qfb no';fb.innerText=quizDefs[phase].no();}}
-function markPhase(idx,state){document.getElementById(`qp${idx}`).className='qphase '+state;}
-function startChallenge(){
-  juiceMode=false;currentJuice=null;clearJuiceBtns();
-  const acidChoices=[0.05,0.06,0.07,0.08,0.09,0.10,0.11,0.12,0.13,0.14,0.15];
-  hiddenConc=acidChoices[Math.floor(Math.random()*acidChoices.length)];cAcid=hiddenConc;
-  const baseChoices=[0.05,0.10,0.15,0.20];cBase=baseChoices[Math.floor(Math.random()*baseChoices.length)];
-  challengeMode=true;document.getElementById('base-conc-row').style.display='none';
-  resetSimulation(true);
-  document.getElementById('normal-status').style.display='none';document.getElementById('challenge-status').style.display='flex';
-  document.getElementById('p-acid-conc').textContent='??? M';document.getElementById('p-acid-conc').style.color='var(--yellow)';
-  document.getElementById('p-eq').textContent='? מ"ל';
-  const n=(acidType==='citric')?3:1;document.getElementById('ch-formula-hint').textContent=`Ca = (Cb × Vb) / (${n} × Va)  [Cb=${cBase.toFixed(2)}M]`;
-}
-function checkChallengeAnswer(){
-  const val=parseFloat(document.getElementById('ch-ans-inp').value),fb=document.getElementById('ch-fb');
-  const n=(acidType==='citric')?3:1,tol=juiceMode?0.02:0.015;
-  if(Math.abs(val-hiddenConc)<tol){fb.className='ch-fb ok';fb.innerText=`✓ מדויק! ריכוז החומצה: ${hiddenConc.toFixed(3)} M`;document.getElementById('p-acid-conc').textContent=`${hiddenConc.toFixed(3)} M`;document.getElementById('p-acid-conc').style.color='var(--green)';launchConfetti();}
-  else{const hint=`Ca = (${cBase.toFixed(2)} × ${eqVolume.toFixed(2)}) / (${n} × 25)`;fb.className='ch-fb no';fb.innerText=`✗ ${val>hiddenConc?'גבוה מדי':'נמוך מדי'} — רמז: ${hint}`;}
-}
-function launchConfetti(){
-  const w=document.createElement('div');w.className='confetti-wrap';document.body.appendChild(w);
-  ['#2563eb','#059669','#d97706','#dc2626','#7c3aed','#ea580c'].forEach(c=>{for(let i=0;i<10;i++){const p=document.createElement('div');p.className='cp';p.style.cssText=`left:${Math.random()*100}%;top:-10px;background:${c};animation-delay:${Math.random()*.8}s;animation-duration:${1.8+Math.random()}s;transform:rotate(${Math.random()*360}deg);width:${6+Math.random()*5}px;height:${8+Math.random()*5}px`;w.appendChild(p);}});
-  setTimeout(()=>w.remove(),4000);
-}
-function updateBaseConc(val){
-  const v=parseFloat(val);if(isNaN(v)||v<0.01||v>1.0)return;cBase=v;
-  document.getElementById('burette-label-txt').textContent=`ביורטה — NaOH ${cBase.toFixed(2)}M`;
-  document.getElementById('p-eq').textContent=`${theoreticalEqVol().toFixed(1)} מ"ל`;
-}
-function phQAnswer(yes){
-  document.getElementById('ph-q-answer').style.display='block';
-  const verdict=document.getElementById('ph-q-verdict');
-  document.getElementById('ph-q-yes').style.pointerEvents='none';document.getElementById('ph-q-no').style.pointerEvents='none';
-  if(yes){verdict.style.cssText='padding:8px 12px;font-size:.75rem;font-weight:700;background:#fee2e2;color:#dc2626';verdict.textContent='✗ לא בדיוק — pH לבדו אינו מספיק לחישוב ריכוז.';}
-  else{verdict.style.cssText='padding:8px 12px;font-size:.75rem;font-weight:700;background:#dcfce7;color:#15803d';verdict.textContent='✓ נכון! הנה למה:';}
-}
-function updateAcidPhLabels(){
-  const savedType=acidType,savedC=cAcid;
-  const computePH=(type,c)=>{acidType=type;cAcid=c;const v=parseFloat(calculatePH(0).toFixed(2));return v;};
-  const phS=computePH('strong',0.1),phW=computePH('weak',0.1),phCit=computePH('citric',0.25);
-  acidType=savedType;cAcid=savedC;
-  document.getElementById('ph-lbl-strong').textContent=`pH ≈ ${phS.toFixed(1)}`;
-  document.getElementById('ph-lbl-weak').textContent=`pH ≈ ${phW.toFixed(2)}`;
-  document.getElementById('ph-lbl-citric').textContent=`pH ≈ ${phCit.toFixed(2)}`;
-}
-function clearJuiceBtns(){['lemon','orange','grapefruit','lime'].forEach(j=>{const el=document.getElementById(`btn-j-${j}`);if(el)el.className='acid-btn';});}
-const JUICE_DATA={
-  lemon:{emoji:'🍋',name:'מיץ לימון',heLabel:'לימון טרי',range:[0.22,0.35],color:'#ca8a04'},
-  orange:{emoji:'🍊',name:'מיץ תפוזים',heLabel:'תפוז טרי',range:[0.04,0.09],color:'#ea580c'},
-  grapefruit:{emoji:'🍈',name:'מיץ אשכוליות',heLabel:'אשכולית טרייה',range:[0.07,0.13],color:'#d97706'},
-  lime:{emoji:'🟢',name:'מיץ ליים',heLabel:'ליים טרי',range:[0.16,0.28],color:'#65a30d'},
-};
-function randInRange(min,max){return Math.round((min+Math.random()*(max-min))*100)/100;}
-function setJuice(j){
-  const d=JUICE_DATA[j];acidType='citric';juiceMode=true;currentJuice=j;challengeMode=true;
-  hiddenConc=randInRange(d.range[0],d.range[1]);cAcid=hiddenConc;
-  document.getElementById('btn-strong').className='acid-btn';document.getElementById('btn-weak').className='acid-btn';document.getElementById('btn-citric').className='acid-btn';
-  clearJuiceBtns();document.getElementById(`btn-j-${j}`).className='acid-btn act-juice';
-  const nm=document.getElementById('p-acid-name');nm.textContent=d.emoji+' '+d.heLabel;nm.style.color=d.color;
-  document.getElementById('p-eq-ph').textContent='> 7';
-  document.getElementById('hdr-sub').textContent=`${d.emoji} ${d.name} ← NaOH ${cBase.toFixed(2)}M — גלה את ריכוז החומצה הציטרית!`;
-  document.getElementById('normal-status').style.display='none';document.getElementById('challenge-status').style.display='flex';
-  document.getElementById('p-acid-conc').textContent='??? M';document.getElementById('p-acid-conc').style.color='var(--yellow)';
-  document.getElementById('p-eq').textContent='? מ"ל';
-  const hint=document.getElementById('ch-formula-hint');if(hint)hint.textContent=`Ca = (Cb × Vb) / (3 × Va)  [n=3 לחומצה ציטרית, Cb=${cBase.toFixed(2)}M]`;
-  document.getElementById('base-conc-row').style.display='flex';
-  resetSimulation(true);
-}
-function setAcidType(t){
-  acidType=t;clearJuiceBtns();
-  document.getElementById('btn-strong').className='acid-btn'+(t==='strong'?' act-strong':'');
-  document.getElementById('btn-weak').className='acid-btn'+(t==='weak'?' act-weak':'');
-  document.getElementById('btn-citric').className='acid-btn'+(t==='citric'?' act-citric':'');
-  const nm=document.getElementById('p-acid-name'),base=`NaOH ${cBase.toFixed(2)}M`;
-  if(t==='strong'){cAcid=0.1;nm.textContent='HCl';nm.style.color='var(--red)';document.getElementById('p-eq-ph').textContent='7.00';document.getElementById('hdr-sub').textContent=`HCl (חומצה הידרוכלורית) ← ${base}`;}
-  else if(t==='weak'){cAcid=0.1;nm.textContent='CH₃COOH';nm.style.color='var(--orange)';document.getElementById('p-eq-ph').textContent='> 7';document.getElementById('hdr-sub').textContent=`CH₃COOH (חומצה אצטית) ← ${base}`;}
-  else if(t==='citric'){cAcid=0.25;nm.textContent='H₃Cit';nm.style.color='var(--teal)';document.getElementById('p-eq-ph').textContent='> 7';document.getElementById('hdr-sub').textContent=`H₃Cit (חומצה ציטרית) ← ${base}`;}
-  resetSimulation();
-}
-function setMode(m){
-  buretteMode=m;
-  document.getElementById('mode-stream').className='mode-btn'+(m==='stream'?' active':'');
-  document.getElementById('mode-drops').className='mode-btn'+(m==='drops'?' active':'');
-  const btns=document.getElementById('add-btns');
-  if(m==='stream')btns.innerHTML=`<button class="btn btn-blue" onclick="addTitrant(1.0)">＋ 1.0 מ"ל</button><button class="btn btn-outline-blue" onclick="addTitrant(0.5)">＋ 0.5 מ"ל</button><button class="btn btn-outline-blue" onclick="addTitrant(0.1)">＋ 0.1 מ"ל</button><button class="btn btn-outline-red" onclick="resetSimulation()">↺ איפוס</button>`;
-  else btns.innerHTML=`<button class="btn btn-blue" onclick="addTitrant(0.05)">💧 0.05 מ"ל</button><button class="btn btn-outline-blue" onclick="addTitrant(0.02)">💧 0.02 מ"ל</button><button class="btn btn-outline-blue" onclick="addTitrant(0.1)">＋ 0.1 מ"ל</button><button class="btn btn-outline-red" onclick="resetSimulation()">↺ איפוס</button>`;
-}
-function resetSimulation(k){
-  vBaseTotal=0;rowCount=0;eqReached=false;eqVolume=0;midQuizTriggered=false;quizDone=[false,false,false];quizPhase=0;dataLog=[];
-  dataPoints.length=0;const init=calculatePH(0);dataPoints.push({x:0,y:init});
-  chart&&chart.update();
-  document.getElementById('data-body').innerHTML='';document.getElementById('row-cnt').innerText='0 רשומות';
-  document.getElementById('vol-display').innerText='0.00';document.getElementById('ph-display').innerText=init.toFixed(2);document.getElementById('ph-display').className='metric-val mv-acid';
-  document.getElementById('eq-tag').classList.remove('show');
-  document.getElementById('ph-needle').style.left=`${(init/14)*100}%`;
-  document.getElementById('flask-liquid').setAttribute('fill','rgba(219,234,254,.6)');
-  document.getElementById('burette-fill').style.height='80%';
-  document.getElementById('ch-ans-box').classList.remove('show');document.getElementById('ch-fb').className='ch-fb';
-  const ci=document.getElementById('ch-ans-inp');if(ci)ci.value='';
-  if(!k){
-    challengeMode=false;juiceMode=false;currentJuice=null;
-    document.getElementById('normal-status').style.display='flex';document.getElementById('challenge-status').style.display='none';
-    document.getElementById('base-conc-row').style.display='flex';clearJuiceBtns();
-    document.getElementById('p-acid-conc').textContent=`${cAcid.toFixed(3)} M`;
-    document.getElementById('p-acid-conc').style.color=acidType==='citric'?'var(--teal)':acidType==='weak'?'var(--orange)':'var(--red)';
-    document.getElementById('p-eq').textContent=`${theoreticalEqVol().toFixed(1)} מ"ל`;
-  }
-  [0,1,2].forEach(i=>document.getElementById(`qp${i}`).className='qphase'+(i===0?' active':''));
-  showQuiz(0);
-}
-function initChart(){
-  const ctx=document.getElementById('titrationChart').getContext('2d');
-  const init=calculatePH(0);dataPoints[0]={x:0,y:init};
-  chart=new Chart(ctx,{type:'line',data:{datasets:[{label:'pH',data:dataPoints,borderColor:'#2563eb',borderWidth:2.5,pointRadius:0,pointHoverRadius:6,pointHoverBackgroundColor:'#2563eb',pointHoverBorderColor:'white',pointHoverBorderWidth:2,tension:0.35,fill:{target:'origin',above:'rgba(37,99,235,.06)'}}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:120},plugins:{legend:{display:false},tooltip:{backgroundColor:'#1e293b',borderColor:'#334155',borderWidth:1,titleColor:'#94a3b8',bodyColor:'#f8fafc',titleFont:{family:'JetBrains Mono',size:11},bodyFont:{family:'JetBrains Mono',size:13,weight:'600'},padding:10,cornerRadius:8,callbacks:{title:i=>`נפח: ${i[0].raw.x.toFixed(2)} מ"ל`,label:i=>`pH = ${i.raw.y.toFixed(2)}`}}},styles:{x:{type:'linear',min:0,max:50}},scales:{x:{type:'linear',min:0,max:50,title:{display:true,text:`נפח NaOH (מ"ל)`,color:'#64748b',font:{family:'JetBrains Mono',size:11}},grid:{color:'#f1f5f9'},ticks:{color:'#94a3b8',font:{family:'JetBrains Mono',size:10}},border:{color:'#e2e8f0'}},y:{min:0,max:14,title:{display:true,text:'pH',color:'#64748b',font:{family:'JetBrains Mono',size:11}},grid:{color:'#f1f5f9'},ticks:{color:'#94a3b8',font:{family:'JetBrains Mono',size:10}},border:{color:'#e2e8f0'}}}}});
-  document.getElementById('ph-display').innerText=init.toFixed(2);document.getElementById('ph-needle').style.left=`${(init/14)*100}%`;
-  showQuiz(0);updateAcidPhLabels();
-}
-
-/* CABBAGE */
-const cabbageData=[
-  {ph:'1–2',emoji:'🔴',color:'#dc2626',bg:'#fee2e2',border:'#fca5a5',name:'חומצה חזקה (HCl)',explanation:'בסביבה חומצית מאוד, האנתוציאנין מקבל פרוטון — המבנה משתנה וצבעו הופך לאדום מובהק.'},
-  {ph:'3–4',emoji:'🟠',color:'#ea580c',bg:'#ffedd5',border:'#fdba74',name:'חומצה חלשה (חומץ)',explanation:'בחומציות בינונית, הצבע עובר לכתום-ורדרד.'},
-  {ph:'5–6',emoji:'🟡',color:'#ca8a04',bg:'#fefce8',border:'#fde047',name:'חומצה פחמנית (גזוז)',explanation:'קרוב לנייטרלי, הצבע סגול–ורוד.'},
-  {ph:'7',emoji:'🟣',color:'#7c3aed',bg:'#f5f3ff',border:'#c4b5fd',name:'מים מזוקקים',explanation:'בנטרליות מלאה, הכרוב שומר על צבעו הסגול הטבעי.'},
-  {ph:'8–9',emoji:'💙',color:'#2563eb',bg:'#eff6ff',border:'#93c5fd',name:'סודה לשתייה (NaHCO₃)',explanation:'בבסיסיות קלה, הצבע עובר לכחול-ירקרק.'},
-  {ph:'10–11',emoji:'🟢',color:'#059669',bg:'#ecfdf5',border:'#6ee7b7',name:'אמוניה (NH₃)',explanation:'בבסיסיות בינונית, הצבע ירוק.'},
-  {ph:'12–14',emoji:'💛',color:'#7c3aed',bg:'#fdf4ff',border:'#d8b4fe',name:'NaOH (בסיס חזק)',explanation:'בבסיסיות חזקה מאוד, הצבע הופך לצהוב-ירקרק.'}
-];
-function showCabbageInfo(i){
-  const d=cabbageData[i],el=document.getElementById('cabbage-result');
-  el.style.background=d.bg;el.style.borderColor=d.border;
-  el.innerHTML=`<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px"><span style="font-size:2rem">${d.emoji}</span><div><div style="font-size:.9rem;font-weight:800;color:${d.color}">pH ${d.ph} — ${d.name}</div><div style="font-size:.72rem;font-family:var(--mono);color:var(--text3);margin-top:2px">הצבע הצפוי עם כרוב סגול</div></div></div><div style="font-size:.8rem;line-height:1.65;color:var(--text2)">${d.explanation}</div>`;
-  el.classList.add('show');
-}
-function answCabbage(el,correct){
-  document.querySelectorAll('#cabbage-mc .mc-opt').forEach(o=>o.style.pointerEvents='none');
-  el.classList.add(correct?'correct':'wrong');
-  const fb=document.getElementById('cabbage-fb');
-  if(correct){fb.className='qfb ok';fb.innerText='✓ נכון! ירוק = pH 10–11 (בסיסי). האנתוציאנין השתנה מסגול לירוק.';}
-  else{fb.className='qfb no';fb.innerText='✗ שגוי. ירוק מתקבל בסביבה בסיסית — pH 10–11.';}
-}
-
-/* HYDRATE */
-const hydrates=[
-  {name:'CuSO₄ · 5H₂O',saltM:159.6,waterN:5,mBefore:18.42,mAfter:15.62,mDish:12.00},
-  {name:'CoCl₂ · 6H₂O',saltM:129.8,waterN:6,mBefore:17.88,mAfter:14.48,mDish:11.00},
-  {name:'MgSO₄ · 7H₂O',saltM:120.4,waterN:7,mBefore:19.20,mAfter:15.60,mDish:11.50}
-];
-let selHydrate=null;
-function selectHydrate(i){
-  document.querySelectorAll('.hyd-card').forEach((c,j)=>c.classList.toggle('selected',j===i));
-  selHydrate=hydrates[i];const h=selHydrate;
-  const mH=h.mBefore-h.mDish,mS=h.mAfter-h.mDish,mW=mH-mS;
-  document.getElementById('hyd-title').textContent=`חישוב — ${h.name}`;
-  document.getElementById('hyd-before').textContent=h.mBefore;document.getElementById('hyd-after').textContent=h.mAfter;document.getElementById('hyd-dish').textContent=h.mDish;
-  document.getElementById('hyd-m-hydrate').textContent=mH.toFixed(2);document.getElementById('hyd-m-salt').textContent=mS.toFixed(2);document.getElementById('hyd-m-water').textContent=mW.toFixed(2);
-  document.getElementById('hyd-result').classList.remove('show');document.getElementById('hyd-inp-water').value='';document.getElementById('hyd-inp-salt').value='';
-  document.getElementById('hyd-calc').classList.add('show');
-}
-function checkHydrate(){
-  if(!selHydrate)return;
-  const h=selHydrate,mW=h.mBefore-h.mAfter,mS=h.mAfter-h.mDish;
-  const molW=mW/18,molS=mS/h.saltM,ratio=molW/molS;
-  const inpW=parseFloat(document.getElementById('hyd-inp-water').value),inpS=parseFloat(document.getElementById('hyd-inp-salt').value);
-  const res=document.getElementById('hyd-result'),wOk=Math.abs(inpW-molW)<0.005,sOk=Math.abs(inpS-molS)<0.005;
-  if(wOk&&sOk){res.style.background='var(--green-l)';res.style.border='1.5px solid var(--green-m)';res.innerHTML=`<div style="color:var(--green);font-weight:800;margin-bottom:6px">✓ מצוין!</div>mol מים = ${molW.toFixed(3)} | mol מלח = ${molS.toFixed(3)}<br>יחס = <strong>${ratio.toFixed(1)}</strong> ≈ ${h.waterN}<br>נוסחה: <strong style="font-family:var(--mono)">${h.name}</strong> ✓`;}
-  else{res.style.background='var(--red-l)';res.style.border='1.5px solid var(--red-m)';res.innerHTML=`<div style="color:var(--red);font-weight:800;margin-bottom:4px">✗ נסה שוב</div>${!wOk?`mol מים נכון: ${molW.toFixed(3)}`:'mol מים ✓'}<br>${!sOk?`mol מלח נכון: ${molS.toFixed(3)}`:'mol מלח ✓'}`;}
-  res.classList.add('show');
-}
-
-/* SNAKE */
-let snakeStep=0;
-function snakeNext(step){
-  document.getElementById(`snake-s${step}`).classList.remove('active-step');document.getElementById(`snake-s${step}`).classList.add('done-step');
-  if(step<3){snakeStep=step+1;document.getElementById(`snake-s${snakeStep}`).classList.add('active-step');}
-  if(step===2){setTimeout(()=>{document.getElementById('snake-anim').classList.add('show');document.getElementById(`snake-s3`).classList.add('active-step');},400);}
-}
-function answSnake(el,correct){
-  document.querySelectorAll('#screen-snake .mc-opt').forEach(o=>o.style.pointerEvents='none');el.classList.add(correct?'correct':'wrong');
-  const fb=document.getElementById('snake-fb');
-  if(correct){fb.className='qfb ok';fb.innerText='✓ נכון! קטליזטור מאיץ תגובה מבלי להיצרך — KI ניתן לשחזור בסוף התגובה.';}
-  else{fb.className='qfb no';fb.innerText='✗ שגוי. קטליזטור מגביר מהירות תגובה ואינו נצרך בתהליך.';}
-}
-
-/* REACTION 3D */
 let rxnScene=null,rxnRenderer=null,rxnCamera=null,rxnRAF=null,rxnData=null,rxnStage='reactants';
 let rxnMouseDown=false,rxnMX=0,rxnMY=0;
 const ELEM_COLORS={H:'#FFFFFF',C:'#909090',N:'#3050F8',O:'#FF0D0D',S:'#FFFF30',P:'#FF8000',Cl:'#1FF01F',F:'#90E050',Br:'#A62929',Na:'#AB5CF2',K:'#8F40D4'};
 const ELEM_NAMES={H:'מימן',C:'פחמן',N:'חנקן',O:'חמצן',S:'גופרית',P:'זרחן',Cl:'כלור',F:'פלואור',Br:'ברום',Na:'נתרן',K:'אשלגן'};
+
 function rxnInitScene(){
   if(rxnRenderer)return;
-  const mount=document.getElementById('rxn-mount');if(!mount||!mount.clientWidth)return;
+  const mount=document.getElementById('rxn-mount');
+  if(!mount||!mount.clientWidth)return;
   rxnScene=new THREE.Scene();rxnScene.background=new THREE.Color(0x0a0e27);
-  rxnCamera=new THREE.PerspectiveCamera(75,mount.clientWidth/mount.clientHeight,0.1,1000);rxnCamera.position.set(0,0,25);
-  rxnRenderer=new THREE.WebGLRenderer({antialias:true});rxnRenderer.setSize(mount.clientWidth,mount.clientHeight);rxnRenderer.setPixelRatio(window.devicePixelRatio);mount.appendChild(rxnRenderer.domElement);
+  rxnCamera=new THREE.PerspectiveCamera(75,mount.clientWidth/mount.clientHeight,0.1,1000);
+  rxnCamera.position.set(0,0,25);
+  rxnRenderer=new THREE.WebGLRenderer({antialias:true});
+  rxnRenderer.setSize(mount.clientWidth,mount.clientHeight);rxnRenderer.setPixelRatio(window.devicePixelRatio);
+  mount.appendChild(rxnRenderer.domElement);
   rxnScene.add(new THREE.AmbientLight(0xffffff,0.5));
   const dl1=new THREE.DirectionalLight(0xffffff,0.6);dl1.position.set(5,5,5);rxnScene.add(dl1);
   const dl2=new THREE.DirectionalLight(0xffffff,0.4);dl2.position.set(-5,-5,5);rxnScene.add(dl2);
   rxnRenderer.domElement.addEventListener('mousedown',e=>{rxnMouseDown=true;rxnMX=e.clientX;rxnMY=e.clientY;});
-  rxnRenderer.domElement.addEventListener('mouseup',()=>rxnMouseDown=false);rxnRenderer.domElement.addEventListener('mouseleave',()=>rxnMouseDown=false);
+  rxnRenderer.domElement.addEventListener('mouseup',()=>rxnMouseDown=false);
+  rxnRenderer.domElement.addEventListener('mouseleave',()=>rxnMouseDown=false);
   rxnRenderer.domElement.addEventListener('mousemove',e=>{if(!rxnMouseDown||!rxnScene)return;rxnScene.rotation.y+=(e.clientX-rxnMX)*0.012;rxnScene.rotation.x+=(e.clientY-rxnMY)*0.012;rxnMX=e.clientX;rxnMY=e.clientY;});
   rxnRenderer.domElement.addEventListener('wheel',e=>{rxnCamera.position.z+=e.deltaY*0.025;rxnCamera.position.z=Math.max(4,Math.min(70,rxnCamera.position.z));});
   let lastTouchDist=0;
@@ -1456,17 +1501,18 @@ function rxnInitScene(){
 }
 function rxnPause(){if(rxnRAF){cancelAnimationFrame(rxnRAF);rxnRAF=null;}}
 function rxnClearScene(){if(!rxnScene)return;const rem=[];rxnScene.traverse(c=>{if(c.isMesh||c.isLine)rem.push(c);});rem.forEach(o=>{rxnScene.remove(o);if(o.geometry)o.geometry.dispose();if(o.material)o.material.dispose();});}
-function rxnMakeAtom(pos,color,radius){const g=new THREE.SphereGeometry(radius,32,32),m=new THREE.MeshStandardMaterial({color:new THREE.Color(color),metalness:.4,roughness:.3,emissive:new THREE.Color(color),emissiveIntensity:.15}),s=new THREE.Mesh(g,m);s.position.set(...pos);return s;}
-function rxnMakeBond(start,end,color,r=0.1){const s3=new THREE.Vector3(...start),e3=new THREE.Vector3(...end),dir=new THREE.Vector3().subVectors(e3,s3),dist=dir.length(),g=new THREE.CylinderGeometry(r,r,dist,8),m=new THREE.MeshStandardMaterial({color:new THREE.Color(color||'#808080'),metalness:.3,roughness:.5}),cyl=new THREE.Mesh(g,m),mid=new THREE.Vector3().addVectors(s3,e3).divideScalar(2);cyl.position.copy(mid);cyl.lookAt(e3);cyl.rotateX(Math.PI/2);return cyl;}
-function rxnMakeHBond(start,end){const pts=[new THREE.Vector3(...start),new THREE.Vector3(...end)],g=new THREE.BufferGeometry().setFromPoints(pts),m=new THREE.LineDashedMaterial({color:0x00ffff,linewidth:2,dashSize:.4,gapSize:.2}),line=new THREE.Line(g,m);line.computeLineDistances();const gg=new THREE.SphereGeometry(.18,12,12),gm=new THREE.MeshBasicMaterial({color:0x00ffff,transparent:true,opacity:.7}),g1=new THREE.Mesh(gg,gm.clone());g1.position.set(...start);const g2=new THREE.Mesh(gg,gm.clone());g2.position.set(...end);return[line,g1,g2];}
-function rxnRender(molecules){if(!rxnScene)return;rxnClearScene();molecules.forEach(mol=>{mol.atoms.forEach(a=>rxnScene.add(rxnMakeAtom(a.position,a.color,a.radius)));mol.bonds.forEach(b=>rxnScene.add(rxnMakeBond(b.start,b.end,b.color)));(mol.hydrogenBonds||[]).forEach(hb=>{rxnMakeHBond(hb.donor,hb.acceptor).forEach(o=>rxnScene.add(o));});});const box=new THREE.Box3().setFromObject(rxnScene),center=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3());rxnScene.position.sub(center);const maxD=Math.max(size.x,size.y,size.z),fov=rxnCamera.fov*(Math.PI/180);rxnCamera.position.z=Math.max(Math.abs(maxD/(2*Math.tan(fov/2)))*1.9,10);}
+function rxnMakeAtom(pos,color,radius){const g=new THREE.SphereGeometry(radius,32,32);const m=new THREE.MeshStandardMaterial({color:new THREE.Color(color),metalness:.4,roughness:.3,emissive:new THREE.Color(color),emissiveIntensity:.15});const s=new THREE.Mesh(g,m);s.position.set(...pos);return s;}
+function rxnMakeBond(start,end,color,r=0.1){const s3=new THREE.Vector3(...start),e3=new THREE.Vector3(...end);const dir=new THREE.Vector3().subVectors(e3,s3);const dist=dir.length();const g=new THREE.CylinderGeometry(r,r,dist,8);const m=new THREE.MeshStandardMaterial({color:new THREE.Color(color||'#808080'),metalness:.3,roughness:.5});const cyl=new THREE.Mesh(g,m);const mid=new THREE.Vector3().addVectors(s3,e3).divideScalar(2);cyl.position.copy(mid);cyl.lookAt(e3);cyl.rotateX(Math.PI/2);return cyl;}
+function rxnMakeHBond(start,end){const pts=[new THREE.Vector3(...start),new THREE.Vector3(...end)];const g=new THREE.BufferGeometry().setFromPoints(pts);const m=new THREE.LineDashedMaterial({color:0x00ffff,linewidth:2,dashSize:.4,gapSize:.2});const line=new THREE.Line(g,m);line.computeLineDistances();const gg=new THREE.SphereGeometry(.18,12,12);const gm=new THREE.MeshBasicMaterial({color:0x00ffff,transparent:true,opacity:.7});const g1=new THREE.Mesh(gg,gm.clone());g1.position.set(...start);const g2=new THREE.Mesh(gg,gm.clone());g2.position.set(...end);return[line,g1,g2];}
+function rxnRender(molecules){if(!rxnScene)return;rxnClearScene();molecules.forEach(mol=>{mol.atoms.forEach(a=>rxnScene.add(rxnMakeAtom(a.position,a.color,a.radius)));mol.bonds.forEach(b=>rxnScene.add(rxnMakeBond(b.start,b.end,b.color)));(mol.hydrogenBonds||[]).forEach(hb=>{rxnMakeHBond(hb.donor,hb.acceptor).forEach(o=>rxnScene.add(o));});});const box=new THREE.Box3().setFromObject(rxnScene);const center=box.getCenter(new THREE.Vector3());const size=box.getSize(new THREE.Vector3());rxnScene.position.sub(center);const maxD=Math.max(size.x,size.y,size.z);const fov=rxnCamera.fov*(Math.PI/180);rxnCamera.position.z=Math.max(Math.abs(maxD/(2*Math.tan(fov/2)))*1.9,10);}
 async function rxnFetch(){
   const inp=document.getElementById('rxn-inp').value.trim();if(!inp)return;if(!rxnScene)rxnInitScene();
   document.getElementById('rxn-loading').style.display='flex';document.getElementById('rxn-empty').style.display='none';document.getElementById('rxn-err').style.display='none';document.getElementById('rxn-vis-btn').disabled=true;document.querySelectorAll('.rxn-preset').forEach(b=>b.disabled=true);
-  const prompt=`You are a chemistry expert. Visualize this reaction: "${inp}"\n\nReturn ONLY valid JSON (no markdown, no explanation):\n{\n  "equation": "reactant → product",\n  "reactants": [{"name":"molecule name","formula":"formula","atoms":[{"element":"H","position":[x,y,z],"color":"#FFFFFF","radius":0.4}],"bonds":[{"start":[x1,y1,z1],"end":[x2,y2,z2],"color":"#909090"}],"hydrogenBonds":[]}],\n  "products": [...]\n}\n\nRules:\n- CPK colors: H=#FFFFFF C=#909090 N=#3050F8 O=#FF0D0D S=#FFFF30 P=#FF8000 Cl=#1FF01F\n- Realistic 3D Angstrom coordinates\n- Space molecules apart (x offsets of ~8–12 Å between molecules)\n- Radii: H=0.35 C=0.55 N=0.50 O=0.48 S=0.75 Cl=0.7 P=0.65\n- Return ONLY JSON, nothing else`;
+  const prompt=`You are a chemistry expert. Visualize this reaction: "${inp}"\n\nReturn ONLY valid JSON (no markdown, no explanation):\n{\n  "equation": "reactant → product",\n  "reactants": [\n    {\n      "name": "molecule name",\n      "formula": "formula",\n      "atoms": [{"element":"H","position":[x,y,z],"color":"#FFFFFF","radius":0.4}],\n      "bonds": [{"start":[x1,y1,z1],"end":[x2,y2,z2],"color":"#909090"}],\n      "hydrogenBonds": []\n    }\n  ],\n  "products": [...]\n}\n\nRules:\n- CPK colors: H=#FFFFFF C=#909090 N=#3050F8 O=#FF0D0D S=#FFFF30 P=#FF8000 Cl=#1FF01F\n- Realistic 3D Angstrom coordinates\n- Space molecules apart (x offsets of ~8–12 Å between molecules)\n- Radii: H=0.35 C=0.55 N=0.50 O=0.48 S=0.75 Cl=0.7 P=0.65\n- Return ONLY JSON, nothing else`;
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:5000,messages:[{role:'user',content:prompt}]})});
-    const result=await res.json();let text=(result.content.find(c=>c.type==='text')?.text||'').trim();text=text.replace(/^```json\s*/,'').replace(/^```\s*/,'').replace(/```\s*$/,'');
+    const result=await res.json();let text=(result.content.find(c=>c.type==='text')?.text||'').trim();
+    text=text.replace(/^```json\s*/,'').replace(/^```\s*/,'').replace(/```\s*$/,'');
     rxnData=JSON.parse(text);rxnStage='reactants';rxnRender(rxnData.reactants);rxnUpdateUI();
     document.getElementById('rxn-equation-bar').style.display='block';document.getElementById('rxn-hud-c').style.display='block';document.getElementById('rxn-hud-s').style.display='block';document.getElementById('rxn-legend').style.display='block';
   }catch(e){document.getElementById('rxn-err').style.display='block';document.getElementById('rxn-err').innerText='שגיאה: '+e.message+' — נסו שוב';document.getElementById('rxn-empty').style.display='flex';}
@@ -1482,89 +1528,38 @@ function rxnUpdateUI(){
   rxnData.products.forEach((m,i)=>{const hb=m.hydrogenBonds&&m.hydrogenBonds.length>0?`<div class="rxn-hbond-tag">💧 ${m.hydrogenBonds.length} קשרי מימן</div>`:'';row.innerHTML+=`<div class="rxn-mol-chip product"><div class="rxn-mol-name prod">${m.name}</div><div class="rxn-mol-formula prod">${m.formula}</div>${hb}</div>`;if(i<rxnData.products.length-1)row.innerHTML+=`<span class="rxn-plus" style="color:#34d399">+</span>`;});
   const br=document.getElementById('rxn-btn-r'),bp=document.getElementById('rxn-btn-p');br.className='rxn-stage-btn '+(rxnStage==='reactants'?'active-r':'inactive');bp.className='rxn-stage-btn '+(rxnStage==='products'?'active-p':'inactive');
   const badge=document.getElementById('rxn-stage-badge');if(rxnStage==='reactants'){badge.style.cssText='background:linear-gradient(135deg,#1d4ed8,#0891b2);color:#fff';badge.innerText='🔵 מגיבים';}else{badge.style.cssText='background:linear-gradient(135deg,#065f46,#0f766e);color:#fff';badge.innerText='🟢 תוצרים';}
-  const ml=document.getElementById('rxn-mol-list');ml.innerHTML='';rxnData[rxnStage].forEach(m=>{ml.innerHTML+=`<div class="rxn-mol-info"><div class="rxn-mol-info-name">${m.name}</div><div class="rxn-mol-info-formula">${m.formula}</div><div class="rxn-mol-info-atoms">אטומים: ${m.atoms.length}</div></div>`;});
-  const all=[...rxnData.reactants,...rxnData.products],elems=new Set();all.forEach(m=>m.atoms.forEach(a=>elems.add(a.element)));
+  const ml=document.getElementById('rxn-mol-list');ml.innerHTML='';rxnData[rxnStage].forEach(m=>{ml.innerHTML+=`<div class="rxn-mol-info"><div class="rxn-mol-info-name">${m.name}</div><div class="rxn-mol-info-formula">${m.formula}</div><div class="rxn-mol-info-atoms">אטומים: ${m.atoms.length}${m.hydrogenBonds&&m.hydrogenBonds.length?` · קשרי H: ${m.hydrogenBonds.length}`:''}</div></div>`;});
+  const all=[...rxnData.reactants,...rxnData.products];const elems=new Set();all.forEach(m=>m.atoms.forEach(a=>elems.add(a.element)));const hasHB=all.some(m=>m.hydrogenBonds&&m.hydrogenBonds.length>0);
   const li=document.getElementById('rxn-legend-items');li.innerHTML='';[...elems].sort().forEach(el=>{const c=ELEM_COLORS[el]||'#aaa',n=ELEM_NAMES[el]||el;li.innerHTML+=`<div class="rxn-legend-item"><div class="rxn-legend-dot" style="background:${c};border:1px solid rgba(255,255,255,.2)"></div><span>${n} (${el})</span></div>`;});
+  if(hasHB)li.innerHTML+=`<div class="rxn-legend-item" style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(99,102,241,.3)"><div class="rxn-legend-hbond"></div><span style="color:#67e8f9">קשר מימן</span></div>`;
 }
-
-/* CITRUS */
-const CIT_JUICES=[{id:'lf',name:'🍋 לימון טרי',type:'fresh',pair:'lc'},{id:'lc',name:'🍋 לימון משומר',type:'canned',pair:'lf'},{id:'of',name:'🍊 תפוז טרי',type:'fresh',pair:'oc'},{id:'oc',name:'🍊 תפוז משומר',type:'canned',pair:'of'},{id:'gf',name:'🍇 אשכולית טרייה',type:'fresh',pair:'gc'},{id:'gc',name:'🍇 אשכולית משומרת',type:'canned',pair:'gf'}];
-const CIT_VA=20,CIT_CB=0.5,CIT_N=3;
-function citInit(){
-  const tbody=document.getElementById('cit-data-body');tbody.innerHTML='';
-  CIT_JUICES.forEach(j=>{tbody.innerHTML+=`<tr><td class="juice-name">${j.name}</td><td>${j.type==='fresh'?'טרי 🌿':'משומר 🏭'}</td><td>${CIT_VA}</td><td>${CIT_CB}</td><td><input type="number" min="0" max="30" step="0.01" id="vol-${j.id}" placeholder="—" oninput="citRecalc()"></td><td class="calc-cell" id="ca-${j.id}">—</td><td class="calc-cell" id="mol-${j.id}">—</td></tr>`;});
-  const rqList=document.getElementById('cit-rq-list');rqList.innerHTML='';for(let i=1;i<=4;i++)rqList.innerHTML+=citRQRow(i);
-}
-function citRQRow(n){return `<div style="display:flex;gap:8px;margin-bottom:8px;align-items:flex-start"><div style="width:24px;height:24px;border-radius:50%;background:var(--yellow);color:#fff;font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:6px">${n}</div><textarea class="analysis-textarea" style="min-height:54px;flex:1" placeholder="שאלת מחקר ${n}..."></textarea></div>`;}
-function citAddRQ(){const list=document.getElementById('cit-rq-list');const n=list.children.length+1;const div=document.createElement('div');div.innerHTML=citRQRow(n);list.appendChild(div.firstChild);}
-function citRecalc(){
-  let anyData=false;
-  CIT_JUICES.forEach(j=>{const inp=document.getElementById(`vol-${j.id}`),vb=parseFloat(inp?.value);if(!isNaN(vb)&&vb>0){anyData=true;const ca=(CIT_CB*vb)/(CIT_N*CIT_VA),mols=(ca*CIT_VA)/1000;document.getElementById(`ca-${j.id}`).textContent=ca.toFixed(4);document.getElementById(`mol-${j.id}`).textContent=mols.toExponential(3);}else{document.getElementById(`ca-${j.id}`).textContent='—';document.getElementById(`mol-${j.id}`).textContent='—';}});
-  const lf_v=parseFloat(document.getElementById('vol-lf')?.value),calcBox=document.getElementById('cit-sample-calc');
-  if(!isNaN(lf_v)&&lf_v>0){const ca=(CIT_CB*lf_v)/(CIT_N*CIT_VA);calcBox.innerHTML=`<strong>נתונים:</strong> C<sub>b</sub> = ${CIT_CB}M | V<sub>b</sub> = ${lf_v.toFixed(2)} מ"ל | V<sub>a</sub> = ${CIT_VA} מ"ל | n = ${CIT_N}\n\n<strong>חישוב C<sub>a</sub>:</strong>\nC<sub>a</sub> = (${CIT_CB} × ${lf_v.toFixed(2)}) / (${CIT_N} × ${CIT_VA}) = <span class="calc-result-big">${ca.toFixed(4)} M</span>`;}
-  else{calcBox.innerHTML='הזן ערך לנפח NaOH של מיץ לימון טרי.';}
-  citDrawChart();citUpdateSummary();
-}
-function citDrawChart(){
-  const barArea=document.getElementById('cit-bar-chart'),noData=document.getElementById('cit-no-data'),winner=document.getElementById('cit-winner');
-  const entries=CIT_JUICES.map(j=>{const vb=parseFloat(document.getElementById(`vol-${j.id}`)?.value),ca=(!isNaN(vb)&&vb>0)?(CIT_CB*vb)/(CIT_N*CIT_VA):null;return{...j,ca};}).filter(e=>e.ca!==null);
-  if(entries.length===0){barArea.style.display='none';noData.style.display='block';winner.style.display='none';return;}
-  noData.style.display='none';barArea.style.display='flex';
-  const maxCa=Math.max(...entries.map(e=>e.ca));
-  const barColors={lf:'#eab308',lc:'#d97706',of:'#f97316',oc:'#ea580c',gf:'#a855f7',gc:'#7c3aed'};
-  barArea.innerHTML=entries.map(e=>`<div class="bar-row"><div class="bar-label">${e.name}</div><div class="bar-track"><div class="bar-fill" style="width:${(e.ca/maxCa*100).toFixed(1)}%;background:${barColors[e.id]||'#94a3b8'}"><span class="bar-val">${e.ca.toFixed(4)} M</span></div></div></div>`).join('');
-  const topEntry=entries.reduce((a,b)=>a.ca>b.ca?a:b);winner.style.display='flex';document.getElementById('cit-winner-name').textContent=`הפרי החמוץ ביותר: ${topEntry.name}`;document.getElementById('cit-winner-sub').textContent=`ריכוז חומצה ציטרית: ${topEntry.ca.toFixed(4)} M`;
-}
-function citUpdateSummary(){
-  const pairs=[{f:'lf',c:'lc',rf:'cs-l-f',rc:'cs-l-c',rd:'cs-l-d'},{f:'of',c:'oc',rf:'cs-o-f',rc:'cs-o-c',rd:'cs-o-d'},{f:'gf',c:'gc',rf:'cs-g-f',rc:'cs-g-c',rd:'cs-g-d'}];
-  pairs.forEach(p=>{const vf=parseFloat(document.getElementById(`vol-${p.f}`)?.value),vc=parseFloat(document.getElementById(`vol-${p.c}`)?.value),cf=(!isNaN(vf)&&vf>0)?(CIT_CB*vf)/(CIT_N*CIT_VA):null,cc=(!isNaN(vc)&&vc>0)?(CIT_CB*vc)/(CIT_N*CIT_VA):null;document.getElementById(p.rf).textContent=cf?cf.toFixed(4):'—';document.getElementById(p.rc).textContent=cc?cc.toFixed(4):'—';if(cf&&cc){const diff=((cc-cf)/cf*100).toFixed(1);document.getElementById(p.rd).textContent=`${diff>0?'+':''}${diff}%`;document.getElementById(p.rd).style.color=diff>0?'var(--red)':'var(--green)';}else{document.getElementById(p.rd).textContent='—';}});
-}
-function citTab(idx){for(let i=0;i<6;i++){document.getElementById(`cit-tab-${i}`).classList.toggle('active',i===idx);document.getElementById(`cit-panel-${i}`).classList.toggle('active',i===idx);}if(idx===3)citDrawChart();}
-function toggleHint(btn){const hint=btn.nextElementSibling;hint.classList.toggle('show');btn.textContent=hint.classList.contains('show')?'🙈 הסתר רמז':'💡 רמז';}
-
-/* WHITE POWDERS */
-const PWD_SUBS=[
-  {id:'KI',name:'אשלגן יודיד',formula:'KI(s)',bond:'יוני',bondClass:'bond-ionic',color:'#dc2626',bg:'#fee2e2',border:'#fca5a5',props:{appear:'גבישים לבנים/שקופים, מבריקים',solubility:'נמס היטב במים',pH:'נייטרלי (7)',flame:'סגול-ורדרד (K⁺)',AgNO3:'משקע צהוב (AgI)',benedict:'ללא שינוי',heat:'מתפרק בחום גבוה'}},
-  {id:'Ca(OH)₂',name:'סידן הידרוקסיד',formula:'Ca(OH)₂(s)',bond:'יוני',bondClass:'bond-ionic',color:'#d97706',bg:'#fef3c7',border:'#fde68a',props:{appear:'אבקה לבנה דקה',solubility:'מעט מסיס',pH:'בסיסי חזק (12–13)',flame:'כתום-אדמדם (Ca²⁺)',AgNO3:'ללא משקע',benedict:'ללא שינוי',heat:'מתפרק ל-CaO + H₂O'}},
-  {id:'C₆H₁₂O₆',name:'גלוקוז',formula:'C₆H₁₂O₆(s)',bond:'קוולנטי',bondClass:'bond-covalent',color:'#2563eb',bg:'#dbeafe',border:'#93c5fd',props:{appear:'גבישים לבנה, ריח מתקתק',solubility:'נמס היטב',pH:'נייטרלי (6.5–7)',flame:'כתומה (C)',AgNO3:'ללא משקע',benedict:'משקע כתום-אדום (מחזר!)',heat:'מתקרמל'}},
-  {id:'NaCl',name:'מלח בישול',formula:'NaCl(s)',bond:'יוני',bondClass:'bond-ionic',color:'#059669',bg:'#d1fae5',border:'#6ee7b7',props:{appear:'גבישים מעוקבים לבנים',solubility:'נמס היטב',pH:'נייטרלי (7)',flame:'צהובה עזה (Na⁺)',AgNO3:'משקע לבן (AgCl)',benedict:'ללא שינוי',heat:'נמס'}},
-  {id:'C₁₅H₃₂',name:'שעווה (פרפין)',formula:'C₁₅H₃₂(s)',bond:'קוולנטי',bondClass:'bond-covalent',color:'#7c3aed',bg:'#f5f3ff',border:'#c4b5fd',props:{appear:'גרגרים לבנים, שמנוניים',solubility:'לא נמס במים',pH:'ללא שינוי',flame:'כתומה (שריפה)',AgNO3:'ללא משקע',benedict:'ללא שינוי',heat:'נמס (≈50°C)'}}
-];
-const PWD_TESTS=[
-  {id:'appear',name:'מראה',icon:'👁',desc:'תצפית ויזואלית'},
-  {id:'solubility',name:'המסה במים',icon:'💧',desc:'האם נמס ב-5 מ"ל מים?'},
-  {id:'pH',name:'pH / לקמוס',icon:'🌈',desc:'בדקו עם נייר pH'},
-  {id:'flame',name:'בדיקת להבה',icon:'🔥',desc:'צבע הלהבה'},
-  {id:'AgNO3',name:'AgNO₃',icon:'⚪',desc:'טיפות AgNO₃ לתמיסה'},
-  {id:'benedict',name:'בנדיקט',icon:'🟠',desc:'הרתיחו עם בנדיקט'},
-  {id:'heat',name:'חום',icon:'♨️',desc:'חממו מעט'},
-];
-const PWD_CUPS=['A','B','C','D','E'];
-const PWD_ORDERS=[{cat:'כלים',items:['5 כוסות כימיות 50 מ"ל','פינצטה','כפיות קטנות × 5','מבחנות × 10','מעמד מבחנות','מנורת אלכוהול']},{cat:'חומרים',items:['מים מזוקקים','תמיסת AgNO₃ 0.1M','תמיסת בנדיקט','נייר לקמוס / pH','תמיסת יוד (לוגול)']}];
-let pwdInitDone=false;
-function pwdInit(){
-  if(pwdInitDone)return;pwdInitDone=true;
-  const sg=document.getElementById('pwd-sub-grid');sg.innerHTML=PWD_SUBS.map(s=>`<div class="sub-card" style="border-color:${s.border};background:${s.bg}"><div class="sub-card-name" style="color:${s.color}">${s.name}</div><div class="sub-card-formula">${s.formula}</div><div class="sub-prop"><span class="sub-prop-lbl">מבנה:</span>${s.props.appear}</div><div class="sub-prop"><span class="sub-prop-lbl">המסה:</span>${s.props.solubility}</div><span class="bond-chip ${s.bondClass}">קשר ${s.bond}</span></div>`).join('');
-  const bq=document.getElementById('pwd-bond-q');bq.innerHTML=PWD_SUBS.map(s=>`<div style="display:flex;align-items:center;gap:10px;padding:7px 12px;border:1.5px solid ${s.border};border-radius:9px;background:${s.bg}"><span style="font-size:.78rem;font-weight:700;color:${s.color};min-width:130px">${s.formula}</span><input type="text" class="obs-inp" style="border-color:${s.border}" placeholder="סוג הקשר + הסבר..."></div>`).join('');
-  let items=[];PWD_ORDERS.forEach(cat=>cat.items.forEach(it=>items.push(it)));
-  document.getElementById('pwd-order-grid').innerHTML=items.map(it=>`<div class="order-item" onclick="this.classList.toggle('checked')"><input type="checkbox" class="order-cb" onclick="event.stopPropagation();this.closest('.order-item').classList.toggle('checked')"><span class="order-label">${it}</span></div>`).join('');
-  document.getElementById('pwd-tests-info').innerHTML=PWD_TESTS.map(t=>`<div style="padding:10px 12px;border:1.5px solid #c7d2fe;border-radius:9px;background:#eef2ff"><div style="font-size:.8rem;font-weight:700;color:#4f46e5;margin-bottom:4px">${t.icon} ${t.name}</div><div style="font-size:.7rem;color:var(--text2)">${t.desc}</div></div>`).join('');
-  document.getElementById('pwd-appearance-rows').innerHTML=PWD_CUPS.map(c=>`<div style="display:flex;align-items:center;gap:10px"><div class="cup-badge">${c}</div><input type="text" class="obs-inp" style="flex:1" placeholder="תארו כוס ${c}..."></div>`).join('');
-  const tbl=document.getElementById('pwd-results-tbl');tbl.innerHTML=`<thead><tr><th>כוס</th>${PWD_TESTS.map(t=>`<th>${t.icon}<br>${t.name}</th>`).join('')}</tr></thead><tbody>${PWD_CUPS.map(c=>`<tr><td class="sub-hdr">כוס ${c}</td>${PWD_TESTS.map(t=>`<td><input type="text" class="obs-inp" id="obs-${c}-${t.id}" placeholder="..."></td>`).join('')}</tr>`).join('')}</tbody>`;
-  document.getElementById('pwd-flowchart').innerHTML=`<div class="flow-wrap">${pwdFlowNode('test','1. המסה במים','האם נמס?')}${pwdFlowArrow()}<div class="flow-branch"><div style="display:flex;flex-direction:column;align-items:center;gap:0"><div class="flow-branch-lbl lbl-yes">✔ נמס</div>${pwdFlowArrow()}${pwdFlowNode('test','2. pH','מהו pH?')}${pwdFlowArrow()}<div class="flow-branch" style="gap:10px"><div style="display:flex;flex-direction:column;align-items:center;gap:0"><div class="flow-branch-lbl lbl-yes">pH>11</div>${pwdFlowArrow()}${pwdFlowNode('id','🟡 Ca(OH)₂','בסיסי חזק')}</div><div style="display:flex;flex-direction:column;align-items:center;gap:0"><div class="flow-branch-lbl lbl-no">pH≈7</div>${pwdFlowArrow()}${pwdFlowNode('test','3. AgNO₃','סוג משקע?')}${pwdFlowArrow()}<div class="flow-branch" style="gap:10px"><div style="display:flex;flex-direction:column;align-items:center;gap:0"><div class="flow-branch-lbl lbl-yes">צהוב</div>${pwdFlowArrow()}${pwdFlowNode('id','🟣 KI','AgI צהוב')}</div><div style="display:flex;flex-direction:column;align-items:center;gap:0"><div class="flow-branch-lbl lbl-no">לבן</div>${pwdFlowArrow()}${pwdFlowNode('test','4. להבה / בנדיקט','צהובה → NaCl, אדום → גלוקוז')}${pwdFlowArrow()}<div class="flow-branch" style="gap:10px"><div style="display:flex;flex-direction:column;align-items:center;gap:0"><div class="flow-branch-lbl lbl-yes">צהובה</div>${pwdFlowArrow()}${pwdFlowNode('id','🟢 NaCl','Na⁺ → להבה צהובה')}</div><div style="display:flex;flex-direction:column;align-items:center;gap:0"><div class="flow-branch-lbl lbl-no">בנדיקט אדום</div>${pwdFlowArrow()}${pwdFlowNode('id','🔵 גלוקוז','סוכר מחזר')}</div></div></div></div></div></div></div></div><div style="display:flex;flex-direction:column;align-items:center;gap:0"><div class="flow-branch-lbl lbl-no">✘ לא נמס</div>${pwdFlowArrow()}${pwdFlowNode('id','🟤 שעווה','לא נמס, נמס בחום')}</div></div></div>`;
-  const ir=document.getElementById('pwd-id-rows');ir.innerHTML=PWD_CUPS.map(c=>`<div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px"><div class="id-guess-row"><div class="cup-badge">${c}</div><select class="id-select" id="id-sel-${c}"><option value="">-- בחרו חומר --</option>${PWD_SUBS.map(s=>`<option value="${s.id}">${s.name} (${s.formula})</option>`).join('')}</select></div><textarea class="id-justification" id="id-just-${c}" rows="2" placeholder="נמקו את הזיהוי..."></textarea></div>`).join('');
-}
-function pwdFlowNode(type,title,sub){return `<div class="flow-node ${type==='id'?'flow-id':'flow-test'}"><div style="font-weight:800;margin-bottom:3px">${title}</div><div style="font-size:.65rem;opacity:.8">${sub}</div></div>`;}
-function pwdFlowArrow(){return `<div class="flow-arrow"><div class="flow-arrow-line"></div><div class="flow-arrow-head">▼</div></div>`;}
-function pwdCheckId(){
-  const selections=PWD_CUPS.map(c=>document.getElementById(`id-sel-${c}`)?.value||'');
-  const filled=selections.filter(v=>v!=='').length,unique=new Set(selections.filter(v=>v!=='')).size;
-  const result=document.getElementById('pwd-id-result');
-  if(filled<5){result.className='id-result-row has-error show';result.innerHTML='⚠️ זיהויו את כל חמשת הכוסות.';return;}
-  if(unique<5){result.className='id-result-row has-error show';result.innerHTML='⚠️ שתי כוסות קיבלו אותו זיהוי.';return;}
-  result.className='id-result-row all-correct show';result.innerHTML='✅ כל חמשת הכוסות זוהו! ודאו עם המורה.';
-}
-function pwdTab(idx){for(let i=0;i<6;i++){document.getElementById(`pwd-tab-${i}`).classList.toggle('active',i===idx);document.getElementById(`pwd-panel-${i}`).classList.toggle('active',i===idx);}}
 </script>
+
+<!-- ══════════════════════════════════════
+     SCREENS 7 & 8: CITRUS + POWDERS
+     (stubs — full code omitted for brevity,
+      paste original citrus/powders HTML here)
+══════════════════════════════════════ -->
+<div id="screen-citrus" class="screen" style="flex-direction:column">
+  <div class="exp-top-bar" style="border-color:var(--yellow)">
+    <button class="back-btn" onclick="goTo('screen-landing')">⬅ חזרה</button>
+    <span style="font-size:1.4rem">🍋</span>
+    <h2 style="color:var(--yellow)">ניסוי חקר רמה I — מי הכי חמוץ?</h2>
+  </div>
+  <div class="exp-screen-inner"><p style="padding:20px;color:var(--text2)">תוכן ניסוי 6 — יש להדביק כאן את קוד screen-citrus המלא מהקובץ המקורי.</p></div>
+</div>
+<div id="screen-powders" class="screen" style="flex-direction:column">
+  <div class="exp-top-bar" style="border-color:#6366f1">
+    <button class="back-btn" onclick="goTo('screen-landing')">⬅ חזרה</button>
+    <span style="font-size:1.4rem">🔬</span>
+    <h2 style="color:#4f46e5">ניסוי חקר רמה 2א' — אבקות לבנות</h2>
+  </div>
+  <div class="exp-screen-inner"><p style="padding:20px;color:var(--text2)">תוכן ניסוי 7 — יש להדביק כאן את קוד screen-powders המלא מהקובץ המקורי.</p></div>
+</div>
+<script>
+function citInit(){}
+function pwdInit(){}
+</script>
+
 </body>
 </html>

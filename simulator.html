@@ -869,11 +869,7 @@ tbody tr.fresh{animation:rowIn .5s ease}
         <div class="quiz-card">
           <div class="quiz-hdr">
             <div style="font-size:.8rem;font-weight:700;color:var(--yellow);display:flex;align-items:center;gap:6px">⬡ מרכז שאלות</div>
-            <div class="quiz-phases">
-              <div class="qphase active" id="qp0">לפני הניסוי</div>
-              <div class="qphase" id="qp1">אמצע הניסוי</div>
-              <div class="qphase" id="qp2">נקודת שיווי משקל</div>
-            </div>
+
           </div>
           <div class="quiz-body" id="quiz-body"></div>
         </div>
@@ -1185,9 +1181,16 @@ function getEqPH(){
   }
   return 7.0;
 }
+const JUICE_COLORS={
+  lemon:     'rgba(253,224,71,.65)',
+  orange:    'rgba(251,146,60,.6)',
+  grapefruit:'rgba(251,191,36,.6)',
+  clementine:'rgba(249,115,22,.6)',
+};
 function getLiquidColor(ph){
-  // פנולפתלאין בלבד: חסר צבע < 8.2, ורוד מעל
-  return ph>8.2?'rgba(192,38,211,.5)':'rgba(219,234,254,.6)';
+  if(ph>8.2) return 'rgba(192,38,211,.55)';
+  if(juiceMode && currentJuice && JUICE_COLORS[currentJuice]) return JUICE_COLORS[currentJuice];
+  return 'rgba(219,234,254,.45)';
 }
 function getPhaseLabel(isEq,ph){
   if(isEq) return '✦ נ.ש.מ.';
@@ -1201,7 +1204,14 @@ function getPhaseColor(isEq,ph){
 }
 function updateUI(ph){
   const color=getLiquidColor(ph);
-  document.getElementById('flask-liquid').setAttribute('fill',color);
+  const liq=document.getElementById('flask-liquid');
+  liq.setAttribute('fill',color);
+  // עליית נפח: 20מ"ל התחלה, מקסימום ~70מ"ל (20+50). גובה מילוי: 268→214 = 54px
+  const totalVol=vAcid+vBaseTotal;
+  const frac=Math.min(totalVol/70,1);
+  const fillH=Math.max(8, frac*54);
+  liq.setAttribute('y', (268-fillH).toFixed(1));
+  liq.setAttribute('height', fillH.toFixed(1));
   const pct=Math.max(0,Math.min(100,(ph/14)*100));
   document.getElementById('ph-needle').style.left=`calc(${pct}% - 2px)`;
   const el=document.getElementById('ph-display');
@@ -1240,7 +1250,7 @@ function addTitrant(amt){
     showQuiz(2);
   }
   if(!midQuizTriggered&&vBaseTotal>=eqVol*0.45&&vBaseTotal<=eqVol*0.65){
-    midQuizTriggered=true;if(!quizDone[0]){quizDone[0]=true;markPhase(0,'done');}showQuiz(1);
+    midQuizTriggered=true;if(!quizDone[0]){quizDone[0]=true;}showQuiz(1);
   }
   addRow(vBaseTotal,ph,color,eqReached);dataPoints.push({x:vBaseTotal,y:parseFloat(ph.toFixed(3))});chart.update();
 }
@@ -1283,7 +1293,7 @@ const quizDefs=[
 ];
 
 function showQuiz(phase){
-  quizPhase=phase;markPhase(phase,'active');
+  quizPhase=phase;
   const def=quizDefs[phase];
   const body=document.getElementById('quiz-body');
   body.style.opacity='0';
@@ -1309,11 +1319,11 @@ function answerConceptual(phase,idx){
   });
   const fb=document.getElementById('qfb');
   const explain=typeof def.explain==='function'?def.explain():def.explain;
-  if(idx===def.correct){fb.className='qfb ok';fb.innerText=explain;quizDone[phase]=true;markPhase(phase,'done');}
+  if(idx===def.correct){fb.className='qfb ok';fb.innerText=explain;quizDone[phase]=true;}
   else{const ct=typeof def.opts[def.correct]==='function'?def.opts[def.correct]():def.opts[def.correct];fb.className='qfb no';fb.innerText=`✗ לא מדויק. התשובה הנכונה: ${String.fromCharCode(65+def.correct)}. ${ct}\n${explain}`;}
 }
 
-function markPhase(idx,state){document.getElementById(`qp${idx}`).className='qphase '+state;}
+
 
 function updateBaseConc(val){
   const v=parseFloat(val);if(isNaN(v)||v<0.01||v>1.0)return;
@@ -1412,13 +1422,16 @@ function resetSimulation(k){
   document.getElementById('ph-display').className='metric-val mv-acid';
   document.getElementById('eq-tag').classList.remove('show');
   document.getElementById('ph-needle').style.left=`${(init/14)*100}%`;
-  document.getElementById('flask-liquid').setAttribute('fill','rgba(219,234,254,.6)');
+  const initFillH=(vAcid/70)*54;
+  const liqEl=document.getElementById('flask-liquid');
+  liqEl.setAttribute('fill', getLiquidColor(0));
+  liqEl.setAttribute('y', (268-initFillH).toFixed(1));
+  liqEl.setAttribute('height', initFillH.toFixed(1));
   document.getElementById('burette-fill').style.height='80%';
   if(!k){
     document.getElementById('base-conc-row').style.display='flex';
     clearJuiceBtns();
   }
-  [0,1,2].forEach(i=>document.getElementById(`qp${i}`).className='qphase'+(i===0?' active':''));
   showQuiz(0);
 }
 function initChart(){

@@ -554,21 +554,11 @@ tbody tr.fresh{animation:rowIn .5s ease}
       <div class="exp-tags"><span class="exp-tag">3D</span><span class="exp-tag">AI</span><span class="exp-tag">מולקולות</span></div>
       <div class="exp-arrow"><span>לחצו להתחלה</span><span class="arrow-icon">←</span></div>
     </div>
-    <div class="exp-card" style="border-color:var(--border)" onclick="goTo('screen-citrus')"
-      onmouseover="this.style.borderColor='#d97706';this.style.transform='translateY(-6px)';this.style.boxShadow='0 12px 32px rgba(217,119,6,.18)'"
-      onmouseout="this.style.borderColor='var(--border)';this.style.transform='';this.style.boxShadow=''">
-      <div class="exp-emoji">🍋</div>
-      <div class="exp-badge" style="background:var(--yellow-l);border:1.5px solid var(--yellow-m);color:var(--yellow)">ניסוי חקר 6</div>
-      <div class="exp-name">מי הכי<br>חמוץ? 🍊🍋</div>
-      <div class="exp-desc">ניסוי חקר רמה I — טיטרציות מיצי פירות הדר. מדדו, חשבו והסיקו מסקנות על ריכוז החומצה הציטרית בכל מיץ.</div>
-      <div class="exp-tags"><span class="exp-tag">חקר</span><span class="exp-tag">רמה I</span><span class="exp-tag">חומצה ציטרית</span><span class="exp-tag">טיטרציה</span></div>
-      <div class="exp-arrow"><span>לחצו להתחלה</span><span class="arrow-icon">←</span></div>
-    </div>
     <div class="exp-card" style="border-color:var(--border)" onclick="goTo('screen-powders')"
       onmouseover="this.style.borderColor='#6366f1';this.style.transform='translateY(-6px)';this.style.boxShadow='0 12px 32px rgba(99,102,241,.18)'"
       onmouseout="this.style.borderColor='var(--border)';this.style.transform='';this.style.boxShadow=''">
       <div class="exp-emoji">🔬</div>
-      <div class="exp-badge" style="background:#eef2ff;border:1.5px solid #c7d2fe;color:#4f46e5">ניסוי חקר 7</div>
+      <div class="exp-badge" style="background:#eef2ff;border:1.5px solid #c7d2fe;color:#4f46e5">ניסוי חקר 6</div>
       <div class="exp-name">אבקות<br>לבנות 🧪</div>
       <div class="exp-desc">ניסוי חקר רמה 2א' — זיהוי חמש אבקות לבנות נעלמות: KI, Ca(OH)₂, גלוקוז, NaCl ושעווה באמצעות סדרת בדיקות.</div>
       <div class="exp-tags"><span class="exp-tag">חקר</span><span class="exp-tag">רמה 2א</span><span class="exp-tag">זיהוי</span><span class="exp-tag">קשרים כימיים</span></div>
@@ -1109,7 +1099,7 @@ function goTo(id){
       }
     },50);
   }
-  if(id==='screen-citrus') citInit();
+
   if(id==='screen-powders') pwdInit();
 }
 
@@ -1650,18 +1640,8 @@ function rxnUpdateUI(){
 </script>
 
 <!-- ══════════════════════════════════════
-     SCREENS 7 & 8: CITRUS + POWDERS
-     (stubs — full code omitted for brevity,
-      paste original citrus/powders HTML here)
+     SCREEN 7: POWDERS
 ══════════════════════════════════════ -->
-<div id="screen-citrus" class="screen" style="flex-direction:column">
-  <div class="exp-top-bar" style="border-color:var(--yellow)">
-    <button class="back-btn" onclick="goTo('screen-landing')">⬅ חזרה</button>
-    <span style="font-size:1.4rem">🍋</span>
-    <h2 style="color:var(--yellow)">ניסוי חקר רמה I — מי הכי חמוץ?</h2>
-  </div>
-  <div class="exp-screen-inner"><p style="padding:20px;color:var(--text2)">תוכן ניסוי 6 — יש להדביק כאן את קוד screen-citrus המלא מהקובץ המקורי.</p></div>
-</div>
 <div id="screen-powders" class="screen" style="flex-direction:column;position:relative">
 
   <!-- ── TOP BAR ── -->
@@ -1781,7 +1761,7 @@ function rxnUpdateUI(){
   </div>
 </div>
 <script>
-function citInit(){}
+
 
 /* ══════════════════════════════════
    POWDERS EXPERIMENT

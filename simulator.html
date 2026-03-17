@@ -605,20 +605,25 @@ tbody tr.fresh{animation:rowIn .5s ease}
             ⬅ חזרה לניסוי
           </button>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px">
           <div style="background:var(--surface);border:1.5px solid var(--blue-m);border-radius:10px;padding:14px 16px">
             <div style="font-size:.8rem;font-weight:800;color:var(--blue);margin-bottom:8px">🔬 מהי שיטת הטיטור?</div>
             <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">טיטור הוא כלי מרכזי ב<strong>כימיה אנליטית</strong> המאפשר לגלות ריכוז לא ידוע של חומר בתמיסה. עושים זאת על ידי הוספה <strong>מבוקרת והדרגתית</strong> של תמיסה שריכוזה ידוע במדויק (ה<strong>טיטרנט</strong>), עד להשלמת התגובה הכימית ביניהן.</div>
           </div>
-          <div style="background:var(--surface);border:1.5px solid #fed7aa;border-radius:10px;padding:14px 16px">
-            <div style="font-size:.8rem;font-weight:800;color:var(--orange);margin-bottom:8px">🍋 התהליך הכימי בניסוי</div>
-            <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">מיץ הלימון מכיל בעיקר <strong>חומצה ציטרית (C₆H₈O₇)</strong> — חומצה שלש–פרוטונית. הטיטרנט הוא <strong>NaOH</strong> בריכוז ידוע. כשמטפטפים NaOH למיץ, מתרחשת <strong>תגובת נטרול</strong>.
-              <div style="margin-top:8px;padding:6px 10px;background:#fff7ed;border-radius:7px;font-family:var(--mono);font-size:.68rem;color:var(--orange);text-align:center">H₃Cit + 3 NaOH → Na₃Cit + 3H₂O</div>
-            </div>
-          </div>
           <div style="background:var(--surface);border:1.5px solid var(--purple-m);border-radius:10px;padding:14px 16px">
             <div style="font-size:.8rem;font-weight:800;color:var(--purple);margin-bottom:8px">🎯 נקודת שיווי המשקל</div>
-            <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">מוסיפים לתמיסה <strong>פנולפתלאין</strong>. ברגע שכל החומצה נוטרלה, הטיפה הבאה תהפוך את התמיסה ל<strong style="color:var(--pink)">ורוד/סגול</strong>. זוהי <strong>נקודת הסיום</strong>.</div>
+            <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">
+              ברגע שכל החומצה נוטרלה, הטיפה הבאה תהפוך את התמיסה <strong style="color:var(--pink)">לוורודה</strong>. זוהי נקודת הסיום.<br><br>
+              מבחינה כימית, בנקודת שיווי המשקל כמות הבסיס שהוספנו שווה <strong>בדיוק</strong> לכמות המימנים החומציים שהיו במיץ. מכיוון שהחומצה הציטרית היא <strong>תלת–פרוטונית</strong> (כל מולקולה תורמת 3 מימנים), חלקיקי הבסיס ניטרלו <strong>פי 3 מימנים!</strong><br><br>
+              ברגע שהמימן האחרון נוטרל והפך למים, הטיפה הבאה של הבסיס כבר לא תמצא מי להילחם. היא תהפוך את התמיסה מיד לבסיסית — והעודף הקטן הזה הוא מה שגורם לאינדיקטור לשנות את צבעו <strong style="color:var(--pink)">לוורוד</strong>.
+            </div>
+          </div>
+          <div style="background:var(--surface);border:1.5px solid var(--teal-m);border-radius:10px;padding:14px 16px">
+            <div style="font-size:.8rem;font-weight:800;color:var(--teal);margin-bottom:8px">🌊 טיטור חומצה ציטרית</div>
+            <div style="font-size:.75rem;line-height:1.8;color:var(--text2)">
+              בניגוד לחומצה פשוטה שיש לה <strong>מימן אחד למסור</strong>, לחומצה הציטרית יש <strong>3 פרוטונים</strong> — והיא מוסרת אותם <strong>בזה אחר זה</strong>, לא בבת אחת.
+              כל פרוטון מנוטרל בנפח בסיס שונה, וכך נוצרות <strong>שלוש "מדרגות"</strong> בגרף הטיטרציה — כל אחת מסמנת שלב נטרול נפרד.
+            </div>
           </div>
           <div style="background:var(--surface);border:1.5px solid var(--green-m);border-radius:10px;padding:14px 16px">
             <div style="font-size:.8rem;font-weight:800;color:var(--green);margin-bottom:8px">🧮 חישוב ריכוז החומצה</div>

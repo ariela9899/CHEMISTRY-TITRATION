@@ -933,7 +933,7 @@ tbody tr.fresh{animation:rowIn .5s ease}
           </div>
           <div style="margin-top:12px">
             <div class="plabel">סקלת pH</div>
-            <div class="ph-bar"><div class="ph-needle" id="ph-needle" style="left:7.14%"></div></div>
+            <div class="ph-bar"><div class="ph-needle" id="ph-needle" style="left:92.86%"></div></div>
             <div class="ph-ticks"><span>0</span><span>2</span><span>4</span><span>7</span><span>9</span><span>11</span><span>14</span></div>
           </div>
           <div class="metrics-row" style="margin-top:10px">
@@ -1244,34 +1244,42 @@ function calculatePH(vBase){
   }
   if(acidType==='citric'){
     const pKa1=3.13,pKa2=4.76,pKa3=6.40;
-    const Ka1=Math.pow(10,-pKa1);
-    const eps=1e-9;
-    if(vBase===0) return -Math.log10((-Ka1+Math.sqrt(Ka1*Ka1+4*Ka1*cAcid))/2);
-    const ratio=nBase/nAcid;
-    if(ratio<1-eps){
-      if(nBase<eps) return -Math.log10((-Ka1+Math.sqrt(Ka1*Ka1+4*Ka1*cAcid))/2);
-      return pKa1+Math.log10(nBase/(nAcid-nBase));
+    const Ka1=Math.pow(10,-pKa1),Ka2=Math.pow(10,-pKa2),Ka3=Math.pow(10,-pKa3);
+    const Kw=1e-14;
+    const eps=1e-12;
+
+    // Full speciation: solve charge balance numerically
+    // [H3A] + 2[H2A-] + ... charge balance, solved via bisection on pH
+    const alpha=h=>{
+      // Returns weighted average protons per molecule given [H+]=h
+      const h2=h*h,h3=h*h*h;
+      const D=h3+Ka1*h2+Ka1*Ka2*h+Ka1*Ka2*Ka3;
+      const a0=h3/D;          // H3Cit
+      const a1=Ka1*h2/D;      // H2Cit-
+      const a2=Ka1*Ka2*h/D;   // HCit2-
+      const a3=Ka1*Ka2*Ka3/D; // Cit3-
+      return {a0,a1,a2,a3};
+    };
+
+    // charge balance: [Na+] + [H+] = [H2A-] + 2[HA2-] + 3[A3-] + [OH-]
+    // [Na+] = nBase/totalVol, [H+]=h, solve for h
+    const cA=nAcid/totalVol;
+    const cNa=nBase/totalVol;
+
+    const f=h=>{
+      const {a1,a2,a3}=alpha(h);
+      const oh=Kw/h;
+      return cNa+h-(a1+2*a2+3*a3)*cA-oh;
+    };
+
+    // bisect on log scale between pH 0 and 14
+    let lo=1e-14,hi=1.0;
+    for(let i=0;i<80;i++){
+      const mid=Math.sqrt(lo*hi);
+      if(f(mid)>0) hi=mid; else lo=mid;
     }
-    if(Math.abs(ratio-1)<eps) return (pKa1+pKa2)/2;
-    if(ratio<2-eps){
-      const nH2A=2*nAcid-nBase;
-      const nHA2=nBase-nAcid;
-      if(nH2A<eps||nHA2<eps) return (pKa1+pKa2)/2;
-      return pKa2+Math.log10(nHA2/nH2A);
-    }
-    if(Math.abs(ratio-2)<eps) return (pKa2+pKa3)/2;
-    if(ratio<3-eps){
-      const nHA2=3*nAcid-nBase;
-      const nA3=nBase-2*nAcid;
-      if(nHA2<eps||nA3<eps) return (pKa2+pKa3)/2;
-      return pKa3+Math.log10(nA3/nHA2);
-    }
-    if(Math.abs(ratio-3)<eps || ratio<=3){
-      const Kb3=(1e-14)/Math.pow(10,-pKa3);
-      const cSalt=nAcid/totalVol;
-      return 14+0.5*Math.log10(Kb3*cSalt);
-    }
-    return 14+Math.log10((nBase-3*nAcid)/totalVol);
+    const h=Math.sqrt(lo*hi);
+    return Math.max(0,Math.min(14,-Math.log10(h)));
   }
   return 7.0;
 }
@@ -1321,7 +1329,7 @@ function updateUI(ph){
   const fillH=Math.max(8, frac*54);
   liq.setAttribute('y', (268-fillH).toFixed(1));
   liq.setAttribute('height', fillH.toFixed(1));
-  const pct=Math.max(0,Math.min(100,(ph/14)*100));
+  const pct=Math.max(0,Math.min(100,((14-ph)/14)*100));
   document.getElementById('ph-needle').style.left=`calc(${pct}% - 2px)`;
   const el=document.getElementById('ph-display');
   el.className='metric-val';
@@ -1485,11 +1493,11 @@ function clearJuiceBtns(){
   });
 }
 const JUICE_DATA={
-  // טווחים מבוססים על נתוני ניסוי מעבדה: ריכוז H⁺ ÷ 3 = ריכוז חומצה ציטרית
-  lemon:{emoji:'🍋',name:'מיץ לימון',heLabel:'לימון טרי',range:[0.24,0.28],color:'#ca8a04'},       // H⁺=0.78M → 0.26M ±~8%
-  orange:{emoji:'🍊',name:'מיץ תפוזים',heLabel:'תפוז טרי',range:[0.050,0.057],color:'#ea580c'},   // H⁺=0.16M → 0.053M ±~7%
-  grapefruit:{emoji:'🍈',name:'מיץ אשכוליות',heLabel:'אשכולית טרייה',range:[0.073,0.081],color:'#d97706'}, // H⁺=0.23M → 0.077M ±~5%
-  clementine:{emoji:'🍊',name:'מיץ קלמנטינה',heLabel:'קלמנטינה טרייה',range:[0.040,0.047],color:'#f97316'}, // H⁺=0.13M → 0.043M ±~8%
+  // C_acid = [H⁺] / 3  (חומצה ציטרית תלת-פרוטונית)
+  lemon:{emoji:'🍋',name:'מיץ לימון',heLabel:'לימון טרי',range:[0.26,0.26],color:'#ca8a04'},        // H⁺=0.78M → 0.26M  → Veq=31.2 מ"ל
+  orange:{emoji:'🍊',name:'מיץ תפוזים',heLabel:'תפוז טרי',range:[0.0533,0.0533],color:'#ea580c'},  // H⁺=0.16M → 0.0533M → Veq=6.4 מ"ל
+  grapefruit:{emoji:'🍈',name:'מיץ אשכוליות',heLabel:'אשכולית טרייה',range:[0.0767,0.0767],color:'#d97706'}, // H⁺=0.23M → 0.0767M → Veq=9.2 מ"ל
+  clementine:{emoji:'🍊',name:'מיץ קלמנטינה',heLabel:'קלמנטינה טרייה',range:[0.0433,0.0433],color:'#f97316'}, // H⁺=0.13M → 0.0433M → Veq=5.2 מ"ל
 };
 let juiceMode=false,currentJuice=null;
 
@@ -1534,7 +1542,7 @@ function resetSimulation(k){
   document.getElementById('ph-display').innerText=init.toFixed(2);
   document.getElementById('ph-display').className='metric-val mv-acid';
   document.getElementById('eq-tag').classList.remove('show');
-  document.getElementById('ph-needle').style.left=`${(init/14)*100}%`;
+  document.getElementById('ph-needle').style.left=`${((14-init)/14)*100}%`;
   const initFillH=(vAcid/70)*54;
   const liqEl=document.getElementById('flask-liquid');
   liqEl.setAttribute('fill', getLiquidColor(0));
@@ -1565,7 +1573,7 @@ function initChart(){
         x:{type:'linear',min:0,max:50,title:{display:true,text:`נפח NaOH (מ"ל)`,color:'#64748b',font:{family:'JetBrains Mono',size:11}},grid:{color:'#f1f5f9'},ticks:{color:'#94a3b8',font:{family:'JetBrains Mono',size:10}},border:{color:'#e2e8f0'}},
         y:{min:0,max:14,title:{display:true,text:'pH',color:'#64748b',font:{family:'JetBrains Mono',size:11}},grid:{color:'#f1f5f9'},ticks:{color:'#94a3b8',font:{family:'JetBrains Mono',size:10}},border:{color:'#e2e8f0'}}}}});
   document.getElementById('ph-display').innerText=init.toFixed(2);
-  document.getElementById('ph-needle').style.left=`${(init/14)*100}%`;
+  document.getElementById('ph-needle').style.left=`${((14-init)/14)*100}%`;
   showQuiz(0);updateAcidPhLabels();updateFormulaHint();
 }
 

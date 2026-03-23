@@ -1151,45 +1151,72 @@ tbody tr.fresh{animation:rowIn .5s ease}
     <span style="font-size:1.4rem">🐍</span>
     <h2 style="color:var(--green)">נחש קצף — פירוק H₂O₂ קטליטי</h2>
   </div>
-  <div class="exp-screen-inner">
-    <div class="snake-container">
-      <div style="background:var(--green-l);border:2px solid var(--green-m);border-radius:14px;padding:16px 20px;margin-bottom:20px;font-size:.82rem;line-height:1.7;color:var(--text2)">
-        <strong style="color:var(--green)">מה קורה כאן?</strong><br>
-        יוד (I⁻ מ-KI) פועל כקטליזטור לפירוק <strong>H₂O₂</strong> למים וחמצן. החמצן הנוצר במהירות "תוקע" בתוך סבון ויוצר קצף אדיר.<br>המשוואה: <span style="font-family:var(--mono)">2H₂O₂ → 2H₂O + O₂↑</span>
+
+  <div class="exp-screen-inner" style="padding:14px;display:flex;gap:16px;flex-wrap:wrap">
+
+    <!-- LEFT: controls + info -->
+    <div style="display:flex;flex-direction:column;gap:12px;min-width:260px;flex:1">
+
+      <!-- Theory box -->
+      <div style="background:var(--green-l);border:2px solid var(--green-m);border-radius:12px;padding:14px 16px;font-size:.78rem;line-height:1.8;color:var(--text2)">
+        <strong style="color:var(--green);font-size:.82rem">⚗️ מה קורה כאן?</strong><br>
+        יוד (<strong>I⁻</strong> מ-KI) פועל כ<strong>קטליזטור</strong> לפירוק <strong>H₂O₂</strong> למים וחמצן.
+        גז O₂ הנוצר בקצב מהיר מאוד מתפשט בתוך בועות הסבון ויוצר קצף ענק — ה<strong>"נחש"</strong>!<br><br>
+        <span style="font-family:var(--mono);font-size:.72rem;color:var(--green)">2H₂O₂ <strong>(aq)</strong> → 2H₂O<strong>(l)</strong> + O₂↑<strong>(g)</strong></span>
       </div>
-      <div class="plabel">שלבי הניסוי — לחצו לפי הסדר:</div>
-      <div class="snake-steps">
-        <div class="snake-step active-step" id="snake-s0">
-          <div class="step-header"><div class="step-num">1</div><div class="step-title">הכנת המגיבים</div></div>
-          <div class="step-desc">יוצקים לכוס <strong>100 מ"ל</strong> של מי חמצן (H₂O₂) בריכוז 30%. מוסיפים <strong>כף סבון כלים</strong> ומערבבים בעדינות.</div>
-          <button class="btn btn-outline-green" style="margin-top:10px" onclick="snakeNext(0)">סיימתי ← שלב הבא</button>
+
+      <!-- Steps -->
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:14px">
+        <div style="font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">שלבי הסימולציה</div>
+
+        <div id="sk-step-btns" style="display:flex;flex-direction:column;gap:8px">
+          <button id="sk-btn0" class="btn btn-outline-green" onclick="skStep(0)" style="justify-content:flex-start;font-size:.75rem;gap:8px">
+            <span style="background:var(--green);color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0">1</span>
+            יצקו 100 מ"ל H₂O₂ 10% + סבון
+          </button>
+          <button id="sk-btn1" class="btn btn-outline-green" onclick="skStep(1)" disabled style="justify-content:flex-start;font-size:.75rem;gap:8px;opacity:.4">
+            <span style="background:var(--green);color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0">2</span>
+            הכינו תמיסת KI (1g ב-10 מ"ל מים)
+          </button>
+          <button id="sk-btn2" class="btn btn-blue" onclick="skStep(2)" disabled style="justify-content:flex-start;font-size:.75rem;gap:8px;opacity:.4">
+            <span style="background:white;color:var(--blue);border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0;font-weight:800">3</span>
+            🚀 הוסיפו את הקטליזטור!
+          </button>
+          <button id="sk-btn3" class="btn btn-outline-red" onclick="skReset()" disabled style="justify-content:flex-start;font-size:.75rem;gap:8px;opacity:.4">
+            ↺ &nbsp;ניסוי חדש
+          </button>
         </div>
-        <div class="snake-connector"></div>
-        <div class="snake-step" id="snake-s1">
-          <div class="step-header"><div class="step-num">2</div><div class="step-title">הכנת הקטליזטור</div></div>
-          <div class="step-desc">בכלי נפרד מערבבים <strong>10 מ"ל מים</strong> עם <strong>1 גרם KI</strong> (אשלגן יודיד) עד להמסה מלאה.</div>
-          <button class="btn btn-outline-green" style="margin-top:10px" onclick="snakeNext(1)">סיימתי ← שלב הבא</button>
-        </div>
-        <div class="snake-connector"></div>
-        <div class="snake-step" id="snake-s2">
-          <div class="step-header"><div class="step-num">3</div><div class="step-title">⚠️ הוספת הקטליזטור</div></div>
-          <div class="step-desc"><strong>בזהירות ובמרחק בטוח!</strong> יוצקים את תמיסת KI לתוך כוס H₂O₂. התגובה מתחילה מיידית!</div>
-          <button class="btn btn-blue" style="margin-top:10px" onclick="snakeNext(2)">🚀 התחל תגובה!</button>
-        </div>
-        <div class="snake-connector"></div>
-        <div class="snake-step" id="snake-s3">
-          <div class="step-header"><div class="step-num">4</div><div class="step-title">צפו בנחש!</div></div>
-          <div class="step-desc">קצף בצבע כתום-חום (בגלל I₂ שנוצר) מתפרץ ויוצר "נחש" ענק. הניסוי מדגים קטליזה, פירוק ויצירת גז.</div>
+
+        <div id="sk-status" style="margin-top:12px;font-size:.75rem;color:var(--text3);min-height:20px;font-family:var(--mono)">מוכן — לחצו על שלב 1 להתחיל</div>
+      </div>
+
+      <!-- Reaction meters -->
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:14px">
+        <div style="font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">מדדים בזמן אמת</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:9px;padding:9px;text-align:center">
+            <div style="font-size:.58rem;color:var(--text3);font-family:var(--mono);text-transform:uppercase;margin-bottom:3px">H₂O₂ נותר</div>
+            <div id="sk-h2o2" style="font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--blue)">100%</div>
+          </div>
+          <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:9px;padding:9px;text-align:center">
+            <div style="font-size:.58rem;color:var(--text3);font-family:var(--mono);text-transform:uppercase;margin-bottom:3px">O₂ נוצר</div>
+            <div id="sk-o2" style="font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--green)">0%</div>
+          </div>
+          <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:9px;padding:9px;text-align:center">
+            <div style="font-size:.58rem;color:var(--text3);font-family:var(--mono);text-transform:uppercase;margin-bottom:3px">טמפ׳ (°C)</div>
+            <div id="sk-temp" style="font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--red)">23°</div>
+          </div>
+          <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:9px;padding:9px;text-align:center">
+            <div style="font-size:.58rem;color:var(--text3);font-family:var(--mono);text-transform:uppercase;margin-bottom:3px">גובה קצף</div>
+            <div id="sk-height" style="font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--orange)">0 ס"מ</div>
+          </div>
         </div>
       </div>
-      <div class="snake-anim" id="snake-anim">
-        <div class="snake-emoji">🐍</div>
-        <div style="font-size:1.1rem;font-weight:800;margin-top:12px;color:var(--green)">נחש הקצף נוצר!</div>
-        <div style="font-size:.8rem;color:var(--text2);margin-top:6px">2H₂O₂ → 2H₂O + O₂↑</div>
-      </div>
-      <div style="background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:18px;margin-top:16px">
-        <div style="font-size:.85rem;font-weight:700;margin-bottom:10px">❓ שאלת הבנה</div>
-        <div style="font-size:.8rem;color:var(--text2);margin-bottom:12px">מדוע KI נחשב קטליזטור בניסוי זה?</div>
+
+      <!-- Quiz -->
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:14px">
+        <div style="font-size:.8rem;font-weight:700;color:var(--yellow);margin-bottom:8px">❓ שאלת הבנה</div>
+        <div style="font-size:.78rem;color:var(--text2);margin-bottom:10px;line-height:1.6">מדוע KI נחשב קטליזטור בניסוי זה?</div>
         <div class="mc-options">
           <div class="mc-opt" onclick="answSnake(this,false)">A. כי הוא נוצר בסוף התגובה</div>
           <div class="mc-opt" onclick="answSnake(this,true)">B. כי הוא מאיץ את התגובה מבלי להיצרך</div>
@@ -1198,9 +1225,308 @@ tbody tr.fresh{animation:rowIn .5s ease}
         </div>
         <div id="snake-fb" class="qfb" style="margin-top:8px"></div>
       </div>
+
     </div>
+
+    <!-- RIGHT: Canvas simulation -->
+    <div style="flex:1.4;min-width:300px;display:flex;flex-direction:column;align-items:center;gap:10px">
+      <canvas id="sk-canvas" width="340" height="520"
+        style="border-radius:16px;border:2px solid var(--border);box-shadow:var(--shadow-md);background:#f0f9ff;max-width:100%"></canvas>
+      <div id="sk-label" style="font-size:.72rem;font-family:var(--mono);color:var(--text3);text-align:center"></div>
+    </div>
+
   </div>
 </div>
+
+<script>
+/* ══════════════════════════════════
+   FOAM SNAKE SIMULATION
+══════════════════════════════════ */
+const SK={
+  canvas:null,ctx:null,
+  phase:0,        // 0=empty, 1=h2o2+soap, 2=ki added, 3=reacting, 4=done
+  raf:null,
+  t:0,            // animation time
+  foam:[],        // foam bubble array
+  h2o2:100,o2:0,temp:23,foamH:0,
+  running:false,
+};
+
+function skInit(){
+  SK.canvas=document.getElementById('sk-canvas');
+  if(!SK.canvas)return;
+  SK.ctx=SK.canvas.getContext('2d');
+  SK.phase=0;SK.t=0;SK.foam=[];SK.h2o2=100;SK.o2=0;SK.temp=23;SK.foamH=0;SK.running=false;
+  if(SK.raf){cancelAnimationFrame(SK.raf);SK.raf=null;}
+  skDraw();
+}
+
+function skStep(step){
+  if(step===0&&SK.phase===0){
+    SK.phase=1;
+    document.getElementById('sk-btn0').disabled=true;document.getElementById('sk-btn0').style.opacity='.6';
+    document.getElementById('sk-btn1').disabled=false;document.getElementById('sk-btn1').style.opacity='1';
+    document.getElementById('sk-status').textContent='H₂O₂ + סבון בכוס. הכינו את תמיסת KI...';
+    skDraw();
+  } else if(step===1&&SK.phase===1){
+    SK.phase=2;
+    document.getElementById('sk-btn1').disabled=true;document.getElementById('sk-btn1').style.opacity='.6';
+    document.getElementById('sk-btn2').disabled=false;document.getElementById('sk-btn2').style.opacity='1';
+    document.getElementById('sk-status').textContent='KI מוכן. לחצו "הוסיפו את הקטליזטור!" 🚀';
+  } else if(step===2&&SK.phase===2){
+    SK.phase=3;SK.running=true;SK.t=0;
+    document.getElementById('sk-btn2').disabled=true;document.getElementById('sk-btn2').style.opacity='.6';
+    document.getElementById('sk-btn3').disabled=false;document.getElementById('sk-btn3').style.opacity='1';
+    document.getElementById('sk-status').textContent='⚗️ תגובה מתחילה...';
+    skAnimate();
+  }
+}
+
+function skReset(){
+  if(SK.raf){cancelAnimationFrame(SK.raf);SK.raf=null;}
+  SK.phase=0;SK.t=0;SK.foam=[];SK.h2o2=100;SK.o2=0;SK.temp=23;SK.foamH=0;SK.running=false;
+  ['sk-btn0','sk-btn1','sk-btn2'].forEach((id,i)=>{
+    const b=document.getElementById(id);
+    b.disabled=i!==0;b.style.opacity=i===0?'1':'.4';
+  });
+  document.getElementById('sk-btn3').disabled=true;document.getElementById('sk-btn3').style.opacity='.4';
+  document.getElementById('sk-status').textContent='מוכן — לחצו על שלב 1 להתחיל';
+  document.getElementById('sk-h2o2').textContent='100%';
+  document.getElementById('sk-o2').textContent='0%';
+  document.getElementById('sk-temp').textContent='23°';
+  document.getElementById('sk-height').textContent='0 ס"מ';
+  skDraw();
+}
+
+function skAnimate(){
+  SK.t++;
+  const speed = SK.t < 60 ? SK.t/60 : 1; // ramp up
+  SK.h2o2 = Math.max(0, SK.h2o2 - speed * 0.55);
+  SK.o2   = Math.min(100, SK.o2 + speed * 0.55);
+  SK.temp = Math.min(70, SK.temp + speed * 0.35);
+  SK.foamH= Math.min(360, SK.foamH + speed * 1.8);
+
+  // Spawn foam bubbles
+  if(SK.t < 280 && Math.random() < 0.45 + speed*0.4){
+    const cx=170, baseY=460;
+    SK.foam.push({
+      x: cx + (Math.random()-0.5)*70,
+      y: baseY - SK.foamH * 0.5 - Math.random()*20,
+      r: 4 + Math.random()*16,
+      vy: -(0.4 + Math.random()*1.2),
+      vx: (Math.random()-0.5)*0.6,
+      life:1,
+      col: SK.t < 30 ? '#d97706' : (Math.random()<0.5?'#fef9c3':'#d4f4dd'),
+    });
+  }
+
+  // Update bubbles
+  SK.foam.forEach(b=>{
+    b.x+=b.vx; b.y+=b.vy;
+    b.life -= 0.004;
+    b.r = Math.min(b.r + 0.08, 22);
+  });
+  SK.foam = SK.foam.filter(b=>b.life>0 && b.y > -20);
+
+  // Update UI meters
+  document.getElementById('sk-h2o2').textContent=Math.round(SK.h2o2)+'%';
+  document.getElementById('sk-o2').textContent=Math.round(SK.o2)+'%';
+  document.getElementById('sk-temp').textContent=Math.round(SK.temp)+'°';
+  document.getElementById('sk-height').textContent=Math.round(SK.foamH/9)+' ס"מ';
+
+  const pct=SK.o2/100;
+  document.getElementById('sk-h2o2').style.color=`hsl(${200+pct*20},70%,${45-pct*10}%)`;
+  document.getElementById('sk-temp').style.color=`hsl(${20-pct*10},${70+pct*20}%,${45-pct*5}%)`;
+
+  if(SK.t===40) document.getElementById('sk-status').textContent='💨 O₂ מתפשט בסבון — קצף גדל!';
+  if(SK.t===120) document.getElementById('sk-status').textContent='🌡️ התגובה האקזותרמית מחממת את המערכת!';
+  if(SK.t===220) document.getElementById('sk-status').textContent='🐍 נחש הקצף עולה ועולה!';
+
+  skDraw();
+
+  if(SK.h2o2 > 0 && SK.t < 320){
+    SK.raf=requestAnimationFrame(skAnimate);
+  } else {
+    SK.phase=4;
+    document.getElementById('sk-status').textContent='✅ הניסוי הסתיים! כל ה-H₂O₂ פורק.';
+    skDraw();
+  }
+}
+
+function skDraw(){
+  const c=SK.canvas,ctx=SK.ctx;
+  if(!ctx)return;
+  const W=c.width,H=c.height;
+  ctx.clearRect(0,0,W,H);
+
+  // Background — lab bench gradient
+  const bg=ctx.createLinearGradient(0,0,0,H);
+  bg.addColorStop(0,'#e0f2fe');bg.addColorStop(1,'#f0fdf4');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+  // Lab bench surface
+  ctx.fillStyle='#d4a96a';ctx.fillRect(0,H-40,W,40);
+  ctx.fillStyle='#b8895a';ctx.fillRect(0,H-42,W,4);
+
+  // === BEAKER (250mL graduated cylinder style) ===
+  const bx=110,by=200,bw=120,bh=260;
+
+  // Beaker glass body
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(bx+10,by);ctx.lineTo(bx+bw-10,by);
+  ctx.lineTo(bx+bw,by+bh);ctx.lineTo(bx,by+bh);ctx.closePath();
+  ctx.fillStyle='rgba(200,230,255,0.25)';ctx.fill();
+  ctx.strokeStyle='#64b5f6';ctx.lineWidth=2.5;ctx.stroke();
+  ctx.restore();
+
+  // Pour lip
+  ctx.beginPath();ctx.moveTo(bx+5,by);ctx.lineTo(bx+bw-5,by);
+  ctx.strokeStyle='#64b5f6';ctx.lineWidth=3;ctx.stroke();
+
+  // Graduation marks
+  ctx.fillStyle='#90a4ae';ctx.font='9px JetBrains Mono,monospace';
+  [50,100,150,200,250].forEach((ml,i)=>{
+    const y=by+bh-(i+1)*(bh/5.5);
+    ctx.beginPath();ctx.moveTo(bx+bw-2,y);ctx.lineTo(bx+bw+10,y);
+    ctx.strokeStyle='#90a4ae';ctx.lineWidth=1;ctx.stroke();
+    ctx.fillText(ml+'mL',bx+bw+12,y+4);
+  });
+
+  if(SK.phase>=1){
+    // H2O2 liquid (pale blue, fills bottom ~40% of beaker)
+    const liqFrac = SK.phase>=3 ? SK.h2o2/100 : 1;
+    const liqH = bh * 0.42 * liqFrac;
+    const liqY = by + bh - liqH;
+    const liqGrad=ctx.createLinearGradient(bx,liqY,bx+bw,liqY+liqH);
+    liqGrad.addColorStop(0,'rgba(147,210,255,0.7)');
+    liqGrad.addColorStop(1,'rgba(96,165,250,0.55)');
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(bx+10,by);ctx.lineTo(bx+bw-10,by);
+    ctx.lineTo(bx+bw,by+bh);ctx.lineTo(bx,by+bh);ctx.closePath();ctx.clip();
+    ctx.fillStyle=liqGrad;
+    ctx.fillRect(bx,liqY,bw,liqH+2);
+    // Soap shimmer
+    if(SK.t%30<15){
+      ctx.fillStyle='rgba(255,255,255,0.18)';
+      ctx.beginPath();ctx.ellipse(bx+bw*0.35,liqY+4,18,4,0,0,Math.PI*2);ctx.fill();
+    }
+    ctx.restore();
+
+    // Brown KI pour effect
+    if(SK.phase===3&&SK.t<25){
+      const alpha=Math.max(0,1-SK.t/25);
+      ctx.fillStyle=`rgba(180,120,40,${alpha*0.7})`;
+      ctx.beginPath();ctx.ellipse(bx+bw/2,liqY+6,22,5,0,0,Math.PI*2);ctx.fill();
+    }
+  }
+
+  // === FOAM / SNAKE ===
+  if(SK.phase>=3 && SK.foamH>0){
+    const fh=SK.foamH;
+    const foamY=by+bh-bh*0.42-fh;
+
+    // Main foam body (grows upward)
+    const foamGrad=ctx.createLinearGradient(0,foamY,0,foamY+fh);
+    const intensity=Math.min(1,SK.t/80);
+    // Color transitions: first orange (I2), then off-white/cream
+    const r=Math.round(251-intensity*60);
+    const g=Math.round(146+intensity*100);
+    const b2=Math.round(60+intensity*160);
+    foamGrad.addColorStop(0,`rgba(${r},${g},${b2},0.92)`);
+    foamGrad.addColorStop(0.3,`rgba(255,248,220,0.9)`);
+    foamGrad.addColorStop(1,`rgba(240,255,244,0.85)`);
+
+    ctx.save();
+    // Clip to beaker + above
+    ctx.beginPath();
+    const spreadFactor=Math.min(1,fh/200);
+    const extraW=spreadFactor*40;
+    ctx.moveTo(bx-extraW,by-fh*0.6);
+    ctx.lineTo(bx+bw+extraW,by-fh*0.6);
+    ctx.lineTo(bx+bw,by+bh);ctx.lineTo(bx,by+bh);ctx.closePath();ctx.clip();
+
+    // Foam base
+    ctx.fillStyle=foamGrad;
+    ctx.beginPath();
+    // Wavy top edge
+    const topY=foamY;
+    const steps=20;
+    ctx.moveTo(bx-extraW,topY+30);
+    for(let i=0;i<=steps;i++){
+      const px=bx-extraW+i*(bw+extraW*2)/steps;
+      const wave=Math.sin(i*0.8+SK.t*0.12)*9*(1+spreadFactor);
+      ctx.lineTo(px,topY+wave);
+    }
+    ctx.lineTo(bx+bw+extraW,by+bh);ctx.lineTo(bx-extraW,by+bh);ctx.closePath();
+    ctx.fill();
+
+    // Foam bubbles on surface
+    SK.foam.forEach(bb=>{
+      ctx.globalAlpha=bb.life*0.85;
+      ctx.beginPath();ctx.arc(bb.x,bb.y,bb.r,0,Math.PI*2);
+      ctx.fillStyle=bb.col;ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,0.6)';ctx.lineWidth=1;ctx.stroke();
+      // Highlight
+      ctx.beginPath();ctx.arc(bb.x-bb.r*0.3,bb.y-bb.r*0.3,bb.r*0.3,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,0.45)';ctx.fill();
+    });
+    ctx.globalAlpha=1;
+    ctx.restore();
+
+    // Steam / gas wisps
+    if(SK.t>20){
+      for(let s=0;s<3;s++){
+        const sx=bx+bw*0.25+s*bw*0.25;
+        const sy=foamY-10-Math.sin(SK.t*0.07+s)*15;
+        const wispAlpha=Math.min(0.25, (SK.t-20)/60);
+        ctx.save();ctx.globalAlpha=wispAlpha;
+        ctx.beginPath();ctx.arc(sx,sy,12+s*4,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,255,255,0.5)';ctx.fill();
+        ctx.restore();
+      }
+    }
+  }
+
+  // Beaker glass overlay (front shine)
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(bx+10,by);ctx.lineTo(bx+bw-10,by);
+  ctx.lineTo(bx+bw,by+bh);ctx.lineTo(bx,by+bh);ctx.closePath();ctx.clip();
+  const shine=ctx.createLinearGradient(bx,by,bx+30,by);
+  shine.addColorStop(0,'rgba(255,255,255,0.22)');
+  shine.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.fillStyle=shine;ctx.fillRect(bx,by,bw,bh);
+  ctx.restore();
+
+  // Beaker outline redraw on top
+  ctx.beginPath();
+  ctx.moveTo(bx+10,by);ctx.lineTo(bx+bw-10,by);
+  ctx.lineTo(bx+bw,by+bh);ctx.lineTo(bx,by+bh);ctx.closePath();
+  ctx.strokeStyle='#42a5f5';ctx.lineWidth=2.5;ctx.stroke();
+
+  // === LABELS ===
+  ctx.font='bold 11px Noto Sans Hebrew,sans-serif';
+  ctx.textAlign='center';
+  if(SK.phase===0){
+    ctx.fillStyle='#94a3b8';ctx.fillText('כוס ריקה — לחצו על שלב 1',W/2,H-60);
+  } else if(SK.phase===1){
+    ctx.fillStyle='#0369a1';ctx.fillText('H₂O₂ 10% + סבון כלים',W/2,H-60);
+  } else if(SK.phase===2){
+    ctx.fillStyle='#d97706';ctx.fillText('KI מוכן — לחצו "הוסיפו קטליזטור"!',W/2,H-60);
+  } else if(SK.phase>=3){
+    const frac=SK.foamH/360;
+    ctx.fillStyle=`hsl(${130-frac*30},70%,35%)`;
+    ctx.fillText(SK.phase===4?'✅ התגובה הסתיימה':`🐍 גובה קצף: ${Math.round(SK.foamH/9)} ס"מ`,W/2,H-60);
+  }
+
+  // Equation label
+  ctx.font='10px JetBrains Mono,monospace';ctx.fillStyle='#475569';ctx.textAlign='left';
+  ctx.fillText('2H₂O₂ → 2H₂O + O₂↑',10,20);
+  ctx.fillStyle='#059669';ctx.fillText('KI = קטליזטור',10,35);
+}
+</script>
 
 <script>
 /* ══════════════════════════════════
@@ -1210,16 +1536,10 @@ function goTo(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   if(id==='screen-titration' && !chart) initChart();
-  if(id==='screen-reaction'){
-    setTimeout(()=>{
-      rxnInitScene();
-      if(!rxnRAF && rxnRenderer && rxnScene && rxnCamera){
-        (function animate(){rxnRAF=requestAnimationFrame(animate);rxnRenderer.render(rxnScene,rxnCamera);})();
-      }
-    },50);
-  }
+  if(id==='screen-reaction') setTimeout(()=>{if(!document.getElementById('rxn-chat').children.length)rxnNewChat();},50);
 
   if(id==='screen-powders') pwdInit();
+  if(id==='screen-snake') setTimeout(skInit, 50);
 }
 
 /* ══════════════════════════════════
@@ -1396,7 +1716,7 @@ const quizDefs=[
   },
   { q: ()=>`הגענו לנקודת שיווי המשקל ב-${eqVolume.toFixed(1)} מ"ל NaOH. מה קרה כאן בדיוק?`,
     opts:[
-      ()=>'n(OH⁻)שנוסף = n(H⁺)שנוטרל',
+      ()=>'יוני ההידרוקסיד שנוספו שווים ליוני ההידרוניום אשר נוטרלו',
       ()=>'pH = 7 בדיוק',
       ()=>'החומצה נעלמה לחלוטין מהתמיסה'
     ],correct:0,
@@ -1639,12 +1959,6 @@ function checkHydrate(){
    FOAM SNAKE
 ══════════════════════════════════ */
 let snakeStep=0;
-function snakeNext(step){
-  document.getElementById(`snake-s${step}`).classList.remove('active-step');
-  document.getElementById(`snake-s${step}`).classList.add('done-step');
-  if(step<3){snakeStep=step+1;document.getElementById(`snake-s${snakeStep}`).classList.add('active-step');}
-  if(step===2){setTimeout(()=>{document.getElementById('snake-anim').classList.add('show');document.getElementById(`snake-s3`).classList.add('active-step');},400);}
-}
 function answSnake(el,correct){
   document.querySelectorAll('#screen-snake .mc-opt').forEach(o=>o.style.pointerEvents='none');
   el.classList.add(correct?'correct':'wrong');
@@ -1657,117 +1971,262 @@ function answSnake(el,correct){
 <!-- ══════════════════════════════════════
      SCREEN 6: REACTION VISUALIZER
 ══════════════════════════════════════ -->
-<div id="screen-reaction" class="screen">
-  <div class="rxn-top">
-    <div class="rxn-top-row1">
-      <button class="back-btn" onclick="goTo('screen-landing');rxnPause()">⬅ חזרה</button>
-      <h2>⚗️ סימולטור תגובות — ויזואליזציה תלת–ממדית</h2>
+<div id="screen-reaction" class="screen" style="flex-direction:column;background:#0f172a">
+
+  <!-- TOP BAR -->
+  <div style="flex-shrink:0;display:flex;align-items:center;gap:12px;padding:10px 18px;
+    background:rgba(0,0,0,.5);backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(99,102,241,.3)">
+    <button class="back-btn" onclick="goTo('screen-landing');rxnPause()"
+      style="background:rgba(30,41,59,.8);border-color:rgba(99,102,241,.4);color:#a5b4fc">⬅ חזרה</button>
+    <div style="flex:1">
+      <div style="font-size:1rem;font-weight:800;color:#fff">⚗️ סימולטור תגובות כימיות</div>
+      <div style="font-size:.65rem;color:#6366f1;font-family:var(--mono)">AI · SVG Molecular Diagrams · Interactive</div>
     </div>
-    <div class="rxn-input-row">
-      <input class="rxn-inp" id="rxn-inp" type="text" placeholder="הקלידו תגובה: H2 + O2 → H2O  או  CH4 + 2O2 → CO2 + 2H2O" onkeydown="if(event.key==='Enter')rxnFetch()">
-      <button class="rxn-vis-btn" id="rxn-vis-btn" onclick="rxnFetch()">🔬 הדמה</button>
-    </div>
-    <div class="rxn-presets">
-      <span class="rxn-preset-lbl">דוגמאות מהירות:</span>
-      <button class="rxn-preset" onclick="rxnPreset('H2 + O2 → H2O')">💧 מים</button>
-      <button class="rxn-preset" onclick="rxnPreset('CH4 + 2O2 → CO2 + 2H2O')">🔥 שריפת מתאן</button>
-      <button class="rxn-preset" onclick="rxnPreset('N2 + 3H2 → 2NH3')">⚗️ אמוניה</button>
-      <button class="rxn-preset" onclick="rxnPreset('NaCl → Na+ + Cl-')">🧂 המסת מלח</button>
-      <button class="rxn-preset" onclick="rxnPreset('cysteine + guanine → cysteine-guanine complex')">🧬 ציסטאין–גואנין</button>
-      <button class="rxn-preset" onclick="rxnPreset('C2H5OH + 3O2 → 2CO2 + 3H2O')">🍷 שריפת אתנול</button>
-    </div>
-    <div id="rxn-err" class="rxn-err" style="display:none"></div>
-    <div id="rxn-equation-bar" class="rxn-equation-bar" style="display:none">
-      <div class="rxn-eq-row" id="rxn-eq-row"></div>
-      <div class="rxn-stage-btns">
-        <button class="rxn-stage-btn active-r" id="rxn-btn-r" onclick="rxnShowStage('reactants')">👁 הצג מגיבים</button>
-        <button class="rxn-stage-btn inactive" id="rxn-btn-p" onclick="rxnShowStage('products')">👁 הצג תוצרים</button>
-      </div>
-    </div>
+    <button onclick="rxnNewChat()" style="padding:6px 14px;border:1.5px solid rgba(99,102,241,.5);
+      border-radius:8px;background:rgba(99,102,241,.15);color:#a5b4fc;font-size:.72rem;
+      font-weight:700;cursor:pointer;font-family:var(--sans)">🔄 שיחה חדשה</button>
   </div>
-  <div class="rxn-body">
-    <div id="rxn-mount"></div>
-    <div class="rxn-overlay" id="rxn-empty">
-      <div class="rxn-empty">
-        <div class="rxn-empty-icon">⚗️</div>
-        <h3>סימולטור תגובות כימיות</h3>
-        <p>הקלידו תגובה כימית כלשהי<br>והמחשב יבנה מולקולות תלת–ממדיות בזמן אמת</p>
+
+  <!-- MAIN LAYOUT -->
+  <div style="flex:1;display:flex;min-height:0;overflow:hidden">
+
+    <!-- LEFT: Chat panel -->
+    <div style="width:320px;flex-shrink:0;display:flex;flex-direction:column;
+      border-left:1px solid rgba(99,102,241,.25);background:rgba(15,23,42,.95)">
+
+      <!-- Messages -->
+      <div id="rxn-chat" style="flex:1;overflow-y:auto;padding:14px;display:flex;
+        flex-direction:column;gap:10px;font-size:.78rem">
+        <!-- populated by JS -->
+      </div>
+
+      <!-- Presets -->
+      <div style="padding:8px 12px;border-top:1px solid rgba(99,102,241,.2)">
+        <div style="font-size:.6rem;color:#6366f1;font-family:var(--mono);
+          text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">תגובות מהירות</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px" id="rxn-presets-row">
+          <button class="rxn-preset" onclick="rxnAsk('שריפת מתאן: CH₄ + O₂')">🔥 שריפת מתאן</button>
+          <button class="rxn-preset" onclick="rxnAsk('ניטרליזציה: HCl + NaOH')">⚗️ סתירה</button>
+          <button class="rxn-preset" onclick="rxnAsk('פירוק מים: H₂O → H₂ + O₂')">💧 פירוק מים</button>
+          <button class="rxn-preset" onclick="rxnAsk('אסטריפיקציה: חומצה אצטית + אתנול')">🍷 אסטריפיקציה</button>
+          <button class="rxn-preset" onclick="rxnAsk('הבר-בוש: N₂ + H₂ → NH₃')">🌱 הבר-בוש</button>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div style="padding:10px 12px;border-top:1px solid rgba(99,102,241,.2);display:flex;gap:8px">
+        <input id="rxn-inp" type="text"
+          placeholder="הקלידו תגובה או שאלה..."
+          onkeydown="if(event.key==='Enter')rxnSend()"
+          style="flex:1;background:rgba(30,41,59,.8);border:1.5px solid rgba(99,102,241,.35);
+            border-radius:9px;color:#e2e8f0;font-family:var(--sans);font-size:.78rem;
+            padding:8px 12px;outline:none;direction:rtl"/>
+        <button onclick="rxnSend()" id="rxn-send-btn"
+          style="padding:8px 14px;background:linear-gradient(135deg,#4f46e5,#7c3aed);
+            border:none;border-radius:9px;color:#fff;font-weight:700;font-size:.78rem;
+            cursor:pointer;font-family:var(--sans);white-space:nowrap">שלח</button>
       </div>
     </div>
-    <div class="rxn-overlay rxn-loading" id="rxn-loading" style="display:none">
-      <div class="rxn-loading-inner"><div class="rxn-spin">⚛️</div><p>בונה מולקולות...</p><small>AI מחשב קואורדינטות תלת–ממדיות</small></div>
+
+    <!-- RIGHT: Visual panel -->
+    <div style="flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden">
+
+      <!-- SVG display -->
+      <div id="rxn-svg-area" style="flex:1;overflow:auto;padding:20px;
+        display:flex;align-items:center;justify-content:center;direction:ltr">
+        <div id="rxn-svg-placeholder" style="text-align:center;color:#4338ca;max-width:400px">
+          <div style="font-size:4rem;margin-bottom:16px">⚗️</div>
+          <div style="font-size:1.1rem;font-weight:600;color:#818cf8;margin-bottom:10px">
+            סימולטור תגובות כימיות
+          </div>
+          <div style="font-size:.8rem;color:#475569;line-height:1.7">
+            בחרו תגובה מהרשימה משמאל<br>
+            או הקלידו כל תגובה כימית —<br>
+            ה-AI יצייר את המולקולות ויסביר את המנגנון.
+          </div>
+          <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+            <span style="padding:4px 10px;border-radius:6px;background:rgba(99,102,241,.15);
+              border:1px solid rgba(99,102,241,.3);color:#818cf8;font-size:.68rem">SVG מולקולרי</span>
+            <span style="padding:4px 10px;border-radius:6px;background:rgba(99,102,241,.15);
+              border:1px solid rgba(99,102,241,.3);color:#818cf8;font-size:.68rem">נוסחה מאוזנת</span>
+            <span style="padding:4px 10px;border-radius:6px;background:rgba(99,102,241,.15);
+              border:1px solid rgba(99,102,241,.3);color:#818cf8;font-size:.68rem">מנגנון תגובה</span>
+          </div>
+        </div>
+        <div id="rxn-svg-content" style="display:none;width:100%"></div>
+      </div>
+
+      <!-- Info cards -->
+      <div id="rxn-info-area" style="display:none;flex-shrink:0;
+        border-top:1px solid rgba(99,102,241,.2);
+        background:rgba(15,23,42,.9);padding:14px 18px;
+        display:none;gap:12px;flex-wrap:wrap;max-height:38%;overflow-y:auto">
+      </div>
+
+      <!-- Loading overlay -->
+      <div id="rxn-loading" style="display:none;position:absolute;inset:0;
+        background:rgba(10,14,39,.85);backdrop-filter:blur(6px);
+        align-items:center;justify-content:center;flex-direction:column;gap:12px;z-index:10">
+        <div style="font-size:3rem;animation:rxnspin 1s linear infinite">⚛️</div>
+        <div style="color:#a5b4fc;font-size:.9rem;font-weight:600">בונה ויזואליזציה מולקולרית...</div>
+        <div style="color:#6366f1;font-size:.72rem">AI מעבד את התגובה</div>
+      </div>
     </div>
-    <div class="rxn-hud-controls" id="rxn-hud-c" style="display:none"><strong>🎮 שליטה:</strong><div>• גרור — סיבוב</div><div>• גלגל — זום</div></div>
-    <div class="rxn-hud-stage" id="rxn-hud-s" style="display:none"><div class="rxn-stage-badge" id="rxn-stage-badge"></div><div id="rxn-mol-list"></div></div>
-    <div class="rxn-legend" id="rxn-legend" style="display:none"><strong>⚛️ אלמנטים:</strong><div id="rxn-legend-items"></div></div>
   </div>
 </div>
 
 <script>
-let rxnScene=null,rxnRenderer=null,rxnCamera=null,rxnRAF=null,rxnData=null,rxnStage='reactants';
-let rxnMouseDown=false,rxnMX=0,rxnMY=0;
-const ELEM_COLORS={H:'#FFFFFF',C:'#909090',N:'#3050F8',O:'#FF0D0D',S:'#FFFF30',P:'#FF8000',Cl:'#1FF01F',F:'#90E050',Br:'#A62929',Na:'#AB5CF2',K:'#8F40D4'};
-const ELEM_NAMES={H:'מימן',C:'פחמן',N:'חנקן',O:'חמצן',S:'גופרית',P:'זרחן',Cl:'כלור',F:'פלואור',Br:'ברום',Na:'נתרן',K:'אשלגן'};
+let rxnHistory=[];
+let rxnLoading=false;
 
-function rxnInitScene(){
-  if(rxnRenderer)return;
-  const mount=document.getElementById('rxn-mount');
-  if(!mount||!mount.clientWidth)return;
-  rxnScene=new THREE.Scene();rxnScene.background=new THREE.Color(0x0a0e27);
-  rxnCamera=new THREE.PerspectiveCamera(75,mount.clientWidth/mount.clientHeight,0.1,1000);
-  rxnCamera.position.set(0,0,25);
-  rxnRenderer=new THREE.WebGLRenderer({antialias:true});
-  rxnRenderer.setSize(mount.clientWidth,mount.clientHeight);rxnRenderer.setPixelRatio(window.devicePixelRatio);
-  mount.appendChild(rxnRenderer.domElement);
-  rxnScene.add(new THREE.AmbientLight(0xffffff,0.5));
-  const dl1=new THREE.DirectionalLight(0xffffff,0.6);dl1.position.set(5,5,5);rxnScene.add(dl1);
-  const dl2=new THREE.DirectionalLight(0xffffff,0.4);dl2.position.set(-5,-5,5);rxnScene.add(dl2);
-  rxnRenderer.domElement.addEventListener('mousedown',e=>{rxnMouseDown=true;rxnMX=e.clientX;rxnMY=e.clientY;});
-  rxnRenderer.domElement.addEventListener('mouseup',()=>rxnMouseDown=false);
-  rxnRenderer.domElement.addEventListener('mouseleave',()=>rxnMouseDown=false);
-  rxnRenderer.domElement.addEventListener('mousemove',e=>{if(!rxnMouseDown||!rxnScene)return;rxnScene.rotation.y+=(e.clientX-rxnMX)*0.012;rxnScene.rotation.x+=(e.clientY-rxnMY)*0.012;rxnMX=e.clientX;rxnMY=e.clientY;});
-  rxnRenderer.domElement.addEventListener('wheel',e=>{rxnCamera.position.z+=e.deltaY*0.025;rxnCamera.position.z=Math.max(4,Math.min(70,rxnCamera.position.z));});
-  let lastTouchDist=0;
-  rxnRenderer.domElement.addEventListener('touchstart',e=>{if(e.touches.length===1){rxnMouseDown=true;rxnMX=e.touches[0].clientX;rxnMY=e.touches[0].clientY;}if(e.touches.length===2)lastTouchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);});
-  rxnRenderer.domElement.addEventListener('touchend',()=>rxnMouseDown=false);
-  rxnRenderer.domElement.addEventListener('touchmove',e=>{if(e.touches.length===1&&rxnMouseDown&&rxnScene){rxnScene.rotation.y+=(e.touches[0].clientX-rxnMX)*0.012;rxnScene.rotation.x+=(e.touches[0].clientY-rxnMY)*0.012;rxnMX=e.touches[0].clientX;rxnMY=e.touches[0].clientY;}if(e.touches.length===2){const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);rxnCamera.position.z-=(d-lastTouchDist)*0.1;rxnCamera.position.z=Math.max(4,Math.min(70,rxnCamera.position.z));lastTouchDist=d;}});
-  window.addEventListener('resize',()=>{if(!rxnRenderer||!rxnCamera)return;const m=document.getElementById('rxn-mount');if(!m)return;rxnRenderer.setSize(m.clientWidth,m.clientHeight);rxnCamera.aspect=m.clientWidth/m.clientHeight;rxnCamera.updateProjectionMatrix();});
-  (function animate(){rxnRAF=requestAnimationFrame(animate);if(rxnRenderer&&rxnScene&&rxnCamera)rxnRenderer.render(rxnScene,rxnCamera);})();
+function rxnPause(){}  // no-op (Three.js removed)
+
+function rxnNewChat(){
+  rxnHistory=[];
+  document.getElementById('rxn-chat').innerHTML='';
+  document.getElementById('rxn-svg-placeholder').style.display='block';
+  document.getElementById('rxn-svg-content').style.display='none';
+  document.getElementById('rxn-svg-content').innerHTML='';
+  const ia=document.getElementById('rxn-info-area');ia.style.display='none';ia.innerHTML='';
+  rxnAddMsg('assistant',
+    'שלום! 👋 אני סימולטור תגובות כימיות אינטראקטיבי.\n\n' +
+    'אני יכול להציג ויזואליזציה מולקולרית SVG של כל תגובה כימית — אורגנית, אנאורגנית, חומצה-בסיס, חיזור-חמצון ועוד.\n\n' +
+    'בחרו תגובה מהרשימה, או הקלידו תגובה משלכם!'
+  );
 }
-function rxnPause(){if(rxnRAF){cancelAnimationFrame(rxnRAF);rxnRAF=null;}}
-function rxnClearScene(){if(!rxnScene)return;const rem=[];rxnScene.traverse(c=>{if(c.isMesh||c.isLine)rem.push(c);});rem.forEach(o=>{rxnScene.remove(o);if(o.geometry)o.geometry.dispose();if(o.material)o.material.dispose();});}
-function rxnMakeAtom(pos,color,radius){const g=new THREE.SphereGeometry(radius,32,32);const m=new THREE.MeshStandardMaterial({color:new THREE.Color(color),metalness:.4,roughness:.3,emissive:new THREE.Color(color),emissiveIntensity:.15});const s=new THREE.Mesh(g,m);s.position.set(...pos);return s;}
-function rxnMakeBond(start,end,color,r=0.1){const s3=new THREE.Vector3(...start),e3=new THREE.Vector3(...end);const dir=new THREE.Vector3().subVectors(e3,s3);const dist=dir.length();const g=new THREE.CylinderGeometry(r,r,dist,8);const m=new THREE.MeshStandardMaterial({color:new THREE.Color(color||'#808080'),metalness:.3,roughness:.5});const cyl=new THREE.Mesh(g,m);const mid=new THREE.Vector3().addVectors(s3,e3).divideScalar(2);cyl.position.copy(mid);cyl.lookAt(e3);cyl.rotateX(Math.PI/2);return cyl;}
-function rxnMakeHBond(start,end){const pts=[new THREE.Vector3(...start),new THREE.Vector3(...end)];const g=new THREE.BufferGeometry().setFromPoints(pts);const m=new THREE.LineDashedMaterial({color:0x00ffff,linewidth:2,dashSize:.4,gapSize:.2});const line=new THREE.Line(g,m);line.computeLineDistances();const gg=new THREE.SphereGeometry(.18,12,12);const gm=new THREE.MeshBasicMaterial({color:0x00ffff,transparent:true,opacity:.7});const g1=new THREE.Mesh(gg,gm.clone());g1.position.set(...start);const g2=new THREE.Mesh(gg,gm.clone());g2.position.set(...end);return[line,g1,g2];}
-function rxnRender(molecules){if(!rxnScene)return;rxnClearScene();molecules.forEach(mol=>{mol.atoms.forEach(a=>rxnScene.add(rxnMakeAtom(a.position,a.color,a.radius)));mol.bonds.forEach(b=>rxnScene.add(rxnMakeBond(b.start,b.end,b.color)));(mol.hydrogenBonds||[]).forEach(hb=>{rxnMakeHBond(hb.donor,hb.acceptor).forEach(o=>rxnScene.add(o));});});const box=new THREE.Box3().setFromObject(rxnScene);const center=box.getCenter(new THREE.Vector3());const size=box.getSize(new THREE.Vector3());rxnScene.position.sub(center);const maxD=Math.max(size.x,size.y,size.z);const fov=rxnCamera.fov*(Math.PI/180);rxnCamera.position.z=Math.max(Math.abs(maxD/(2*Math.tan(fov/2)))*1.9,10);}
-async function rxnFetch(){
-  const inp=document.getElementById('rxn-inp').value.trim();if(!inp)return;if(!rxnScene)rxnInitScene();
-  document.getElementById('rxn-loading').style.display='flex';document.getElementById('rxn-empty').style.display='none';document.getElementById('rxn-err').style.display='none';document.getElementById('rxn-vis-btn').disabled=true;document.querySelectorAll('.rxn-preset').forEach(b=>b.disabled=true);
-  const prompt=`You are a chemistry expert. Visualize this reaction: "${inp}"\n\nReturn ONLY valid JSON (no markdown, no explanation):\n{\n  "equation": "reactant → product",\n  "reactants": [\n    {\n      "name": "molecule name",\n      "formula": "formula",\n      "atoms": [{"element":"H","position":[x,y,z],"color":"#FFFFFF","radius":0.4}],\n      "bonds": [{"start":[x1,y1,z1],"end":[x2,y2,z2],"color":"#909090"}],\n      "hydrogenBonds": []\n    }\n  ],\n  "products": [...]\n}\n\nRules:\n- CPK colors: H=#FFFFFF C=#909090 N=#3050F8 O=#FF0D0D S=#FFFF30 P=#FF8000 Cl=#1FF01F\n- Realistic 3D Angstrom coordinates\n- Space molecules apart (x offsets of ~8–12 Å between molecules)\n- Radii: H=0.35 C=0.55 N=0.50 O=0.48 S=0.75 Cl=0.7 P=0.65\n- Return ONLY JSON, nothing else`;
+
+function rxnAddMsg(role, text){
+  const chat=document.getElementById('rxn-chat');
+  const div=document.createElement('div');
+  const isUser=role==='user';
+  div.style.cssText=`
+    padding:10px 13px;border-radius:${isUser?'12px 12px 4px 12px':'12px 12px 12px 4px'};
+    background:${isUser?'linear-gradient(135deg,#4f46e5,#7c3aed)':'rgba(30,41,59,.9)'};
+    border:1.5px solid ${isUser?'transparent':'rgba(99,102,241,.25)'};
+    color:${isUser?'#fff':'#e2e8f0'};
+    font-size:.75rem;line-height:1.7;
+    align-self:${isUser?'flex-end':'flex-start'};
+    max-width:92%;white-space:pre-wrap;direction:rtl;text-align:right;
+  `;
+  div.textContent=text;
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+function rxnSend(){
+  const inp=document.getElementById('rxn-inp');
+  const text=inp.value.trim();
+  if(!text||rxnLoading)return;
+  inp.value='';
+  rxnAsk(text);
+}
+
+function rxnAsk(reaction){
+  rxnAddMsg('user',reaction);
+  rxnFetchNew(reaction);
+}
+
+async function rxnFetchNew(reaction){
+  if(rxnLoading)return;
+  rxnLoading=true;
+  document.getElementById('rxn-send-btn').disabled=true;
+  document.getElementById('rxn-loading').style.display='flex';
+
+  const SYSTEM=`You are an expert chemistry visualization engine. 
+When given a chemical reaction, you MUST return a JSON object with this exact structure:
+{
+  "equation": "balanced equation with proper coefficients",
+  "equation_hebrew": "המשוואה המאוזנת",
+  "type": "reaction type in Hebrew (e.g. תגובת שריפה, תגובת סתירה, חיזור-חמצון, תגובת תחלופה, תגובה אורגנית)",
+  "mechanism": "2-3 sentence mechanism explanation in Hebrew",
+  "applications": "1-2 real-world applications in Hebrew",
+  "next_suggestions": ["suggestion 1 in Hebrew", "suggestion 2 in Hebrew"],
+  "svg": "COMPLETE SVG code showing the reaction strictly LEFT-TO-RIGHT: REACTANTS on the LEFT, a right-pointing arrow (→) in the CENTER, and PRODUCTS on the RIGHT. This is mandatory standard chemical notation and must never be reversed. Must be self-contained, width=800 height=300, dark background (#1e293b), colored atoms (C=gray #909090, O=red #ff4444, H=lightblue #93c5fd, N=blue #60a5fa, Cl=green #4ade80, Na=purple #c084fc, S=yellow #facc15), white bond lines, clear atom labels. Structural/skeletal formulas with explicit bonds. Make it publication-quality and clear."
+}
+
+CRITICAL: 
+- The SVG must show actual molecular STRUCTURAL FORMULAS (bond lines, atom symbols) NOT just text formulas.
+- CHEMICAL EQUATIONS ARE ALWAYS LEFT-TO-RIGHT: reactants LEFT → arrow CENTER → products RIGHT. NEVER reverse this.
+- For simple molecules: draw explicit bonds. For complex organics: use skeletal formula style.
+- Return ONLY valid JSON, no markdown, no explanation outside JSON.
+- The SVG background should be #1e293b (dark blue-gray).
+- All atom labels and bond lines must be clearly visible on dark background.
+- Use white/light colors for bonds and labels.`;
+
+  const userMsg=`Draw this chemical reaction with structural molecular formulas: ${reaction}`;
+
+  rxnHistory.push({role:'user',content:userMsg});
+
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:5000,messages:[{role:'user',content:prompt}]})});
-    const result=await res.json();let text=(result.content.find(c=>c.type==='text')?.text||'').trim();
-    text=text.replace(/^```json\s*/,'').replace(/^```\s*/,'').replace(/```\s*$/,'');
-    rxnData=JSON.parse(text);rxnStage='reactants';rxnRender(rxnData.reactants);rxnUpdateUI();
-    document.getElementById('rxn-equation-bar').style.display='block';document.getElementById('rxn-hud-c').style.display='block';document.getElementById('rxn-hud-s').style.display='block';document.getElementById('rxn-legend').style.display='block';
-  }catch(e){document.getElementById('rxn-err').style.display='block';document.getElementById('rxn-err').innerText='שגיאה: '+e.message+' — נסו שוב';document.getElementById('rxn-empty').style.display='flex';}
-  finally{document.getElementById('rxn-loading').style.display='none';document.getElementById('rxn-vis-btn').disabled=false;document.querySelectorAll('.rxn-preset').forEach(b=>b.disabled=false);}
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:4000,
+        system:SYSTEM,
+        messages:rxnHistory
+      })
+    });
+    const result=await res.json();
+    const rawText=(result.content?.find(c=>c.type==='text')?.text||'').trim();
+    const jsonText=rawText.replace(/^```json\s*/,'').replace(/^```\s*/,'').replace(/```\s*$/,'');
+    const data=JSON.parse(jsonText);
+
+    rxnHistory.push({role:'assistant',content:rawText});
+
+    // Show SVG
+    const svgArea=document.getElementById('rxn-svg-content');
+    document.getElementById('rxn-svg-placeholder').style.display='none';
+    svgArea.style.display='block';
+    svgArea.innerHTML=data.svg;
+    // Make SVG responsive
+    const svgEl=svgArea.querySelector('svg');
+    if(svgEl){svgEl.style.maxWidth='100%';svgEl.style.height='auto';}
+
+    // Build info cards
+    const infoArea=document.getElementById('rxn-info-area');
+    infoArea.style.display='flex';
+    infoArea.innerHTML=`
+      <div style="flex:1;min-width:200px;background:rgba(30,41,59,.8);border:1.5px solid rgba(99,102,241,.3);
+        border-radius:10px;padding:12px 14px">
+        <div style="font-size:.65rem;font-family:var(--mono);color:#6366f1;text-transform:uppercase;
+          letter-spacing:.08em;margin-bottom:6px">⚗️ משוואה מאוזנת</div>
+        <div style="font-size:.82rem;font-weight:700;color:#e2e8f0;font-family:var(--mono);
+          direction:ltr;text-align:left">${data.equation}</div>
+        <div style="font-size:.7rem;color:#818cf8;margin-top:5px">סוג: ${data.type}</div>
+      </div>
+      <div style="flex:1.5;min-width:220px;background:rgba(30,41,59,.8);border:1.5px solid rgba(52,211,153,.25);
+        border-radius:10px;padding:12px 14px">
+        <div style="font-size:.65rem;font-family:var(--mono);color:#34d399;text-transform:uppercase;
+          letter-spacing:.08em;margin-bottom:6px">🔬 מנגנון</div>
+        <div style="font-size:.75rem;color:#cbd5e1;line-height:1.7;direction:rtl">${data.mechanism}</div>
+      </div>
+      <div style="flex:1;min-width:180px;background:rgba(30,41,59,.8);border:1.5px solid rgba(251,191,36,.25);
+        border-radius:10px;padding:12px 14px">
+        <div style="font-size:.65rem;font-family:var(--mono);color:#fbbf24;text-transform:uppercase;
+          letter-spacing:.08em;margin-bottom:6px">🌍 יישומים</div>
+        <div style="font-size:.75rem;color:#cbd5e1;line-height:1.7;direction:rtl">${data.applications}</div>
+      </div>`;
+
+    // AI chat reply
+    const suggestions=data.next_suggestions||[];
+    let reply=`✅ הויזואליזציה מוכנה!\n\n📐 ${data.equation}\n🔬 סוג: ${data.type}`;
+    if(suggestions.length) reply+='\n\n💡 מה תרצו לנסות הבא?\n'+suggestions.map(s=>'• '+s).join('\n');
+    rxnAddMsg('assistant',reply);
+
+  }catch(e){
+    rxnAddMsg('assistant','❌ שגיאה: '+e.message+'\nנסו שוב עם ניסוח אחר.');
+  }finally{
+    rxnLoading=false;
+    document.getElementById('rxn-send-btn').disabled=false;
+    document.getElementById('rxn-loading').style.display='none';
+  }
 }
-function rxnPreset(txt){document.getElementById('rxn-inp').value=txt;rxnFetch();}
-function rxnShowStage(stage){if(!rxnData)return;rxnStage=stage;rxnRender(rxnData[stage]);rxnUpdateUI();}
-function rxnUpdateUI(){
-  if(!rxnData)return;
-  const row=document.getElementById('rxn-eq-row');row.innerHTML='';
-  rxnData.reactants.forEach((m,i)=>{row.innerHTML+=`<div class="rxn-mol-chip reactant"><div class="rxn-mol-name">${m.name}</div><div class="rxn-mol-formula">${m.formula}</div></div>`;if(i<rxnData.reactants.length-1)row.innerHTML+=`<span class="rxn-plus">+</span>`;});
-  row.innerHTML+=`<span class="rxn-arrow-lbl">→</span>`;
-  rxnData.products.forEach((m,i)=>{const hb=m.hydrogenBonds&&m.hydrogenBonds.length>0?`<div class="rxn-hbond-tag">💧 ${m.hydrogenBonds.length} קשרי מימן</div>`:'';row.innerHTML+=`<div class="rxn-mol-chip product"><div class="rxn-mol-name prod">${m.name}</div><div class="rxn-mol-formula prod">${m.formula}</div>${hb}</div>`;if(i<rxnData.products.length-1)row.innerHTML+=`<span class="rxn-plus" style="color:#34d399">+</span>`;});
-  const br=document.getElementById('rxn-btn-r'),bp=document.getElementById('rxn-btn-p');br.className='rxn-stage-btn '+(rxnStage==='reactants'?'active-r':'inactive');bp.className='rxn-stage-btn '+(rxnStage==='products'?'active-p':'inactive');
-  const badge=document.getElementById('rxn-stage-badge');if(rxnStage==='reactants'){badge.style.cssText='background:linear-gradient(135deg,#1d4ed8,#0891b2);color:#fff';badge.innerText='🔵 מגיבים';}else{badge.style.cssText='background:linear-gradient(135deg,#065f46,#0f766e);color:#fff';badge.innerText='🟢 תוצרים';}
-  const ml=document.getElementById('rxn-mol-list');ml.innerHTML='';rxnData[rxnStage].forEach(m=>{ml.innerHTML+=`<div class="rxn-mol-info"><div class="rxn-mol-info-name">${m.name}</div><div class="rxn-mol-info-formula">${m.formula}</div><div class="rxn-mol-info-atoms">אטומים: ${m.atoms.length}${m.hydrogenBonds&&m.hydrogenBonds.length?` · קשרי H: ${m.hydrogenBonds.length}`:''}</div></div>`;});
-  const all=[...rxnData.reactants,...rxnData.products];const elems=new Set();all.forEach(m=>m.atoms.forEach(a=>elems.add(a.element)));const hasHB=all.some(m=>m.hydrogenBonds&&m.hydrogenBonds.length>0);
-  const li=document.getElementById('rxn-legend-items');li.innerHTML='';[...elems].sort().forEach(el=>{const c=ELEM_COLORS[el]||'#aaa',n=ELEM_NAMES[el]||el;li.innerHTML+=`<div class="rxn-legend-item"><div class="rxn-legend-dot" style="background:${c};border:1px solid rgba(255,255,255,.2)"></div><span>${n} (${el})</span></div>`;});
-  if(hasHB)li.innerHTML+=`<div class="rxn-legend-item" style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(99,102,241,.3)"><div class="rxn-legend-hbond"></div><span style="color:#67e8f9">קשר מימן</span></div>`;
-}
+
+// Init on first open
+document.addEventListener('DOMContentLoaded',()=>rxnNewChat());
 </script>
 
 <!-- ══════════════════════════════════════
